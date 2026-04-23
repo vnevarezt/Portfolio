@@ -21,24 +21,4 @@ export const POSTS: Post[] = [
       'What I learned from rolling my own 2FA for VicentCodes, including the embarrassing first iteration.',
     hue: 45,
   },
-  {
-    title: 'Android, Compose and the patience of learning',
-    date: 'Dec 2025',
-    read: '4 min',
-    cat: 'Mobile',
-    mark: 'android',
-    excerpt:
-      'Compose taught me that patience, not cleverness, is the skill that actually ships apps.',
-    hue: 200,
-  },
-  {
-    title: 'OKLCH is the color space I want to live in',
-    date: 'Nov 2025',
-    read: '7 min',
-    cat: 'CSS',
-    mark: 'oklch',
-    excerpt:
-      'OKLCH is a color space I want to live in: perceptually uniform, accessible by default, and a joy to interpolate.',
-    hue: 310,
-  },
 ];

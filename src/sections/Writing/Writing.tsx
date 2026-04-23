@@ -369,7 +369,7 @@ export function Writing() {
         >
           <input
             type="email"
-            placeholder="you@domain.com"
+            placeholder="contact@vicentcodes.com"
             className="field"
             style={{ width: 200, padding: '9px 12px' }}
           />

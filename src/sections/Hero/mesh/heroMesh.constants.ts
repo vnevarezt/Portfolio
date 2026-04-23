@@ -11,7 +11,7 @@ export const HERO_MESH_VISUAL_PRESETS: Record<HeroMeshVisualPreset, HeroMeshVisu
   subtle: {
     pointerStrengthMultiplier: 0.86,
     waveStrengthMultiplier: 0.88,
-    alphaMultiplier: 0.94,
+    alphaMultiplier: 0.85,
     dotAlphaInteractive: 0.5,
     dotAlphaLight: 0.34,
   },
@@ -26,28 +26,28 @@ export const HERO_MESH_VISUAL_PRESETS: Record<HeroMeshVisualPreset, HeroMeshVisu
 
 export const HERO_MESH_PROFILES: Record<HeroMeshQuality, HeroMeshProfile> = {
   high: {
-    spacing: 26,
+    spacing: 28,
     maxFps: 60,
     pointerRadius: 190,
     pointerStrength: 24,
     waveStrength: 2.2,
-    alpha: 0.36,
+    alpha: 0.26,
   },
   medium: {
-    spacing: 32,
+    spacing: 38,
     maxFps: 54,
     pointerRadius: 170,
     pointerStrength: 18,
     waveStrength: 1.7,
-    alpha: 0.3,
+    alpha: 0.22,
   },
   low: {
-    spacing: 40,
+    spacing: 46,
     maxFps: 46,
     pointerRadius: 150,
     pointerStrength: 14,
     waveStrength: 1.2,
-    alpha: 0.24,
+    alpha: 0.18,
   },
 };
 

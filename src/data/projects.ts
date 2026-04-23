@@ -18,38 +18,6 @@ export const PROJECTS: Project[] = [
     stack: ['Kotlin', 'Jetpack Compose'],
     mark: 'lumen',
   },
-  {
-    title: 'Tinta Editorial',
-    cat: 'Web',
-    year: '2023',
-    desc: 'Editorial website for an indie magazine. Typography-led.',
-    stack: ['Astro', 'CSS'],
-    mark: 'tinta',
-  },
-  {
-    title: 'DeskClock Pro',
-    cat: 'Desktop',
-    year: '2022',
-    desc: 'Cross-platform focus app. Pomodoro presets, themes.',
-    stack: ['Electron', 'React'],
-    mark: 'desk',
-  },
-  {
-    title: 'Palette Studio',
-    cat: 'Web',
-    year: '2024',
-    desc: 'OKLCH color palette generator. Export to CSS / Figma.',
-    stack: ['React'],
-    mark: 'pal',
-  },
-  {
-    title: 'Kaito CLI',
-    cat: 'Desktop',
-    year: '2023',
-    desc: 'Terminal assistant for project scaffolding. Rust-fast.',
-    stack: ['Rust'],
-    mark: 'kaito',
-  },
 ];
 
 export const PROJECT_CATEGORIES = ['All', 'Web', 'Android', 'Desktop'] as const;

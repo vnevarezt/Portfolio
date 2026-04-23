@@ -9,7 +9,6 @@ interface HeroProps {
 export function Hero({ onNavigate }: HeroProps) {
   return (
     <div
-      className="gbg"
       style={{
         minHeight: '100%',
         display: 'flex',

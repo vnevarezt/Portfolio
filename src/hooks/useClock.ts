@@ -5,7 +5,7 @@ const formatter = new Intl.DateTimeFormat('en-GB', {
   minute: '2-digit',
   second: '2-digit',
   hour12: false,
-  timeZone: 'Europe/Madrid',
+  timeZone: 'America/Mexico_City',
 });
 
 export function useClock(): string {
