@@ -41,7 +41,50 @@ body {
   --ac-s: oklch(80% 0.17 130 / 0.11);
   --ac-f: #0c0c0e;
 
-  /* Spacing */
+  /* ── FLUID SPACING ────────────────────────────────────────── */
+  --space-1: clamp(4px, 3px + 0.25vw, 6px);
+  --space-2: clamp(6px, 4px + 0.5vw, 10px);
+  --space-3: clamp(10px, 8px + 0.75vw, 14px);
+  --space-4: clamp(14px, 10px + 1vw, 20px);
+  --space-5: clamp(18px, 13px + 1.5vw, 28px);
+  --space-6: clamp(24px, 16px + 2vw, 40px);
+  --space-7: clamp(32px, 20px + 2.5vw, 56px);
+
+  /* Section padding */
+  --pad-x: clamp(16px, 10px + 1.74vw, 32px);
+  --pad-y: clamp(20px, 14px + 1.2vw, 28px);
+  --pad-b: clamp(36px, 22px + 2.5vw, 60px);
+
+  /* ── FLUID TYPOGRAPHY ─────────────────────────────────────── */
+  --fs-9:  9px;
+  --fs-11: 11px;
+  --fs-12: 12px;
+  --fs-13: 13px;
+  --fs-14: 14px;
+  --fs-15: clamp(13px, 12px + 0.3vw, 15px);
+  --fs-17: clamp(15px, 14px + 0.3vw, 17px);
+  --fs-22: clamp(17px, 14px + 0.75vw, 22px);
+  --fs-24: clamp(19px, 16px + 0.75vw, 24px);
+  --fs-28: clamp(22px, 19px + 0.9vw, 28px);
+  --fs-36: clamp(26px, 21px + 1.5vw, 36px);
+  --fs-hero: clamp(40px, 8vw, 120px);
+
+  /* ── LAYOUT ───────────────────────────────────────────────── */
+  --sidebar-w: 264px;
+  --topbar-h: 0px;
+  --bottomnav-h: 0px;
+  --main-header-h: 56px;
+  --card-radius: clamp(10px, 8px + 0.5vw, 16px);
+  --btn-pad-y: clamp(9px, 8px + 0.3vw, 11px);
+  --btn-pad-x: clamp(14px, 10px + 1vw, 20px);
+
+  /* ── LAYOUT GRID VARS (overridden at breakpoints) ─────────── */
+  --timeline-cols: 116px 1fr;
+  --featured-cols: 1.1fr 1fr;
+  --about-grid-cols: repeat(auto-fit, minmax(200px, 1fr));
+  --contact-2col: minmax(260px, 1fr) minmax(320px, 1.15fr);
+
+  /* Legacy */
   --px: 56px;
 }
 
@@ -55,6 +98,27 @@ body {
   --fg: #0c0c0e;
   --fg-m: rgba(12, 12, 14, 0.6);
   --fg-d: rgba(12, 12, 14, 0.36);
+}
+
+/* ── BREAKPOINT OVERRIDES ──────────────────────────────────── */
+@media (max-width: 768px) {
+  :root {
+    --sidebar-w: 0px;
+    --topbar-h: 56px;
+    --bottomnav-h: 64px;
+    --main-header-h: 0px;
+    --px: 24px;
+    --about-grid-cols: repeat(auto-fit, minmax(160px, 1fr));
+    --contact-2col: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --timeline-cols: 1fr;
+    --featured-cols: 1fr;
+    --card-radius: 12px;
+  }
 }
 
 /* ── UTILITY CLASSES ───────────────────────────────────────── */
@@ -78,17 +142,18 @@ button {
 .card {
   background: var(--bg-c);
   border: 1px solid var(--br);
-  border-radius: 16px;
+  border-radius: var(--card-radius);
 }
 
 .btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 11px 20px;
+  padding: var(--btn-pad-y) var(--btn-pad-x);
   border-radius: 999px;
   font-weight: 500;
-  font-size: 14px;
+  font-size: var(--fs-14);
+  min-height: 40px;
   border: 1px solid var(--br-s);
   background: transparent;
   color: var(--fg);
@@ -101,6 +166,13 @@ button {
   border-color: var(--ac);
   color: var(--ac);
 }
+
+@media (pointer: coarse) {
+  .btn {
+    min-height: 44px;
+  }
+}
+
 .btn.p,
 .accent-surface {
   background: var(--ac);
@@ -137,7 +209,7 @@ button {
   background: var(--bg-e);
   color: var(--fg);
   font-family: var(--font-b);
-  font-size: 13px;
+  font-size: var(--fs-13);
   outline: none;
   transition: border-color 0.15s;
   display: block;
@@ -148,6 +220,44 @@ button {
 }
 .field::placeholder {
   color: var(--fg-d);
+}
+
+/* ── RESPONSIVE OVERRIDES ──────────────────────────────────── */
+
+/* Sticky header: hide on mobile (identity card takes its place) */
+.main-sticky-header {
+  display: flex;
+}
+@media (max-width: 768px) {
+  .main-sticky-header {
+    display: none;
+  }
+}
+
+/* Experience timeline: spine/dot hidden, grid collapses to 1fr */
+@media (max-width: 600px) {
+  .timeline-spine,
+  .timeline-dot {
+    display: none;
+  }
+  .timeline-year-block {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding-right: 0;
+    overflow: visible;
+    margin-bottom: 8px;
+  }
+}
+
+/* Featured cards (Writing, Contact): deco area shrinks on mobile */
+@media (max-width: 600px) {
+  .featured-deco {
+    min-height: 120px;
+  }
+  .featured-deco .featured-quote {
+    font-size: clamp(48px, 10vw, 88px);
+  }
 }
 
 /* ── KEYFRAMES ─────────────────────────────────────────────── */
@@ -183,6 +293,15 @@ button {
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
@@ -222,11 +341,4 @@ button {
 ::-webkit-scrollbar-thumb {
   background: var(--br-s);
   border-radius: 2px;
-}
-
-/* ── RESPONSIVE ────────────────────────────────────────────── */
-@media (max-width: 768px) {
-  :root {
-    --px: 24px;
-  }
 }
