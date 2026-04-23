@@ -68,13 +68,14 @@ export function Writing() {
         {cats.map((c) => (
           <button
             key={c}
+            className={filter === c ? 'accent-surface' : undefined}
             onClick={() => setFilter(c)}
             style={{
               padding: '6px 14px',
               border: 'none',
               borderRadius: 999,
-              background: filter === c ? 'var(--ac)' : 'transparent',
-              color: filter === c ? 'var(--ac-f)' : 'var(--fg-m)',
+              background: filter === c ? undefined : 'transparent',
+              color: filter === c ? undefined : 'var(--fg-m)',
               fontFamily: 'var(--font-b)',
               fontSize: 12,
               cursor: 'pointer',

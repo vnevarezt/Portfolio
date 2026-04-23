@@ -167,13 +167,11 @@ export function Experience() {
                         </div>
                         {isNow && (
                           <span
-                            className="m"
+                            className="m accent-surface"
                             style={{
                               fontSize: 9,
                               padding: '2px 7px',
                               borderRadius: 999,
-                              background: 'var(--ac)',
-                              color: 'var(--ac-f)',
                               letterSpacing: '0.1em',
                             }}
                           >

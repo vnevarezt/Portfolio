@@ -19,12 +19,13 @@ export function FilterPills({ options, active, onChange }: FilterPillsProps) {
       {options.map((option) => (
         <button
           key={option}
+          className={active === option ? 'accent-surface' : undefined}
           onClick={() => onChange(option)}
           style={{
             padding: '6px 14px',
             border: 'none',
-            background: active === option ? 'var(--ac)' : 'transparent',
-            color: active === option ? 'var(--ac-f)' : 'var(--fg-m)',
+            background: active === option ? undefined : 'transparent',
+            color: active === option ? undefined : 'var(--fg-m)',
             fontFamily: 'var(--font-b)',
             fontSize: 12,
             borderRadius: 999,

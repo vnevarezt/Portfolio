@@ -22,7 +22,7 @@ export function ProjectMark({ kind, big }: ProjectMarkProps) {
 
   if (kind === 'vc')
     return (
-      <div style={{ ...box, background: 'var(--ac)', color: 'var(--ac-f)' }}>
+      <div className="accent-surface" style={{ ...box, background: undefined, color: undefined }}>
         <div
           style={{
             position: 'absolute',

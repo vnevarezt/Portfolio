@@ -133,13 +133,14 @@ export function Work() {
           {PROJECT_CATEGORIES.map((c) => (
             <button
               key={c}
+              className={filter === c ? 'accent-surface' : undefined}
               onClick={() => setFilter(c)}
               style={{
                 padding: '5px 12px',
                 border: 'none',
                 borderRadius: 999,
-                background: filter === c ? 'var(--ac)' : 'transparent',
-                color: filter === c ? 'var(--ac-f)' : 'var(--fg-m)',
+                background: filter === c ? undefined : 'transparent',
+                color: filter === c ? undefined : 'var(--fg-m)',
                 fontFamily: 'var(--font-b)',
                 fontSize: 11,
                 cursor: 'pointer',

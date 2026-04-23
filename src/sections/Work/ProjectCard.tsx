@@ -44,14 +44,13 @@ export function ProjectCard({ project, big, style }: ProjectCardProps) {
       >
         <ProjectMark kind={project.mark} big={big} />
         <div
+          className="accent-surface"
           style={{
             position: 'absolute',
             top: 8,
             right: 8,
             opacity: hover ? 1 : 0,
             transition: 'opacity .2s',
-            background: 'var(--ac)',
-            color: 'var(--ac-f)',
             width: 30,
             height: 30,
             borderRadius: '50%',

@@ -101,7 +101,8 @@ button {
   border-color: var(--ac);
   color: var(--ac);
 }
-.btn.p {
+.btn.p,
+.accent-surface {
   background: var(--ac);
   color: var(--ac-f);
   border-color: var(--ac);
@@ -109,6 +110,17 @@ button {
 .btn.p:hover {
   filter: brightness(1.1);
   color: var(--ac-f);
+}
+
+.btn.p svg,
+.accent-surface svg,
+.btn.p a,
+.accent-surface a,
+.btn.p [data-accent-icon='true'],
+.accent-surface [data-accent-icon='true'] {
+  color: inherit;
+  fill: currentColor;
+  stroke: currentColor;
 }
 
 .gbg {
