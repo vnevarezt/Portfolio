@@ -1,5 +1,6 @@
 import { Clock } from '@/components/widgets/Clock/Clock';
 import { ArrowIcon, ChevronRightIcon, DownloadIcon } from '@/components/icons/Icons';
+import { HeroMeshBackground } from './mesh/HeroMeshBackground';
 
 interface HeroProps {
   onNavigate?: (tab: string) => void;
@@ -19,6 +20,8 @@ export function Hero({ onNavigate }: HeroProps) {
         overflow: 'hidden',
       }}
     >
+      <HeroMeshBackground />
+
       {/* Bottom gradient */}
       <div
         style={{
@@ -29,6 +32,7 @@ export function Hero({ onNavigate }: HeroProps) {
           height: 120,
           background: 'linear-gradient(to bottom, transparent, var(--bg))',
           pointerEvents: 'none',
+          zIndex: 0,
         }}
       />
 
