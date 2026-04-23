@@ -19,7 +19,7 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
   return (
     <aside
       style={{
-        width: 264,
+        width: 'var(--sidebar-w)',
         flexShrink: 0,
         borderRight: '1px solid var(--br)',
         display: 'flex',
