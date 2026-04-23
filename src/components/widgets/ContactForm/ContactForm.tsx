@@ -34,7 +34,7 @@ function FInput({
           value={val}
           onChange={(e) => set(e.target.value)}
           className="field"
-          style={{ height: 80 }}
+          style={{ minHeight: 80 }}
           placeholder="Your message…"
         />
       ) : (
@@ -113,7 +113,7 @@ export function ContactForm() {
       <button
         type="submit"
         className="btn p"
-        style={{ justifyContent: 'center', padding: '11px 16px', marginTop: 2 }}
+        style={{ justifyContent: 'center', marginTop: 2 }}
       >
         Send <ArrowIcon size={13} />
       </button>

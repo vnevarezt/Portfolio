@@ -17,24 +17,25 @@ export function CommitsHeatmap() {
     <div
       className="card"
       style={{
-        padding: 16,
+        padding: 'var(--space-4)',
         marginTop: 14,
         display: 'flex',
         gap: 20,
         alignItems: 'center',
+        flexWrap: 'wrap',
       }}
     >
-      <div>
+      <div style={{ minWidth: 120 }}>
         <div
           className="m"
-          style={{ fontSize: 10, color: 'var(--fg-d)', letterSpacing: '0.14em' }}
+          style={{ fontSize: 'var(--fs-11)', color: 'var(--fg-d)', letterSpacing: '0.14em' }}
         >
           LAST 12 WEEKS
         </div>
         <div
           className="d"
           style={{
-            fontSize: 28,
+            fontSize: 'var(--fs-28)',
             fontWeight: 500,
             letterSpacing: '-0.02em',
             marginTop: 4,
@@ -42,7 +43,7 @@ export function CommitsHeatmap() {
         >
           <Counter to={347} /> commits
         </div>
-        <div style={{ fontSize: 11, color: 'var(--fg-m)', marginTop: 4 }}>
+        <div style={{ fontSize: 'var(--fs-11)', color: 'var(--fg-m)', marginTop: 4 }}>
           across 8 repos ·{' '}
           <span style={{ color: 'var(--ac)' }}>+24%</span> vs. last quarter
         </div>
@@ -54,8 +55,9 @@ export function CommitsHeatmap() {
           gridTemplateRows: 'repeat(7, 1fr)',
           gap: 3,
           gridAutoFlow: 'column',
-          flex: 1,
-          height: 80,
+          flex: '1 1 160px',
+          minHeight: 64,
+          maxHeight: 84,
         }}
       >
         {data.map((lvl, i) => (
