@@ -9,7 +9,7 @@ export function Writing() {
   const [feat, ...rest] = list;
 
   return (
-    <div style={{ padding: '28px 32px 60px', maxWidth: 960 }}>
+    <div style={{ padding: 'var(--pad-y) var(--pad-x) var(--pad-b)', maxWidth: 'min(960px, 100%)' }}>
       {/* Header */}
       <div
         style={{
@@ -23,26 +23,26 @@ export function Writing() {
       >
         <div
           className="m"
-          style={{ fontSize: 9, color: 'var(--fg-d)', letterSpacing: '0.18em' }}
+          style={{ fontSize: 'var(--fs-9)', color: 'var(--fg-d)', letterSpacing: '0.18em' }}
         >
           05 · WRITING
         </div>
         <div
           className="m"
-          style={{ fontSize: 9, color: 'var(--fg-d)', letterSpacing: '0.1em' }}
+          style={{ fontSize: 'var(--fs-9)', color: 'var(--fg-d)', letterSpacing: '0.1em' }}
         >
           {POSTS.length} essays · updated weekly
         </div>
       </div>
       <h2
         className="d"
-        style={{ fontSize: 36, fontWeight: 500, letterSpacing: '-0.035em', margin: '0 0 8px' }}
+        style={{ fontSize: 'var(--fs-36)', fontWeight: 500, letterSpacing: '-0.035em', margin: '0 0 8px' }}
       >
         Notes from <em style={{ color: 'var(--ac)', fontStyle: 'italic' }}>the edit</em>.
       </h2>
       <p
         style={{
-          fontSize: 14,
+          fontSize: 'var(--fs-14)',
           color: 'var(--fg-m)',
           margin: '0 0 24px',
           lineHeight: 1.55,
@@ -63,6 +63,7 @@ export function Writing() {
           borderRadius: 999,
           width: 'fit-content',
           marginBottom: 20,
+          flexWrap: 'wrap',
         }}
       >
         {cats.map((c) => (
@@ -77,7 +78,7 @@ export function Writing() {
               background: filter === c ? undefined : 'transparent',
               color: filter === c ? undefined : 'var(--fg-m)',
               fontFamily: 'var(--font-b)',
-              fontSize: 12,
+              fontSize: 'var(--fs-12)',
               cursor: 'pointer',
               transition: 'all .15s',
             }}
@@ -91,10 +92,10 @@ export function Writing() {
       {feat && (
         <a
           href="#"
-          className="card"
+          className="card featured-grid"
           style={{
             display: 'grid',
-            gridTemplateColumns: '1.1fr 1fr',
+            gridTemplateColumns: 'var(--featured-cols)',
             gap: 0,
             overflow: 'hidden',
             textDecoration: 'none',
@@ -112,7 +113,7 @@ export function Writing() {
           }}
         >
           <div
-            className="gbg"
+            className="gbg featured-deco"
             style={{
               position: 'relative',
               minHeight: 220,
@@ -134,7 +135,7 @@ export function Writing() {
               <span
                 className="m"
                 style={{
-                  fontSize: 9,
+                  fontSize: 'var(--fs-9)',
                   padding: '3px 9px',
                   borderRadius: 999,
                   background: `oklch(70% 0.18 ${feat.hue} / 0.2)`,
@@ -148,7 +149,7 @@ export function Writing() {
               <span
                 className="m"
                 style={{
-                  fontSize: 9,
+                  fontSize: 'var(--fs-9)',
                   color: 'var(--fg-d)',
                   letterSpacing: '0.14em',
                   marginLeft: 10,
@@ -159,6 +160,7 @@ export function Writing() {
               </span>
             </div>
             <div
+              className="featured-quote"
               style={{
                 position: 'relative',
                 fontSize: 88,
@@ -175,7 +177,7 @@ export function Writing() {
           </div>
           <div
             style={{
-              padding: '22px 24px',
+              padding: 'var(--space-6)',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
@@ -185,7 +187,7 @@ export function Writing() {
             <h3
               className="d"
               style={{
-                fontSize: 22,
+                fontSize: 'var(--fs-22)',
                 fontWeight: 500,
                 letterSpacing: '-0.025em',
                 lineHeight: 1.2,
@@ -194,7 +196,7 @@ export function Writing() {
             >
               {feat.title}
             </h3>
-            <p style={{ fontSize: 13, color: 'var(--fg-m)', lineHeight: 1.6, margin: 0 }}>
+            <p style={{ fontSize: 'var(--fs-13)', color: 'var(--fg-m)', lineHeight: 1.6, margin: 0 }}>
               {feat.excerpt}
             </p>
             <div
@@ -204,14 +206,13 @@ export function Writing() {
                 gap: 10,
                 marginTop: 4,
                 fontSize: 11,
+                flexWrap: 'wrap',
               }}
             >
               <span className="m" style={{ color: 'var(--fg-d)' }}>
                 {feat.date}
               </span>
-              <span className="m" style={{ color: 'var(--fg-d)' }}>
-                ·
-              </span>
+              <span className="m" style={{ color: 'var(--fg-d)' }}>·</span>
               <span className="m" style={{ color: 'var(--fg-d)' }}>
                 {feat.read} read
               </span>
@@ -236,7 +237,7 @@ export function Writing() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
           gap: 10,
         }}
       >
@@ -246,7 +247,7 @@ export function Writing() {
             href="#"
             className="card"
             style={{
-              padding: '18px 20px',
+              padding: 'var(--space-5)',
               textDecoration: 'none',
               color: 'var(--fg)',
               display: 'flex',
@@ -273,7 +274,7 @@ export function Writing() {
               <span
                 className="m"
                 style={{
-                  fontSize: 9,
+                  fontSize: 'var(--fs-9)',
                   padding: '3px 8px',
                   borderRadius: 999,
                   background: `oklch(70% 0.18 ${p.hue} / 0.14)`,
@@ -284,14 +285,14 @@ export function Writing() {
               >
                 {p.cat}
               </span>
-              <span className="m" style={{ fontSize: 10, color: 'var(--fg-d)' }}>
+              <span className="m" style={{ fontSize: 'var(--fs-11)', color: 'var(--fg-d)' }}>
                 {p.read}
               </span>
             </div>
             <h3
               className="d"
               style={{
-                fontSize: 15,
+                fontSize: 'var(--fs-15)',
                 fontWeight: 500,
                 letterSpacing: '-0.02em',
                 lineHeight: 1.3,
@@ -302,7 +303,7 @@ export function Writing() {
             </h3>
             <p
               style={{
-                fontSize: 12,
+                fontSize: 'var(--fs-12)',
                 color: 'var(--fg-m)',
                 lineHeight: 1.55,
                 margin: 0,
@@ -323,7 +324,7 @@ export function Writing() {
                 justifyContent: 'space-between',
               }}
             >
-              <span className="m" style={{ fontSize: 10, color: 'var(--fg-d)' }}>
+              <span className="m" style={{ fontSize: 'var(--fs-11)', color: 'var(--fg-d)' }}>
                 {p.date}
               </span>
               <span
@@ -345,7 +346,7 @@ export function Writing() {
       <div
         style={{
           marginTop: 36,
-          padding: '18px 22px',
+          padding: 'var(--space-5) var(--space-6)',
           border: '1px dashed var(--br-s)',
           borderRadius: 14,
           display: 'flex',
@@ -356,24 +357,24 @@ export function Writing() {
         }}
       >
         <div>
-          <div className="d" style={{ fontSize: 15, fontWeight: 500 }}>
+          <div className="d" style={{ fontSize: 'var(--fs-15)', fontWeight: 500 }}>
             New essay every other week.
           </div>
-          <div style={{ fontSize: 12, color: 'var(--fg-m)', marginTop: 2 }}>
+          <div style={{ fontSize: 'var(--fs-12)', color: 'var(--fg-m)', marginTop: 2 }}>
             No spam. Unsubscribe with one click.
           </div>
         </div>
         <form
           onSubmit={(e) => e.preventDefault()}
-          style={{ display: 'flex', gap: 6 }}
+          style={{ display: 'flex', gap: 6, flexWrap: 'wrap', width: '100%', maxWidth: 380 }}
         >
           <input
             type="email"
             placeholder="contact@vicentcodes.com"
             className="field"
-            style={{ width: 200, padding: '9px 12px' }}
+            style={{ flex: '1 1 160px', padding: '9px 12px' }}
           />
-          <button type="submit" className="btn p" style={{ padding: '9px 16px', fontSize: 12 }}>
+          <button type="submit" className="btn p" style={{ fontSize: 'var(--fs-12)', flexShrink: 0 }}>
             Subscribe
           </button>
         </form>

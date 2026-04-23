@@ -42,7 +42,7 @@ const EMAIL = 'contact@vicentcodes.com';
 
 export function Contact() {
   return (
-    <div style={{ padding: '28px 32px 60px', maxWidth: 960 }}>
+    <div style={{ padding: 'var(--pad-y) var(--pad-x) var(--pad-b)', maxWidth: 'min(960px, 100%)' }}>
       {/* Header */}
       <div
         style={{
@@ -54,22 +54,22 @@ export function Contact() {
           gap: 12,
         }}
       >
-        <div className="m" style={{ fontSize: 9, color: 'var(--fg-d)', letterSpacing: '0.18em' }}>
+        <div className="m" style={{ fontSize: 'var(--fs-9)', color: 'var(--fg-d)', letterSpacing: '0.18em' }}>
           05 · LET'S TALK
         </div>
-        <div className="m" style={{ fontSize: 9, color: 'var(--fg-d)', letterSpacing: '0.1em' }}>
+        <div className="m" style={{ fontSize: 'var(--fs-9)', color: 'var(--fg-d)', letterSpacing: '0.1em' }}>
           Usually replies in &lt; 24h
         </div>
       </div>
       <h2
         className="d"
-        style={{ fontSize: 36, fontWeight: 500, letterSpacing: '-0.035em', margin: '0 0 8px' }}
+        style={{ fontSize: 'var(--fs-36)', fontWeight: 500, letterSpacing: '-0.035em', margin: '0 0 8px' }}
       >
         Let's build <em style={{ color: 'var(--ac)', fontStyle: 'italic' }}>something</em>.
       </h2>
       <p
         style={{
-          fontSize: 14,
+          fontSize: 'var(--fs-14)',
           color: 'var(--fg-m)',
           margin: '0 0 24px',
           lineHeight: 1.55,
@@ -83,10 +83,10 @@ export function Contact() {
       {/* Featured email card */}
       <a
         href={`mailto:${EMAIL}`}
-        className="card"
+        className="card featured-grid"
         style={{
           display: 'grid',
-          gridTemplateColumns: '1.1fr 1fr',
+          gridTemplateColumns: 'var(--featured-cols)',
           gap: 0,
           overflow: 'hidden',
           textDecoration: 'none',
@@ -104,7 +104,7 @@ export function Contact() {
         }}
       >
         <div
-          className="gbg"
+          className="gbg featured-deco"
           style={{
             position: 'relative',
             minHeight: 220,
@@ -119,8 +119,7 @@ export function Contact() {
             style={{
               position: 'absolute',
               inset: 0,
-              background:
-                'radial-gradient(circle at 30% 30%, oklch(60% 0.2 130 / 0.18), transparent 60%)',
+              background: 'radial-gradient(circle at 30% 30%, oklch(60% 0.2 130 / 0.18), transparent 60%)',
             }}
           />
           <div
@@ -135,7 +134,7 @@ export function Contact() {
             <span
               className="m accent-surface"
               style={{
-                fontSize: 9,
+                fontSize: 'var(--fs-9)',
                 padding: '3px 9px',
                 borderRadius: 999,
                 letterSpacing: '0.14em',
@@ -171,7 +170,7 @@ export function Contact() {
             <span
               className="m"
               style={{
-                fontSize: 9,
+                fontSize: 'var(--fs-9)',
                 color: 'var(--fg-d)',
                 letterSpacing: '0.14em',
                 textTransform: 'uppercase',
@@ -181,6 +180,7 @@ export function Contact() {
             </span>
           </div>
           <div
+            className="featured-quote"
             style={{
               position: 'relative',
               fontSize: 88,
@@ -197,7 +197,7 @@ export function Contact() {
         </div>
         <div
           style={{
-            padding: '22px 24px',
+            padding: 'var(--space-6)',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
@@ -207,7 +207,7 @@ export function Contact() {
           <span
             className="m"
             style={{
-              fontSize: 9,
+              fontSize: 'var(--fs-9)',
               padding: '3px 9px',
               borderRadius: 999,
               background: 'oklch(70% 0.18 130 / 0.18)',
@@ -222,7 +222,7 @@ export function Contact() {
           <h3
             className="d"
             style={{
-              fontSize: 22,
+              fontSize: 'var(--fs-22)',
               fontWeight: 500,
               letterSpacing: '-0.025em',
               lineHeight: 1.2,
@@ -232,28 +232,13 @@ export function Contact() {
           >
             {EMAIL}
           </h3>
-          <p style={{ fontSize: 13, color: 'var(--fg-m)', lineHeight: 1.6, margin: 0 }}>
-            The best way to reach me. I read every email and reply to every real one within 24
-            hours.
+          <p style={{ fontSize: 'var(--fs-13)', color: 'var(--fg-m)', lineHeight: 1.6, margin: 0 }}>
+            The best way to reach me. I read every email and reply to every real one within 24 hours.
           </p>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 10,
-              marginTop: 4,
-              fontSize: 11,
-            }}
-          >
-            <span className="m" style={{ color: 'var(--fg-d)' }}>
-              GMT−5
-            </span>
-            <span className="m" style={{ color: 'var(--fg-d)' }}>
-              ·
-            </span>
-            <span className="m" style={{ color: 'var(--fg-d)' }}>
-              Mon–Fri
-            </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 4, flexWrap: 'wrap' }}>
+            <span className="m" style={{ fontSize: 'var(--fs-11)', color: 'var(--fg-d)' }}>GMT−5</span>
+            <span className="m" style={{ color: 'var(--fg-d)' }}>·</span>
+            <span className="m" style={{ fontSize: 'var(--fs-11)', color: 'var(--fg-d)' }}>Mon–Fri</span>
             <span
               style={{
                 marginLeft: 'auto',
@@ -274,7 +259,7 @@ export function Contact() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'minmax(260px, 1fr) minmax(320px, 1.15fr)',
+          gridTemplateColumns: 'var(--contact-2col)',
           gap: 14,
           alignItems: 'start',
         }}
@@ -287,7 +272,7 @@ export function Contact() {
               href={s.href}
               className="card"
               style={{
-                padding: '16px 18px',
+                padding: 'var(--space-4) var(--space-5)',
                 textDecoration: 'none',
                 color: 'var(--fg)',
                 display: 'flex',
@@ -304,17 +289,11 @@ export function Contact() {
                 e.currentTarget.style.transform = '';
               }}
             >
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}
-              >
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <span
                   className="m"
                   style={{
-                    fontSize: 9,
+                    fontSize: 'var(--fs-9)',
                     padding: '3px 8px',
                     borderRadius: 999,
                     background: `oklch(70% 0.18 ${s.hue} / 0.14)`,
@@ -327,46 +306,18 @@ export function Contact() {
                 </span>
                 <span style={{ color: 'var(--fg-d)', display: 'flex' }}>{s.icon}</span>
               </div>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'baseline',
-                  justifyContent: 'space-between',
-                  gap: 10,
-                }}
-              >
+              <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 10 }}>
                 <h3
                   className="d"
-                  style={{
-                    fontSize: 15,
-                    fontWeight: 500,
-                    letterSpacing: '-0.02em',
-                    lineHeight: 1.3,
-                    margin: 0,
-                  }}
+                  style={{ fontSize: 'var(--fs-15)', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1.3, margin: 0 }}
                 >
                   {s.handle}
                 </h3>
-                <span
-                  style={{
-                    color: 'var(--ac)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    fontSize: 11,
-                    flexShrink: 0,
-                  }}
-                >
+                <span style={{ color: 'var(--ac)', display: 'flex', alignItems: 'center', fontSize: 11, flexShrink: 0 }}>
                   <ArrowIcon size={11} />
                 </span>
               </div>
-              <p
-                style={{
-                  fontSize: 12,
-                  color: 'var(--fg-m)',
-                  lineHeight: 1.5,
-                  margin: 0,
-                }}
-              >
+              <p style={{ fontSize: 'var(--fs-12)', color: 'var(--fg-m)', lineHeight: 1.5, margin: 0 }}>
                 {s.tagline}
               </p>
             </a>
@@ -374,23 +325,15 @@ export function Contact() {
         </div>
 
         {/* Form card */}
-        <div className="card" style={{ padding: '22px 24px' }}>
+        <div className="card" style={{ padding: 'var(--space-6)' }}>
           <div style={{ marginBottom: 14 }}>
             <div
               className="m"
-              style={{
-                fontSize: 9,
-                letterSpacing: '0.18em',
-                color: 'var(--fg-d)',
-                marginBottom: 4,
-              }}
+              style={{ fontSize: 'var(--fs-9)', letterSpacing: '0.18em', color: 'var(--fg-d)', marginBottom: 4 }}
             >
               OR WRITE HERE
             </div>
-            <div
-              className="d"
-              style={{ fontSize: 17, fontWeight: 500, letterSpacing: '-0.02em' }}
-            >
+            <div className="d" style={{ fontSize: 'var(--fs-17)', fontWeight: 500, letterSpacing: '-0.02em' }}>
               Tell me what you're{' '}
               <em style={{ color: 'var(--ac)', fontStyle: 'italic' }}>building</em>.
             </div>
@@ -403,7 +346,7 @@ export function Contact() {
       <div
         style={{
           marginTop: 36,
-          padding: '18px 22px',
+          padding: 'var(--space-5) var(--space-6)',
           border: '1px dashed var(--br-s)',
           borderRadius: 14,
           display: 'flex',
@@ -414,18 +357,18 @@ export function Contact() {
         }}
       >
         <div>
-          <div className="d" style={{ fontSize: 15, fontWeight: 500 }}>
+          <div className="d" style={{ fontSize: 'var(--fs-15)', fontWeight: 500 }}>
             Want the full CV or a quick intro call?
           </div>
-          <div style={{ fontSize: 12, color: 'var(--fg-m)', marginTop: 2 }}>
+          <div style={{ fontSize: 'var(--fs-12)', color: 'var(--fg-m)', marginTop: 2 }}>
             20-min video chat, no agenda. Perfect if you're exploring options.
           </div>
         </div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-          <a href="#" className="btn p" style={{ padding: '10px 18px', fontSize: 13 }}>
+          <a href="#" className="btn p" style={{ fontSize: 'var(--fs-13)' }}>
             Download CV <DownloadIcon size={13} />
           </a>
-          <a href="#" className="btn" style={{ padding: '10px 18px', fontSize: 13 }}>
+          <a href="#" className="btn" style={{ fontSize: 'var(--fs-13)' }}>
             Book a call <PhoneIcon size={13} />
           </a>
         </div>

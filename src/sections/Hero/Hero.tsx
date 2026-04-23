@@ -14,7 +14,7 @@ export function Hero({ onNavigate }: HeroProps) {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        padding: '72px 40px',
+        padding: 'clamp(40px, 7vw, 72px) var(--pad-x)',
         position: 'relative',
         overflow: 'hidden',
       }}
@@ -35,13 +35,19 @@ export function Hero({ onNavigate }: HeroProps) {
         }}
       />
 
-      <div style={{ position: 'relative', zIndex: 1, maxWidth: 820 }}>
+      <div style={{ position: 'relative', zIndex: 1, maxWidth: 'min(820px, 100%)' }}>
         {/* Availability row */}
         <div
           className="hl"
-          style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 40 }}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 14,
+            marginBottom: 'clamp(24px, 4vw, 40px)',
+            flexWrap: 'wrap',
+          }}
         >
-          <span style={{ position: 'relative', display: 'flex', width: 10, height: 10 }}>
+          <span style={{ position: 'relative', display: 'flex', width: 10, height: 10, flexShrink: 0 }}>
             <span
               style={{
                 position: 'absolute',
@@ -64,7 +70,7 @@ export function Hero({ onNavigate }: HeroProps) {
           <span
             className="m"
             style={{
-              fontSize: 11,
+              fontSize: 'var(--fs-11)',
               color: 'var(--fg-m)',
               textTransform: 'uppercase',
               letterSpacing: '0.2em',
@@ -72,7 +78,7 @@ export function Hero({ onNavigate }: HeroProps) {
           >
             Available for work · Spring 2026
           </span>
-          <span style={{ flex: 1, height: 1, background: 'var(--br)', maxWidth: 180 }} />
+          <span style={{ flex: 1, height: 1, background: 'var(--br)', maxWidth: 180, minWidth: 20 }} />
           <Clock />
         </div>
 
@@ -80,7 +86,7 @@ export function Hero({ onNavigate }: HeroProps) {
         <h1
           className="d hl"
           style={{
-            fontSize: 'clamp(56px, 8vw, 120px)',
+            fontSize: 'var(--fs-hero)',
             fontWeight: 500,
             letterSpacing: '-0.04em',
             lineHeight: 0.93,
@@ -96,9 +102,9 @@ export function Hero({ onNavigate }: HeroProps) {
         <p
           className="hl"
           style={{
-            fontSize: 'clamp(15px, 1.3vw, 18px)',
+            fontSize: 'clamp(14px, 1.3vw, 18px)',
             color: 'var(--fg-m)',
-            margin: '24px 0 0',
+            margin: 'clamp(16px, 2.5vw, 24px) 0 0',
             maxWidth: 460,
             lineHeight: 1.55,
           }}
@@ -108,22 +114,14 @@ export function Hero({ onNavigate }: HeroProps) {
         </p>
 
         {/* CTA buttons */}
-        <div className="hl" style={{ display: 'flex', gap: 10, marginTop: 32, flexWrap: 'wrap' }}>
-          <button
-            className="btn p"
-            onClick={() => onNavigate?.('Contact')}
-            style={{ padding: '12px 22px' }}
-          >
+        <div className="hl" style={{ display: 'flex', gap: 10, marginTop: 'clamp(20px, 3vw, 32px)', flexWrap: 'wrap' }}>
+          <button className="btn p" onClick={() => onNavigate?.('Contact')}>
             Get in touch <ArrowIcon size={13} />
           </button>
-          <button
-            className="btn"
-            onClick={() => onNavigate?.('Work')}
-            style={{ padding: '12px 22px' }}
-          >
+          <button className="btn" onClick={() => onNavigate?.('Work')}>
             View work <ChevronRightIcon size={13} />
           </button>
-          <a href="#" className="btn" style={{ padding: '12px 18px' }}>
+          <a href="#" className="btn">
             CV <DownloadIcon size={13} />
           </a>
         </div>
@@ -132,13 +130,12 @@ export function Hero({ onNavigate }: HeroProps) {
         <dl
           className="hl"
           style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, auto)',
-            gap: '0 40px',
-            marginTop: 52,
-            paddingTop: 22,
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 'clamp(14px, 2vw, 22px) clamp(20px, 4vw, 40px)',
+            marginTop: 'clamp(32px, 5vw, 52px)',
+            paddingTop: 'clamp(14px, 2vw, 22px)',
             borderTop: '1px solid var(--br)',
-            width: 'fit-content',
           }}
         >
           {(
@@ -153,7 +150,7 @@ export function Hero({ onNavigate }: HeroProps) {
               <dt
                 className="m"
                 style={{
-                  fontSize: 9,
+                  fontSize: 'var(--fs-9)',
                   color: 'var(--fg-d)',
                   textTransform: 'uppercase',
                   letterSpacing: '0.18em',
@@ -162,7 +159,7 @@ export function Hero({ onNavigate }: HeroProps) {
               >
                 {k}
               </dt>
-              <dd className="m" style={{ margin: 0, fontSize: 12, color: 'var(--fg-m)' }}>
+              <dd className="m" style={{ margin: 0, fontSize: 'var(--fs-12)', color: 'var(--fg-m)' }}>
                 {v}
               </dd>
             </div>

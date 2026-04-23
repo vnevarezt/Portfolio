@@ -13,7 +13,7 @@ function ProjMini({ p, delay = 0 }: { p: Project; delay?: number }) {
       ref={ref}
       className="card"
       style={{
-        padding: 14,
+        padding: 'var(--space-3)',
         display: 'flex',
         flexDirection: 'column',
         gap: 10,
@@ -29,8 +29,8 @@ function ProjMini({ p, delay = 0 }: { p: Project; delay?: number }) {
     >
       <div
         style={{
-          height: 140,
-          borderRadius: 10,
+          aspectRatio: '16 / 9',
+          borderRadius: 'calc(var(--card-radius) - 4px)',
           overflow: 'hidden',
           border: '1px solid var(--br)',
         }}
@@ -48,7 +48,7 @@ function ProjMini({ p, delay = 0 }: { p: Project; delay?: number }) {
         <h3
           className="d"
           style={{
-            fontSize: 16,
+            fontSize: 'var(--fs-15)',
             fontWeight: 500,
             letterSpacing: '-0.02em',
             margin: 0,
@@ -60,19 +60,19 @@ function ProjMini({ p, delay = 0 }: { p: Project; delay?: number }) {
         </h3>
         <span
           className="m"
-          style={{ fontSize: 10, color: 'var(--fg-d)', whiteSpace: 'nowrap' }}
+          style={{ fontSize: 'var(--fs-11)', color: 'var(--fg-d)', whiteSpace: 'nowrap' }}
         >
           {p.year}
         </span>
       </div>
-      <p style={{ fontSize: 12, lineHeight: 1.5, margin: 0, color: 'var(--fg-m)' }}>{p.desc}</p>
+      <p style={{ fontSize: 'var(--fs-12)', lineHeight: 1.5, margin: 0, color: 'var(--fg-m)' }}>{p.desc}</p>
       <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
         {p.stack.map((s) => (
           <span
             key={s}
             className="m"
             style={{
-              fontSize: 9,
+              fontSize: 'var(--fs-9)',
               padding: '2px 7px',
               borderRadius: 4,
               border: '1px solid var(--br)',
@@ -92,20 +92,22 @@ export function Work() {
   const list = PROJECTS.filter((p) => filter === 'All' || p.cat.includes(filter));
 
   return (
-    <div style={{ padding: '28px 32px' }}>
+    <div style={{ padding: 'var(--pad-y) var(--pad-x) var(--pad-b)' }}>
       <div
         style={{
           display: 'flex',
-          alignItems: 'baseline',
+          alignItems: 'flex-start',
           justifyContent: 'space-between',
           marginBottom: 24,
+          gap: 12,
+          flexWrap: 'wrap',
         }}
       >
         <div>
           <div
             className="m"
             style={{
-              fontSize: 9,
+              fontSize: 'var(--fs-9)',
               color: 'var(--fg-d)',
               letterSpacing: '0.18em',
               marginBottom: 8,
@@ -115,7 +117,7 @@ export function Work() {
           </div>
           <h2
             className="d"
-            style={{ fontSize: 32, fontWeight: 500, letterSpacing: '-0.03em', margin: 0 }}
+            style={{ fontSize: 'var(--fs-36)', fontWeight: 500, letterSpacing: '-0.03em', margin: 0 }}
           >
             Portfolio
           </h2>
@@ -128,6 +130,7 @@ export function Work() {
             background: 'var(--bg-c)',
             border: '1px solid var(--br)',
             borderRadius: 999,
+            flexWrap: 'wrap',
           }}
         >
           {PROJECT_CATEGORIES.map((c) => (
@@ -142,7 +145,7 @@ export function Work() {
                 background: filter === c ? undefined : 'transparent',
                 color: filter === c ? undefined : 'var(--fg-m)',
                 fontFamily: 'var(--font-b)',
-                fontSize: 11,
+                fontSize: 'var(--fs-11)',
                 cursor: 'pointer',
                 transition: 'all .15s',
               }}
@@ -153,7 +156,13 @@ export function Work() {
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+          gap: 12,
+        }}
+      >
         {list.slice(0, 6).map((p, i) => (
           <ProjMini key={p.title} p={p} delay={i * 0.04} />
         ))}
