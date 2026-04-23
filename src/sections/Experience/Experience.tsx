@@ -51,7 +51,7 @@ export function Experience() {
         <div
           style={{
             position: 'absolute',
-            left: 58,
+            left: 108,
             top: 8,
             bottom: 8,
             width: 1,
@@ -84,11 +84,11 @@ export function Experience() {
                 }}
               >
                 {/* Year column */}
-                <div style={{ paddingTop: 6 }}>
+                <div style={{ paddingTop: 6, paddingRight: 16, overflow: 'hidden' }}>
                   <div
                     className="d"
                     style={{
-                      fontSize: 28,
+                      fontSize: 24,
                       fontWeight: 500,
                       letterSpacing: '-0.04em',
                       lineHeight: 1,
@@ -102,9 +102,12 @@ export function Experience() {
                     style={{
                       fontSize: 9,
                       color: 'var(--fg-d)',
-                      letterSpacing: '0.15em',
+                      letterSpacing: '0.12em',
                       marginTop: 4,
                       textTransform: 'uppercase',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
                     }}
                   >
                     {meta.highlight}
@@ -115,7 +118,7 @@ export function Experience() {
                 <span
                   style={{
                     position: 'absolute',
-                    left: 54,
+                    left: 104,
                     top: 14,
                     width: 9,
                     height: 9,

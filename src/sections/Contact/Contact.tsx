@@ -1,139 +1,433 @@
-import { useState } from 'react';
 import { ContactForm } from '@/components/widgets/ContactForm/ContactForm';
 import {
-  MailIcon,
-  LinkedInIcon,
-  XIcon,
-  GitHubIcon,
   ArrowIcon,
   DownloadIcon,
+  GitHubIcon,
+  LinkedInIcon,
+  PhoneIcon,
+  XIcon,
 } from '@/components/icons/Icons';
 
-const LINKS = [
-  { icon: <MailIcon size={14} />, label: 'contact@vicentcodes.com', sub: 'EMAIL' },
-  { icon: <LinkedInIcon size={14} />, label: 'linkedin.com/in/vicentcodes', sub: 'LINKEDIN' },
-  { icon: <XIcon size={14} />, label: '@VicentCodes', sub: 'X' },
-  { icon: <GitHubIcon size={14} />, label: 'github.com/vicentcodes', sub: 'GITHUB' },
+const SOCIALS = [
+  {
+    icon: <LinkedInIcon size={14} />,
+    label: 'linkedin.com/in/vicentcodes',
+    handle: '@vicentcodes',
+    cat: 'LinkedIn',
+    tagline: 'Work history & recommendations',
+    hue: 245,
+    href: '#',
+  },
+  {
+    icon: <GitHubIcon size={14} />,
+    label: 'github.com/vicentcodes',
+    handle: '@vicentcodes',
+    cat: 'GitHub',
+    tagline: 'Code, side projects & dotfiles',
+    hue: 285,
+    href: '#',
+  },
+  {
+    icon: <XIcon size={14} />,
+    label: 'x.com/VicentCodes',
+    handle: '@VicentCodes',
+    cat: 'X',
+    tagline: 'Thinking out loud, occasionally',
+    hue: 215,
+    href: '#',
+  },
 ];
 
-function CLink({
-  icon,
-  label,
-  sub,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  sub: string;
-}) {
-  const [hover, setHover] = useState(false);
-  return (
-    <a
-      href="#"
-      style={{
-        padding: '11px 13px',
-        borderRadius: 11,
-        display: 'flex',
-        alignItems: 'center',
-        gap: 11,
-        border: `1px solid ${hover ? 'var(--ac)' : 'var(--br)'}`,
-        background: hover ? 'var(--ac-s)' : 'var(--bg-c)',
-        color: 'var(--fg)',
-        textDecoration: 'none',
-        transition: 'all .15s',
-      }}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-    >
-      <div
-        style={{
-          width: 32,
-          height: 32,
-          borderRadius: 8,
-          flexShrink: 0,
-          background: 'var(--ac-s)',
-          color: 'var(--ac)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        {icon}
-      </div>
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div
-          style={{
-            fontSize: 13,
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-          }}
-        >
-          {label}
-        </div>
-        <div
-          className="m"
-          style={{
-            fontSize: 9,
-            color: 'var(--fg-d)',
-            letterSpacing: '0.12em',
-            marginTop: 1,
-          }}
-        >
-          {sub}
-        </div>
-      </div>
-      <ArrowIcon size={11} />
-    </a>
-  );
-}
+const EMAIL = 'contact@vicentcodes.com';
 
 export function Contact() {
   return (
-    <div style={{ padding: '28px 32px' }}>
+    <div style={{ padding: '28px 32px 60px', maxWidth: 960 }}>
+      {/* Header */}
       <div
-        className="m"
-        style={{ fontSize: 9, color: 'var(--fg-d)', letterSpacing: '0.18em', marginBottom: 16 }}
+        style={{
+          display: 'flex',
+          alignItems: 'baseline',
+          justifyContent: 'space-between',
+          marginBottom: 6,
+          flexWrap: 'wrap',
+          gap: 12,
+        }}
       >
-        05 · LET'S TALK
+        <div className="m" style={{ fontSize: 9, color: 'var(--fg-d)', letterSpacing: '0.18em' }}>
+          05 · LET'S TALK
+        </div>
+        <div className="m" style={{ fontSize: 9, color: 'var(--fg-d)', letterSpacing: '0.1em' }}>
+          Usually replies in &lt; 24h
+        </div>
       </div>
       <h2
         className="d"
-        style={{ fontSize: 32, fontWeight: 500, letterSpacing: '-0.03em', margin: '0 0 8px' }}
+        style={{ fontSize: 36, fontWeight: 500, letterSpacing: '-0.035em', margin: '0 0 8px' }}
       >
-        Contact
+        Let's build <em style={{ color: 'var(--ac)', fontStyle: 'italic' }}>something</em>.
       </h2>
-      <p style={{ fontSize: 14, color: 'var(--fg-m)', margin: '0 0 24px', lineHeight: 1.6 }}>
-        Available for freelance. Reply within{' '}
+      <p
+        style={{
+          fontSize: 14,
+          color: 'var(--fg-m)',
+          margin: '0 0 24px',
+          lineHeight: 1.55,
+          maxWidth: 560,
+        }}
+      >
+        Freelance, full-time, or just to say hi — I read every message and reply personally within{' '}
         <span style={{ color: 'var(--ac)' }}>24h</span>.
       </p>
 
+      {/* Featured email card */}
+      <a
+        href={`mailto:${EMAIL}`}
+        className="card"
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '1.1fr 1fr',
+          gap: 0,
+          overflow: 'hidden',
+          textDecoration: 'none',
+          color: 'var(--fg)',
+          marginBottom: 14,
+          transition: 'border-color .2s, transform .2s',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.borderColor = 'var(--ac)';
+          e.currentTarget.style.transform = 'translateY(-2px)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.borderColor = 'var(--br)';
+          e.currentTarget.style.transform = '';
+        }}
+      >
+        <div
+          className="gbg"
+          style={{
+            position: 'relative',
+            minHeight: 220,
+            background: 'oklch(25% 0.08 130 / 0.35)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            padding: 22,
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background:
+                'radial-gradient(circle at 30% 30%, oklch(60% 0.2 130 / 0.18), transparent 60%)',
+            }}
+          />
+          <div
+            style={{
+              position: 'relative',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 10,
+              flexWrap: 'wrap',
+            }}
+          >
+            <span
+              className="m accent-surface"
+              style={{
+                fontSize: 9,
+                padding: '3px 9px',
+                borderRadius: 999,
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6,
+              }}
+            >
+              <span
+                style={{
+                  position: 'relative',
+                  display: 'inline-block',
+                  width: 6,
+                  height: 6,
+                  borderRadius: '50%',
+                  background: 'var(--ac)',
+                }}
+              >
+                <span
+                  style={{
+                    position: 'absolute',
+                    inset: -4,
+                    borderRadius: '50%',
+                    background: 'var(--ac)',
+                    opacity: 0.25,
+                    animation: 'pulse 1.8s ease-in-out infinite',
+                  }}
+                />
+              </span>
+              Available
+            </span>
+            <span
+              className="m"
+              style={{
+                fontSize: 9,
+                color: 'var(--fg-d)',
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+              }}
+            >
+              Featured
+            </span>
+          </div>
+          <div
+            style={{
+              position: 'relative',
+              fontSize: 88,
+              lineHeight: 0.9,
+              letterSpacing: '-0.05em',
+              fontFamily: 'var(--font-d)',
+              fontWeight: 500,
+              color: 'oklch(82% 0.17 130 / 0.9)',
+              fontStyle: 'italic',
+            }}
+          >
+            @
+          </div>
+        </div>
+        <div
+          style={{
+            padding: '22px 24px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            gap: 10,
+          }}
+        >
+          <span
+            className="m"
+            style={{
+              fontSize: 9,
+              padding: '3px 9px',
+              borderRadius: 999,
+              background: 'oklch(70% 0.18 130 / 0.18)',
+              color: 'oklch(85% 0.15 130)',
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              alignSelf: 'flex-start',
+            }}
+          >
+            Direct Email
+          </span>
+          <h3
+            className="d"
+            style={{
+              fontSize: 22,
+              fontWeight: 500,
+              letterSpacing: '-0.025em',
+              lineHeight: 1.2,
+              margin: 0,
+              wordBreak: 'break-all',
+            }}
+          >
+            {EMAIL}
+          </h3>
+          <p style={{ fontSize: 13, color: 'var(--fg-m)', lineHeight: 1.6, margin: 0 }}>
+            The best way to reach me. I read every email and reply to every real one within 24
+            hours.
+          </p>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 10,
+              marginTop: 4,
+              fontSize: 11,
+            }}
+          >
+            <span className="m" style={{ color: 'var(--fg-d)' }}>
+              GMT−5
+            </span>
+            <span className="m" style={{ color: 'var(--fg-d)' }}>
+              ·
+            </span>
+            <span className="m" style={{ color: 'var(--fg-d)' }}>
+              Mon–Fri
+            </span>
+            <span
+              style={{
+                marginLeft: 'auto',
+                color: 'var(--ac)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 4,
+                fontSize: 12,
+              }}
+            >
+              Send <ArrowIcon size={12} />
+            </span>
+          </div>
+        </div>
+      </a>
+
+      {/* Sociales + Form en 2 columnas */}
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: 32,
+          gridTemplateColumns: 'minmax(260px, 1fr) minmax(320px, 1.15fr)',
+          gap: 14,
           alignItems: 'start',
         }}
       >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          {LINKS.map((c, i) => (
-            <CLink key={i} {...c} />
-          ))}
-          <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
+        {/* Social stack */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {SOCIALS.map((s) => (
             <a
-              href="mailto:contact@vicentcodes.com"
-              className="btn p"
-              style={{ padding: '11px 18px', fontSize: 13 }}
+              key={s.cat}
+              href={s.href}
+              className="card"
+              style={{
+                padding: '16px 18px',
+                textDecoration: 'none',
+                color: 'var(--fg)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 8,
+                transition: 'border-color .2s, transform .2s',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'var(--ac)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'var(--br)';
+                e.currentTarget.style.transform = '';
+              }}
             >
-              Start a project <ArrowIcon size={13} />
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <span
+                  className="m"
+                  style={{
+                    fontSize: 9,
+                    padding: '3px 8px',
+                    borderRadius: 999,
+                    background: `oklch(70% 0.18 ${s.hue} / 0.14)`,
+                    color: `oklch(78% 0.15 ${s.hue})`,
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  {s.cat}
+                </span>
+                <span style={{ color: 'var(--fg-d)', display: 'flex' }}>{s.icon}</span>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'baseline',
+                  justifyContent: 'space-between',
+                  gap: 10,
+                }}
+              >
+                <h3
+                  className="d"
+                  style={{
+                    fontSize: 15,
+                    fontWeight: 500,
+                    letterSpacing: '-0.02em',
+                    lineHeight: 1.3,
+                    margin: 0,
+                  }}
+                >
+                  {s.handle}
+                </h3>
+                <span
+                  style={{
+                    color: 'var(--ac)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontSize: 11,
+                    flexShrink: 0,
+                  }}
+                >
+                  <ArrowIcon size={11} />
+                </span>
+              </div>
+              <p
+                style={{
+                  fontSize: 12,
+                  color: 'var(--fg-m)',
+                  lineHeight: 1.5,
+                  margin: 0,
+                }}
+              >
+                {s.tagline}
+              </p>
             </a>
-            <a href="#" className="btn" style={{ padding: '11px 18px', fontSize: 13 }}>
-              CV <DownloadIcon size={13} />
-            </a>
+          ))}
+        </div>
+
+        {/* Form card */}
+        <div className="card" style={{ padding: '22px 24px' }}>
+          <div style={{ marginBottom: 14 }}>
+            <div
+              className="m"
+              style={{
+                fontSize: 9,
+                letterSpacing: '0.18em',
+                color: 'var(--fg-d)',
+                marginBottom: 4,
+              }}
+            >
+              OR WRITE HERE
+            </div>
+            <div
+              className="d"
+              style={{ fontSize: 17, fontWeight: 500, letterSpacing: '-0.02em' }}
+            >
+              Tell me what you're{' '}
+              <em style={{ color: 'var(--ac)', fontStyle: 'italic' }}>building</em>.
+            </div>
+          </div>
+          <ContactForm />
+        </div>
+      </div>
+
+      {/* Bottom CTA */}
+      <div
+        style={{
+          marginTop: 36,
+          padding: '18px 22px',
+          border: '1px dashed var(--br-s)',
+          borderRadius: 14,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 16,
+          flexWrap: 'wrap',
+        }}
+      >
+        <div>
+          <div className="d" style={{ fontSize: 15, fontWeight: 500 }}>
+            Want the full CV or a quick intro call?
+          </div>
+          <div style={{ fontSize: 12, color: 'var(--fg-m)', marginTop: 2 }}>
+            20-min video chat, no agenda. Perfect if you're exploring options.
           </div>
         </div>
-        <div className="card" style={{ padding: 20 }}>
-          <ContactForm />
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          <a href="#" className="btn p" style={{ padding: '10px 18px', fontSize: 13 }}>
+            Download CV <DownloadIcon size={13} />
+          </a>
+          <a href="#" className="btn" style={{ padding: '10px 18px', fontSize: 13 }}>
+            Book a call <PhoneIcon size={13} />
+          </a>
         </div>
       </div>
     </div>
