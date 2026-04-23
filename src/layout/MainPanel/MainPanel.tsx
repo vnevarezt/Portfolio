@@ -33,9 +33,10 @@ export function MainPanel({ activeTab, onTabChange }: MainPanelProps) {
         animation: 'in .45s cubic-bezier(.16,1,.3,1)',
       }}
     >
-      {/* Sticky header — only on non-Home tabs */}
+      {/* Sticky header — only on non-Home tabs, hidden on mobile via CSS */}
       {!isHome && (
         <div
+          className="main-sticky-header"
           style={{
             position: 'sticky',
             top: 0,
@@ -43,9 +44,8 @@ export function MainPanel({ activeTab, onTabChange }: MainPanelProps) {
             background: 'color-mix(in oklab, var(--bg) 85%, transparent)',
             backdropFilter: 'blur(12px)',
             borderBottom: '1px solid var(--br)',
-            padding: '0 32px',
+            padding: '0 var(--pad-x)',
             height: 56,
-            display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
           }}
