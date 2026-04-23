@@ -1,0 +1,88 @@
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  height: 100vh;
+  overflow-y: auto;
+  position: sticky;
+  top: 0;
+}
+
+.identityCard {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.divider {
+  height: 1px;
+  background: var(--br);
+}
+
+.infoIcon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--ac-s);
+  color: var(--ac);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.socialLink {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid var(--br);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg-m);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.socialLink:hover {
+  color: var(--ac);
+  border-color: var(--ac);
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.navButton {
+  text-align: left;
+  padding: 12px 18px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-b);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--fg-m);
+  cursor: pointer;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.15s;
+}
+
+.navButton:hover {
+  color: var(--fg);
+}
+
+.navActive {
+  background: var(--ac-s);
+  font-weight: 500;
+  color: var(--ac);
+}

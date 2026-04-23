@@ -1,0 +1,220 @@
+/* ── RESET ──────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── DESIGN TOKENS ─────────────────────────────────────────── */
+:root {
+  /* Fonts */
+  --font-d: 'Space Grotesk', sans-serif;
+  --font-b: 'Inter', sans-serif;
+  --font-m: 'JetBrains Mono', monospace;
+
+  /* Dark theme (default) */
+  --bg: #0c0c0e;
+  --bg-e: #141416;
+  --bg-c: #161618;
+  --br: rgba(255, 255, 255, 0.07);
+  --br-s: rgba(255, 255, 255, 0.13);
+  --fg: #f0f0f2;
+  --fg-m: rgba(240, 240, 242, 0.58);
+  --fg-d: rgba(240, 240, 242, 0.3);
+
+  /* Accent — lime */
+  --ac: oklch(80% 0.17 130);
+  --ac-s: oklch(80% 0.17 130 / 0.11);
+  --ac-f: #0c0c0e;
+
+  /* Spacing */
+  --px: 56px;
+}
+
+/* ── LIGHT THEME ───────────────────────────────────────────── */
+[data-theme='light'] {
+  --bg: #f8f7f5;
+  --bg-e: #ffffff;
+  --bg-c: #ffffff;
+  --br: rgba(10, 10, 10, 0.08);
+  --br-s: rgba(10, 10, 10, 0.16);
+  --fg: #0c0c0e;
+  --fg-m: rgba(12, 12, 14, 0.6);
+  --fg-d: rgba(12, 12, 14, 0.36);
+}
+
+/* ── UTILITY CLASSES ───────────────────────────────────────── */
+.d {
+  font-family: var(--font-d);
+  letter-spacing: -0.025em;
+  font-feature-settings: 'ss01';
+}
+.m {
+  font-family: var(--font-m);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  font-family: var(--font-b);
+}
+
+.card {
+  background: var(--bg-c);
+  border: 1px solid var(--br);
+  border-radius: 16px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 14px;
+  border: 1px solid var(--br-s);
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+.btn:hover {
+  border-color: var(--ac);
+  color: var(--ac);
+}
+.btn.p {
+  background: var(--ac);
+  color: var(--ac-f);
+  border-color: var(--ac);
+}
+.btn.p:hover {
+  filter: brightness(1.1);
+  color: var(--ac-f);
+}
+
+.gbg {
+  background-image: linear-gradient(var(--br) 1px, transparent 1px),
+    linear-gradient(90deg, var(--br) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+.field {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 9px;
+  border: 1px solid var(--br);
+  background: var(--bg-e);
+  color: var(--fg);
+  font-family: var(--font-b);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s;
+  display: block;
+  resize: none;
+}
+.field:focus {
+  border-color: var(--ac);
+}
+.field::placeholder {
+  color: var(--fg-d);
+}
+
+/* ── KEYFRAMES ─────────────────────────────────────────────── */
+@keyframes in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── ENTRANCE ANIMATION ────────────────────────────────────── */
+.hl {
+  animation: in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.hl:nth-child(1) { animation-delay: 0.05s; }
+.hl:nth-child(2) { animation-delay: 0.18s; }
+.hl:nth-child(3) { animation-delay: 0.32s; }
+.hl:nth-child(4) { animation-delay: 0.48s; }
+.hl:nth-child(5) { animation-delay: 0.62s; }
+.hl:nth-child(6) { animation-delay: 0.75s; }
+
+/* ── SCROLL REVEAL ─────────────────────────────────────────── */
+.rv {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.rv.v {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── SELECTION & SCROLLBAR ─────────────────────────────────── */
+::selection {
+  background: var(--ac-s);
+  color: var(--ac);
+}
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--br-s);
+  border-radius: 2px;
+}
+
+/* ── RESPONSIVE ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  :root {
+    --px: 24px;
+  }
+}
