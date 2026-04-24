@@ -11,7 +11,6 @@ export function Hero({ onNavigate }: HeroProps) {
     <div
       className="hero-root"
       style={{
-        minHeight: 'calc(100dvh - var(--topbar-h) - var(--bottomnav-h) - env(safe-area-inset-bottom, 0px))',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
