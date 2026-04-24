@@ -2,38 +2,44 @@ import { useState } from 'react';
 import { ArrowIcon } from '@/components/icons/Icons';
 import { POSTS } from '@/data/posts';
 
-export function Writing() {
+interface WritingProps {
+  embedded?: boolean;
+}
+
+export function Writing({ embedded = false }: WritingProps) {
   const [filter, setFilter] = useState('All');
   const cats = ['All', ...new Set(POSTS.map((p) => p.cat))];
   const list = POSTS.filter((p) => filter === 'All' || p.cat === filter);
   const [feat, ...rest] = list;
 
-  return (
-    <div style={{ padding: 'var(--pad-y) var(--pad-x) var(--pad-b)', maxWidth: 'min(960px, 100%)' }}>
+  const content = (
+    <>
       {/* Header */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'baseline',
-          justifyContent: 'space-between',
-          marginBottom: 6,
-          flexWrap: 'wrap',
-          gap: 12,
-        }}
-      >
+      {!embedded && (
         <div
-          className="m"
-          style={{ fontSize: 'var(--fs-9)', color: 'var(--fg-d)', letterSpacing: '0.18em' }}
+          style={{
+            display: 'flex',
+            alignItems: 'baseline',
+            justifyContent: 'space-between',
+            marginBottom: 6,
+            flexWrap: 'wrap',
+            gap: 12,
+          }}
         >
-          05 · WRITING
+          <div
+            className="m"
+            style={{ fontSize: 'var(--fs-9)', color: 'var(--fg-d)', letterSpacing: '0.18em' }}
+          >
+            05 · WRITING
+          </div>
+          <div
+            className="m"
+            style={{ fontSize: 'var(--fs-9)', color: 'var(--fg-d)', letterSpacing: '0.1em' }}
+          >
+            {POSTS.length} essays · updated weekly
+          </div>
         </div>
-        <div
-          className="m"
-          style={{ fontSize: 'var(--fs-9)', color: 'var(--fg-d)', letterSpacing: '0.1em' }}
-        >
-          {POSTS.length} essays · updated weekly
-        </div>
-      </div>
+      )}
       <h2
         className="d"
         style={{ fontSize: 'var(--fs-36)', fontWeight: 500, letterSpacing: '-0.035em', margin: '0 0 8px' }}
@@ -379,6 +385,14 @@ export function Writing() {
           </button>
         </form>
       </div>
+    </>
+  );
+
+  if (embedded) return content;
+
+  return (
+    <div style={{ padding: 'var(--pad-y) var(--pad-x) var(--pad-b)' }}>
+      {content}
     </div>
   );
 }

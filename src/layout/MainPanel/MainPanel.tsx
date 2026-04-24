@@ -2,8 +2,6 @@ import { Clock } from '@/components/widgets/Clock/Clock';
 import { Hero } from '@/sections/Hero/Hero';
 import { About } from '@/sections/About/About';
 import { Work } from '@/sections/Work/Work';
-import { Experience } from '@/sections/Experience/Experience';
-import { Writing } from '@/sections/Writing/Writing';
 import { Contact } from '@/sections/Contact/Contact';
 
 interface MainPanelProps {
@@ -15,8 +13,6 @@ const PANELS: Record<string, (props: { onTabChange: (tab: string) => void }) => 
   Home: ({ onTabChange }) => <Hero onNavigate={onTabChange} />,
   About: () => <About />,
   Work: () => <Work />,
-  Career: () => <Experience />,
-  Writing: () => <Writing />,
   Contact: () => <Contact />,
 };
 

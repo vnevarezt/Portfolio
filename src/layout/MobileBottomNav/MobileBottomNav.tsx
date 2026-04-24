@@ -3,8 +3,6 @@ import {
   HomeIcon,
   UserIcon,
   BriefcaseIcon,
-  ChartIcon,
-  PenIcon,
   MailIcon,
 } from '@/components/icons/Icons';
 
@@ -12,8 +10,6 @@ const TABS = [
   { key: 'Home', label: 'Home', Icon: HomeIcon },
   { key: 'About', label: 'About', Icon: UserIcon },
   { key: 'Work', label: 'Work', Icon: BriefcaseIcon },
-  { key: 'Career', label: 'Career', Icon: ChartIcon },
-  { key: 'Writing', label: 'Writing', Icon: PenIcon },
   { key: 'Contact', label: 'Contact', Icon: MailIcon },
 ] as const;
 

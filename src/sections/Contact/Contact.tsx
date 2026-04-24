@@ -42,7 +42,7 @@ const EMAIL = 'contact@vicentcodes.com';
 
 export function Contact() {
   return (
-    <div style={{ padding: 'var(--pad-y) var(--pad-x) var(--pad-b)', maxWidth: 'min(960px, 100%)' }}>
+    <div style={{ padding: 'var(--pad-y) var(--pad-x) var(--pad-b)' }}>
       {/* Header */}
       <div
         style={{
@@ -55,7 +55,7 @@ export function Contact() {
         }}
       >
         <div className="m" style={{ fontSize: 'var(--fs-9)', color: 'var(--fg-d)', letterSpacing: '0.18em' }}>
-          05 · LET'S TALK
+          04 · LET'S TALK
         </div>
         <div className="m" style={{ fontSize: 'var(--fs-9)', color: 'var(--fg-d)', letterSpacing: '0.1em' }}>
           Usually replies in &lt; 24h

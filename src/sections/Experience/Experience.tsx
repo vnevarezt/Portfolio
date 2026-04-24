@@ -1,9 +1,13 @@
 import { DownloadIcon } from '@/components/icons/Icons';
 import { EXPERIENCE, EXPERIENCE_META } from '@/data/experience';
 
-export function Experience() {
-  return (
-    <div style={{ padding: 'var(--pad-y) var(--pad-x) var(--pad-b)', maxWidth: 'min(820px, 100%)' }}>
+interface ExperienceProps {
+  embedded?: boolean;
+}
+
+export function Experience({ embedded = false }: ExperienceProps) {
+  const content = (
+    <>
       {/* Header */}
       <div
         style={{
@@ -17,7 +21,7 @@ export function Experience() {
           className="m"
           style={{ fontSize: 'var(--fs-9)', color: 'var(--fg-d)', letterSpacing: '0.18em' }}
         >
-          04 · BACKGROUND
+          {embedded ? '02 · BACKGROUND' : '04 · BACKGROUND'}
         </div>
         <div
           className="m"
@@ -266,6 +270,14 @@ export function Experience() {
           Download CV <DownloadIcon size={13} />
         </a>
       </div>
+    </>
+  );
+
+  if (embedded) return content;
+
+  return (
+    <div style={{ padding: 'var(--pad-y) var(--pad-x) var(--pad-b)' }}>
+      {content}
     </div>
   );
 }
