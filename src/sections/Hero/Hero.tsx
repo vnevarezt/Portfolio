@@ -9,11 +9,12 @@ interface HeroProps {
 export function Hero({ onNavigate }: HeroProps) {
   return (
     <div
+      className="hero-root"
       style={{
-        minHeight: '100%',
+        minHeight: 'calc(100dvh - var(--topbar-h) - var(--bottomnav-h) - env(safe-area-inset-bottom, 0px))',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         padding: 'clamp(40px, 7vw, 72px) var(--pad-x)',
         position: 'relative',
         overflow: 'hidden',
@@ -35,54 +36,67 @@ export function Hero({ onNavigate }: HeroProps) {
         }}
       />
 
-      <div style={{ position: 'relative', zIndex: 1, maxWidth: 'min(820px, 100%)' }}>
-        {/* Availability row */}
-        <div
-          className="hl"
+      {/* Zone 1 — Availability (top) */}
+      <div className="hl hero-avail">
+        {/* Pill AVAILABLE — same pattern as Experience NOW + Contact featured */}
+        <span
+          className="m accent-surface"
           style={{
-            display: 'flex',
+            fontSize: 'var(--fs-9)',
+            padding: '3px 9px',
+            borderRadius: 999,
+            letterSpacing: '0.14em',
+            textTransform: 'uppercase',
+            display: 'inline-flex',
             alignItems: 'center',
-            gap: 14,
-            marginBottom: 'clamp(24px, 4vw, 40px)',
-            flexWrap: 'wrap',
+            gap: 6,
           }}
         >
-          <span style={{ position: 'relative', display: 'flex', width: 10, height: 10, flexShrink: 0 }}>
-            <span
-              style={{
-                position: 'absolute',
-                inset: 0,
-                borderRadius: '50%',
-                background: 'var(--ac)',
-              }}
-            />
+          <span
+            style={{
+              position: 'relative',
+              display: 'inline-block',
+              width: 6,
+              height: 6,
+              borderRadius: '50%',
+              background: 'var(--ac-f)',
+            }}
+          >
             <span
               style={{
                 position: 'absolute',
                 inset: -4,
                 borderRadius: '50%',
-                background: 'var(--ac)',
+                background: 'var(--ac-f)',
                 opacity: 0.3,
-                animation: 'pulse 2s ease-in-out infinite',
+                animation: 'pulse 1.8s ease-in-out infinite',
               }}
             />
           </span>
-          <span
-            className="m"
-            style={{
-              fontSize: 'var(--fs-11)',
-              color: 'var(--fg-m)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.2em',
-            }}
-          >
-            Available for work · Spring 2026
-          </span>
-          <span style={{ flex: 1, height: 1, background: 'var(--br)', maxWidth: 180, minWidth: 20 }} />
-          <Clock />
-        </div>
+          Available
+        </span>
 
-        {/* Name */}
+        <span
+          className="m"
+          style={{
+            fontSize: 'var(--fs-11)',
+            color: 'var(--fg-m)',
+            letterSpacing: '0.14em',
+            textTransform: 'uppercase',
+          }}
+        >
+          Spring 2026 · remote
+        </span>
+
+        <span
+          className="hero-avail-sep"
+          style={{ flex: 1, height: 1, background: 'var(--br)', maxWidth: 180, minWidth: 20 }}
+        />
+        <Clock />
+      </div>
+
+      {/* Zone 2 — Name + subtitle + CTAs (center) */}
+      <div style={{ position: 'relative', zIndex: 1, maxWidth: 'min(820px, 100%)' }}>
         <h1
           className="d hl"
           style={{
@@ -98,7 +112,6 @@ export function Hero({ onNavigate }: HeroProps) {
           Nevárez<span style={{ color: 'var(--ac)' }}>.</span>
         </h1>
 
-        {/* Subtitle */}
         <p
           className="hl"
           style={{
@@ -110,11 +123,10 @@ export function Hero({ onNavigate }: HeroProps) {
           }}
         >
           Developer & interface designer — turning complex ideas into{' '}
-          <span style={{ color: 'var(--fg)' }}>calm, intuitive software</span>.
+          <em style={{ color: 'var(--ac)', fontStyle: 'italic' }}>calm, intuitive software</em>.
         </p>
 
-        {/* CTA buttons */}
-        <div className="hl" style={{ display: 'flex', gap: 10, marginTop: 'clamp(20px, 3vw, 32px)', flexWrap: 'wrap' }}>
+        <div className="hl hero-ctas" style={{ marginTop: 'clamp(20px, 3vw, 32px)' }}>
           <button className="btn p" onClick={() => onNavigate?.('Contact')}>
             Get in touch <ArrowIcon size={13} />
           </button>
@@ -125,28 +137,29 @@ export function Hero({ onNavigate }: HeroProps) {
             CV <DownloadIcon size={13} />
           </a>
         </div>
+      </div>
 
-        {/* Spec rail */}
-        <dl
-          className="hl"
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: 'clamp(14px, 2vw, 22px) clamp(20px, 4vw, 40px)',
-            marginTop: 'clamp(32px, 5vw, 52px)',
-            paddingTop: 'clamp(14px, 2vw, 22px)',
-            borderTop: '1px solid var(--br)',
-          }}
-        >
-          {(
-            [
-              ['Based', 'Spain · remote'],
-              ['Focus', 'Web · Android'],
-              ['Since', '2018'],
-              ['Stack', 'React · Node'],
-            ] as const
-          ).map(([k, v]) => (
-            <div key={k}>
+      {/* Zone 3 — Spec rail (bottom) */}
+      <dl className="hl hero-spec">
+        {(
+          [
+            ['Based', 'Mexico · remote'],
+            ['Focus', 'Web · Android'],
+            ['Since', '2018'],
+            ['Stack', 'React · Node'],
+          ] as const
+        ).map(([k, v], i) => (
+          <div key={k} className="hero-spec-item">
+            <div
+              className="hero-spec-head"
+              style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 4 }}
+            >
+              <span
+                className="m"
+                style={{ fontSize: 'var(--fs-9)', color: 'var(--ac)', letterSpacing: '0.12em' }}
+              >
+                0{i + 1}
+              </span>
               <dt
                 className="m"
                 style={{
@@ -154,18 +167,18 @@ export function Hero({ onNavigate }: HeroProps) {
                   color: 'var(--fg-d)',
                   textTransform: 'uppercase',
                   letterSpacing: '0.18em',
-                  marginBottom: 4,
+                  margin: 0,
                 }}
               >
                 {k}
               </dt>
-              <dd className="m" style={{ margin: 0, fontSize: 'var(--fs-12)', color: 'var(--fg-m)' }}>
-                {v}
-              </dd>
             </div>
-          ))}
-        </dl>
-      </div>
+            <dd className="m" style={{ margin: 0, fontSize: 'var(--fs-12)', color: 'var(--fg-m)' }}>
+              {v}
+            </dd>
+          </div>
+        ))}
+      </dl>
     </div>
   );
 }

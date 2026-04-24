@@ -21,7 +21,7 @@ export function MobileIdentityCard() {
         background: 'color-mix(in oklab, var(--bg) 88%, transparent)',
         backdropFilter: 'blur(14px)',
         WebkitBackdropFilter: 'blur(14px)',
-        borderBottom: '1px solid var(--br)',
+        boxShadow: 'inset 0 -1px 0 var(--br)',
       }}
     >
       {/* Collapsed row — always visible */}

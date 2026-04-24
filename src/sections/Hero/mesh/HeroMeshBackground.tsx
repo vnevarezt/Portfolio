@@ -79,8 +79,14 @@ export function HeroMeshBackground() {
     const getProfile = (currentQuality: HeroMeshQuality) => {
       const profileBase = HERO_MESH_PROFILES[currentQuality];
 
+      // Viewport-proportional spacing: anchored at 1024px reference width.
+      // Smaller viewports get tighter cells so the grid keeps a consistent
+      // visual density across desktop, tablet and mobile.
+      const viewportScale = width > 0 ? clamp(width / 1024, 0.55, 1.3) : 1;
+      const spacing = Math.max(22, Math.round(profileBase.spacing * viewportScale));
+
       return {
-        spacing: Math.round(profileBase.spacing / qualityScale),
+        spacing,
         maxFps: Math.round(profileBase.maxFps * qualityScale),
         pointerRadius: profileBase.pointerRadius * qualityScale,
         pointerStrength: profileBase.pointerStrength * qualityScale * visual.pointerStrengthMultiplier,
@@ -210,6 +216,8 @@ export function HeroMeshBackground() {
       const rect = host.getBoundingClientRect();
       width = Math.max(1, Math.floor(rect.width));
       height = Math.max(1, Math.floor(rect.height));
+
+      profile = getProfile(quality);
 
       const dpr = clamp(window.devicePixelRatio || 1, 1, HERO_MESH_DEVICE_BUDGET.maxDevicePixelRatio);
       canvas.width = Math.floor(width * dpr);

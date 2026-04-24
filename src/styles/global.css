@@ -260,6 +260,79 @@ button {
   }
 }
 
+/* ── HERO DENSIFICATION ─────────────────────────────────────── */
+.hero-avail {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.hero-ctas {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.hero-spec {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(14px, 2vw, 22px) clamp(20px, 4vw, 40px);
+  padding-top: clamp(14px, 2vw, 22px);
+  border-top: 1px solid var(--br);
+  margin: 0;
+}
+
+/* Mobile: pack zones into cards, stack CTAs full-width, spec as 2×2 grid */
+@media (max-width: 600px) {
+  .hero-root {
+    padding: clamp(24px, 6vw, 40px) var(--pad-x);
+    gap: clamp(20px, 5vw, 32px);
+  }
+
+  .hero-avail {
+    background: var(--bg-c);
+    border: 1px solid var(--br);
+    border-radius: var(--card-radius);
+    padding: 12px 14px;
+    gap: 10px;
+  }
+  .hero-avail-sep {
+    display: none;
+  }
+
+  .hero-ctas {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .hero-ctas > * {
+    width: 100%;
+    justify-content: center;
+    min-height: 46px;
+  }
+
+  .hero-spec {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    border-top: none;
+    padding-top: 0;
+  }
+  .hero-spec-item {
+    background: var(--bg-c);
+    border: 1px solid var(--br);
+    border-radius: var(--card-radius);
+    padding: var(--space-4);
+  }
+}
+
 /* ── KEYFRAMES ─────────────────────────────────────────────── */
 @keyframes in {
   from {
