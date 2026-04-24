@@ -15,7 +15,7 @@ const PANELS: Record<string, (props: { onTabChange: (tab: string) => void }) => 
   Home: ({ onTabChange }) => <Hero onNavigate={onTabChange} />,
   About: () => <About />,
   Work: () => <Work />,
-  Experience: () => <Experience />,
+  Career: () => <Experience />,
   Writing: () => <Writing />,
   Contact: () => <Contact />,
 };
@@ -30,7 +30,7 @@ export function MainPanel({ activeTab, onTabChange }: MainPanelProps) {
         flex: 1,
         overflow: 'auto',
         background: 'var(--bg)',
-        animation: 'in .45s cubic-bezier(.16,1,.3,1)',
+        animation: 'in 0.2s ease-out',
       }}
     >
       {/* Sticky header — only on non-Home tabs, hidden on mobile via CSS */}

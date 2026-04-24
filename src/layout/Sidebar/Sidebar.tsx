@@ -6,7 +6,7 @@ interface SidebarProps {
   onTabChange: (tab: string) => void;
 }
 
-const TABS = ['Home', 'About', 'Work', 'Experience', 'Writing', 'Contact'];
+const TABS = ['Home', 'About', 'Work', 'Career', 'Writing', 'Contact'];
 
 const SOCIALS = [
   { icon: <GitHubIcon size={14} />, label: 'GitHub' },

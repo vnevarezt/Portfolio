@@ -36,7 +36,7 @@ export function Hero({ onNavigate }: HeroProps) {
       />
 
       {/* Zone 1 — Availability (top) */}
-      <div className="hl hero-avail">
+      <div className="hero-avail">
         {/* Pill AVAILABLE — same pattern as Experience NOW + Contact featured */}
         <span
           className="m accent-surface"
@@ -97,7 +97,7 @@ export function Hero({ onNavigate }: HeroProps) {
       {/* Zone 2 — Name + subtitle + CTAs (center) */}
       <div style={{ position: 'relative', zIndex: 1, maxWidth: 'min(820px, 100%)' }}>
         <h1
-          className="d hl"
+          className="d"
           style={{
             fontSize: 'var(--fs-hero)',
             fontWeight: 500,
@@ -112,7 +112,6 @@ export function Hero({ onNavigate }: HeroProps) {
         </h1>
 
         <p
-          className="hl"
           style={{
             fontSize: 'clamp(14px, 1.3vw, 18px)',
             color: 'var(--fg-m)',
@@ -125,7 +124,7 @@ export function Hero({ onNavigate }: HeroProps) {
           <em style={{ color: 'var(--ac)', fontStyle: 'italic' }}>calm, intuitive software</em>.
         </p>
 
-        <div className="hl hero-ctas" style={{ marginTop: 'clamp(20px, 3vw, 32px)' }}>
+        <div className="hero-ctas" style={{ marginTop: 'clamp(20px, 3vw, 32px)' }}>
           <button className="btn p" onClick={() => onNavigate?.('Contact')}>
             Get in touch <ArrowIcon size={13} />
           </button>
@@ -139,7 +138,7 @@ export function Hero({ onNavigate }: HeroProps) {
       </div>
 
       {/* Zone 3 — Spec rail (bottom) */}
-      <dl className="hl hero-spec">
+      <dl className="hero-spec">
         {(
           [
             ['Based', 'Mexico · remote'],

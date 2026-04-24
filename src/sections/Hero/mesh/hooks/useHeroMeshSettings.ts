@@ -38,16 +38,8 @@ export function useHeroMeshSettings(): HeroMeshSettings {
     const coarse = hasCoarsePointer();
     const lowPower = detectLowPowerDevice();
 
-    if (reducedMotion || (coarse && lowPower)) {
-      return {
-        mode: 'static',
-        quality: 'low',
-        prefersReducedMotion: reducedMotion,
-        lowPowerDevice: lowPower,
-      };
-    }
-
-    if (coarse) {
+    // Touch or reduced-motion: light mode keeps particles but skips pointer tracking.
+    if (reducedMotion || coarse) {
       return {
         mode: 'light',
         quality: lowPower ? 'low' : 'medium',

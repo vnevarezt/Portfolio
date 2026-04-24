@@ -1,16 +1,13 @@
 import { useState } from 'react';
-import { useReveal } from '@/hooks/useReveal';
 import { ProjectMark } from '@/components/marks/ProjectMark';
 import { PROJECTS, PROJECT_CATEGORIES } from '@/data/projects';
 import type { Project } from '@/types';
 
-function ProjMini({ p, delay = 0 }: { p: Project; delay?: number }) {
-  const [ref, visible] = useReveal();
+function ProjMini({ p }: { p: Project }) {
   const [hover, setHover] = useState(false);
 
   return (
     <article
-      ref={ref}
       className="card"
       style={{
         padding: 'var(--space-3)',
@@ -19,9 +16,8 @@ function ProjMini({ p, delay = 0 }: { p: Project; delay?: number }) {
         gap: 10,
         cursor: 'pointer',
         borderColor: hover ? 'var(--ac)' : 'var(--br)',
-        opacity: visible ? 1 : 0,
-        transform: visible ? (hover ? 'translateY(-3px)' : 'none') : 'translateY(20px)',
-        transition: `opacity .6s ${delay}s ease, transform .6s ${delay}s ease, border-color .2s`,
+        transform: hover ? 'translateY(-3px)' : 'none',
+        transition: 'transform .2s ease, border-color .2s',
         boxShadow: hover ? '0 6px 24px oklch(50% 0.1 130 / 0.12)' : 'none',
       }}
       onMouseEnter={() => setHover(true)}
@@ -163,8 +159,8 @@ export function Work() {
           gap: 12,
         }}
       >
-        {list.slice(0, 6).map((p, i) => (
-          <ProjMini key={p.title} p={p} delay={i * 0.04} />
+        {list.slice(0, 6).map((p) => (
+          <ProjMini key={p.title} p={p} />
         ))}
       </div>
     </div>
