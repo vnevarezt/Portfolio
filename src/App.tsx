@@ -20,16 +20,19 @@ function Portfolio() {
     return (
       <div
         style={{
-          minHeight: '100dvh',
+          height: '100dvh',
           display: 'flex',
           flexDirection: 'column',
           background: 'var(--bg)',
+          overflow: 'hidden',
         }}
       >
         <div
           style={{
             flex: 1,
-            overflow: 'auto',
+            minHeight: 0,
+            overflow: 'hidden',
+            overscrollBehaviorY: 'contain',
             paddingTop: 'env(safe-area-inset-top, 0px)',
             paddingBottom: 'calc(var(--bottomnav-h) + env(safe-area-inset-bottom, 0px))',
           }}
