@@ -17,13 +17,15 @@ export function About() {
       </h2>
 
       <p style={{ fontSize: 'var(--fs-17)', lineHeight: 1.6, color: 'var(--fg)', margin: 0, maxWidth: 680 }}>
-        I'm <span style={{ color: 'var(--ac)' }}>Vicente</span> — a.k.a. VicentCodes. Building for
-        the web since 2018, with a soft spot for Android, interface design, and the tiny details
-        users never notice but always feel.
+        I&apos;m <span style={{ color: 'var(--ac)' }}>Vicente</span>, a Computer Engineer focused on
+        building useful digital products with clean interfaces, solid architecture, and a clear
+        user-first mindset.
       </p>
       <p style={{ fontSize: 'var(--fs-14)', lineHeight: 1.65, marginTop: 14, color: 'var(--fg-m)', maxWidth: 680 }}>
-        Computer engineering student, freelance developer, and permanent student of good design. My
-        goal: turn complex ideas into simple, beautiful, intuitive software.
+        I enjoy moving between mobile apps, web platforms, backend APIs, and data-driven features.
+        I care about solving real problems, writing maintainable code, and collaborating with teams
+        that value ownership, clarity, and continuous learning. I&apos;m especially drawn to crafting
+        high-quality interface design that feels clear, consistent, and purposeful.
       </p>
 
       <div
@@ -35,10 +37,10 @@ export function About() {
         }}
       >
         {[
-          { t: 'Web Development', d: 'React, Node, Astro.' },
-          { t: 'Android Apps', d: 'Kotlin & Compose.' },
-          { t: 'Interface Design', d: 'Figma to production.' },
-          { t: 'Desktop Tools', d: 'Electron, Tauri.' },
+          { t: 'Product Mindset', d: 'Technology decisions based on impact and usability.' },
+          { t: 'Mobile, Web & UI Design', d: 'Flutter, React, and polished interface systems with strong UX quality.' },
+          { t: 'Backend Engineering', d: 'Node.js, TypeScript, API design, and integrations.' },
+          { t: 'Data & Cloud', d: 'Firebase, SQL, and AWS-connected service workflows.' },
         ].map((s, i) => (
           <div key={i} className="card" style={{ padding: 'var(--space-4)' }}>
             <div className="d" style={{ fontSize: 'var(--fs-14)', fontWeight: 500, marginBottom: 4 }}>
