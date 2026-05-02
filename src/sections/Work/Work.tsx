@@ -1,32 +1,51 @@
 import { useState } from 'react';
 import { ProjectMark } from '@/components/marks/ProjectMark';
+import { DEFAULT_PROJECT_DETAIL_MOCK, PROJECT_DETAILS_MOCK } from '@/data/projectDetails.mock';
 import { PROJECTS, PROJECT_CATEGORIES } from '@/data/projects';
 import { Writing } from '@/sections/Writing/Writing';
+import { WorkProjectDetail } from '@/sections/Work/WorkProjectDetail';
 import type { Project } from '@/types';
 
-function ProjMini({ p }: { p: Project }) {
+interface ProjMiniProps {
+  p: Project;
+  onOpen: (project: Project) => void;
+}
+
+function ProjMini({ p, onOpen }: ProjMiniProps) {
   const [hover, setHover] = useState(false);
+  const visibleStack = p.stack.slice(0, 3);
+  const hiddenStackCount = Math.max(p.stack.length - visibleStack.length, 0);
 
   return (
     <article
       className="card"
       style={{
-        padding: 'var(--space-3)',
+        padding: 'var(--space-2)',
         display: 'flex',
         flexDirection: 'column',
-        gap: 10,
+        gap: 8,
         cursor: 'pointer',
         borderColor: hover ? 'var(--ac)' : 'var(--br)',
-        transform: hover ? 'translateY(-3px)' : 'none',
+        transform: hover ? 'translateY(-2px)' : 'none',
         transition: 'transform .2s ease, border-color .2s',
-        boxShadow: hover ? '0 6px 24px oklch(50% 0.1 130 / 0.12)' : 'none',
+        boxShadow: hover ? '0 5px 18px oklch(50% 0.1 130 / 0.1)' : 'none',
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={`Open project detail for ${p.title}`}
+      onClick={() => onOpen(p)}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          onOpen(p);
+        }
       }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
       <div
         style={{
-          aspectRatio: '16 / 9',
+          aspectRatio: '2 / 1',
           borderRadius: 'calc(var(--card-radius) - 4px)',
           overflow: 'hidden',
           border: '1px solid var(--br)',
@@ -45,7 +64,7 @@ function ProjMini({ p }: { p: Project }) {
         <h3
           className="d"
           style={{
-            fontSize: 'var(--fs-15)',
+            fontSize: 'var(--fs-14)',
             fontWeight: 500,
             letterSpacing: '-0.02em',
             margin: 0,
@@ -62,9 +81,22 @@ function ProjMini({ p }: { p: Project }) {
           {p.year}
         </span>
       </div>
-      <p style={{ fontSize: 'var(--fs-12)', lineHeight: 1.5, margin: 0, color: 'var(--fg-m)' }}>{p.desc}</p>
+      <p
+        style={{
+          fontSize: 'var(--fs-12)',
+          lineHeight: 1.45,
+          margin: 0,
+          color: 'var(--fg-m)',
+          display: '-webkit-box',
+          WebkitLineClamp: 2,
+          WebkitBoxOrient: 'vertical',
+          overflow: 'hidden',
+        }}
+      >
+        {p.desc}
+      </p>
       <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
-        {p.stack.map((s) => (
+        {visibleStack.map((s) => (
           <span
             key={s}
             className="m"
@@ -79,6 +111,20 @@ function ProjMini({ p }: { p: Project }) {
             {s}
           </span>
         ))}
+        {hiddenStackCount > 0 && (
+          <span
+            className="m"
+            style={{
+              fontSize: 'var(--fs-9)',
+              padding: '2px 7px',
+              borderRadius: 4,
+              border: '1px solid var(--br)',
+              color: 'var(--fg-d)',
+            }}
+          >
+            +{hiddenStackCount}
+          </span>
+        )}
       </div>
     </article>
   );
@@ -87,6 +133,7 @@ function ProjMini({ p }: { p: Project }) {
 export function Work() {
   const [view, setView] = useState<'projects' | 'writing'>('projects');
   const [filter, setFilter] = useState('All');
+  const [activeProject, setActiveProject] = useState<Project | null>(null);
   const list = PROJECTS.filter((p) => filter === 'All' || p.cat.includes(filter));
 
   return (
@@ -202,17 +249,25 @@ export function Work() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-              gap: 12,
+              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+              gap: 10,
             }}
           >
             {list.slice(0, 6).map((p) => (
-              <ProjMini key={p.title} p={p} />
+              <ProjMini key={p.title} p={p} onOpen={setActiveProject} />
             ))}
           </div>
         </>
       ) : (
         <Writing embedded />
+      )}
+
+      {activeProject && (
+        <WorkProjectDetail
+          project={activeProject}
+          detail={PROJECT_DETAILS_MOCK[activeProject.title] ?? DEFAULT_PROJECT_DETAIL_MOCK}
+          onClose={() => setActiveProject(null)}
+        />
       )}
     </div>
   );
