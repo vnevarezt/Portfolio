@@ -30,14 +30,14 @@
 .dialog {
   position: relative;
   z-index: 1;
-  width: min(1040px, 100%);
+  width: min(1180px, 100%);
   max-height: 94dvh;
   background: var(--bg-c);
   border: 1px solid var(--br);
   border-radius: 14px;
   overflow: hidden;
   display: grid;
-  grid-template-columns: 320px 1fr;
+  grid-template-columns: 280px 1fr;
   grid-template-rows: 1fr auto;
 }
 
@@ -45,10 +45,10 @@
   grid-row: 1 / 3;
   background: var(--bg);
   border-right: 1px solid var(--br);
-  padding: 28px;
+  padding: 24px 22px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
   overflow: auto;
 }
 
@@ -67,7 +67,7 @@
 
 .title {
   margin: 0;
-  font-size: var(--fs-36);
+  font-size: var(--fs-28);
   font-weight: 500;
   letter-spacing: -0.025em;
   line-height: 1.1;
@@ -161,8 +161,15 @@
 .rightBody {
   position: relative;
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: auto 1fr auto;
   min-height: 0;
+}
+
+.heroWrap {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-e);
+  border-bottom: 1px solid var(--br);
 }
 
 .closeFloating {
@@ -198,26 +205,79 @@
 
 .contentScroll {
   overflow: auto;
-  padding: 28px 32px;
+  padding: 26px 26px 24px;
   display: flex;
   flex-direction: column;
-  gap: 26px;
+  gap: 22px;
 }
 
 .heroShotFrame {
   position: relative;
-  aspect-ratio: 16 / 9;
+  width: 100%;
+  height: clamp(360px, 46dvh, 480px);
   overflow: hidden;
-  border-radius: 10px;
-  border: 1px solid var(--br);
   background: var(--bg-e);
+  cursor: zoom-in;
+  isolation: isolate;
 }
 
-.shotImage {
+.heroShotBackdrop {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  filter: blur(28px) saturate(1.1) brightness(0.7);
+  transform: scale(1.15);
+  opacity: 0.55;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.shotImage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   display: block;
+  z-index: 1;
+}
+
+.heroShotButton {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  background: transparent;
+  appearance: none;
+  cursor: zoom-in;
+  z-index: 2;
+}
+
+.heroShotButton:focus-visible {
+  outline: 2px solid var(--ac);
+  outline-offset: -2px;
+  border-radius: 10px;
+}
+
+.zoomHint {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  background: color-mix(in oklab, var(--bg) 82%, transparent);
+  backdrop-filter: blur(6px);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: var(--fs-11);
+  color: var(--fg-m);
+  letter-spacing: 0.1em;
+  pointer-events: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-m);
+  text-transform: uppercase;
+  z-index: 3;
 }
 
 .shotFallback {
@@ -247,6 +307,7 @@
   justify-content: center;
   cursor: pointer;
   transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+  z-index: 3;
 }
 
 .carouselNavBtn:hover:not(:disabled) {
@@ -285,11 +346,16 @@
   font-size: var(--fs-11);
   color: var(--fg-m);
   letter-spacing: 0.1em;
+  z-index: 3;
 }
 
 .thumbStrip {
   display: flex;
   gap: 8px;
+  padding: 10px 22px;
+  background: var(--bg);
+  border-top: 1px solid var(--br);
+  overflow-x: auto;
 }
 
 .thumbBtn {
@@ -327,12 +393,169 @@
   display: block;
 }
 
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background: color-mix(in oklab, var(--bg) 92%, transparent);
+  backdrop-filter: blur(10px);
+  animation: lightboxFade 0.18s ease;
+}
+
+@keyframes lightboxFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.lightboxBackdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  background: transparent;
+  cursor: zoom-out;
+}
+
+.lightboxStage {
+  position: relative;
+  z-index: 1;
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightboxImage {
+  max-width: min(96vw, 1600px);
+  max-height: 90dvh;
+  object-fit: contain;
+  display: block;
+  border-radius: 8px;
+  border: 1px solid var(--br);
+  background: var(--bg-e);
+  box-shadow: 0 24px 60px color-mix(in oklab, #000 40%, transparent);
+}
+
+.lightboxClose {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--br-s);
+  background: color-mix(in oklab, var(--bg-c) 86%, transparent);
+  backdrop-filter: blur(6px);
+  color: var(--fg);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  line-height: 1;
+  transition: background 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+}
+
+.lightboxClose:hover {
+  background: var(--bg-c);
+  border-color: var(--fg-d);
+  transform: scale(1.05);
+}
+
+.lightboxClose:focus-visible {
+  outline: 2px solid var(--ac);
+  outline-offset: 2px;
+}
+
+.lightboxNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  border: 1px solid var(--br-s);
+  background: color-mix(in oklab, var(--bg-c) 86%, transparent);
+  backdrop-filter: blur(6px);
+  color: var(--fg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+
+.lightboxNav:hover:not(:disabled) {
+  background: var(--bg-c);
+  border-color: var(--fg-d);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.lightboxNav:focus-visible {
+  outline: 2px solid var(--ac);
+  outline-offset: 2px;
+}
+
+.lightboxNav:disabled {
+  color: var(--fg-d);
+  cursor: default;
+  opacity: 0.4;
+}
+
+.lightboxPrev {
+  left: 24px;
+}
+
+.lightboxNext {
+  right: 24px;
+}
+
+.lightboxCounter {
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  background: color-mix(in oklab, var(--bg-c) 86%, transparent);
+  backdrop-filter: blur(6px);
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--br-s);
+  font-family: var(--font-m);
+  font-size: var(--fs-11);
+  color: var(--fg-m);
+  letter-spacing: 0.14em;
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .lightbox {
+    padding: 12px;
+  }
+  .lightboxImage {
+    max-height: 82dvh;
+  }
+  .lightboxNav {
+    width: 40px;
+    height: 40px;
+  }
+  .lightboxPrev {
+    left: 8px;
+  }
+  .lightboxNext {
+    right: 8px;
+  }
+}
+
 .narrative {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding-top: 4px;
-  max-width: 68ch;
+  gap: 22px;
+  padding-top: 2px;
 }
 
 .caseText {
@@ -447,8 +670,12 @@
 
 .mobileShotFrame {
   position: relative;
-  aspect-ratio: 4 / 3;
+  width: 100%;
+  height: clamp(360px, 60dvh, 560px);
   overflow: hidden;
+  background: var(--bg-e);
+  cursor: zoom-in;
+  isolation: isolate;
 }
 
 .mobileNavBtn {
@@ -467,6 +694,7 @@
   font-size: var(--fs-11);
   color: var(--fg-m);
   letter-spacing: 0.1em;
+  z-index: 3;
 }
 
 .mobileDots {
@@ -475,6 +703,7 @@
   bottom: 14px;
   display: flex;
   gap: 5px;
+  z-index: 3;
 }
 
 .mobileDot {
@@ -576,6 +805,16 @@
   justify-content: center;
   padding: 12px 14px;
   font-size: var(--fs-13);
+}
+
+@media (max-width: 980px) and (min-width: 769px) {
+  .dialog {
+    grid-template-columns: 240px 1fr;
+  }
+
+  .heroShotFrame {
+    height: clamp(320px, 40dvh, 420px);
+  }
 }
 
 @media (max-width: 768px) {

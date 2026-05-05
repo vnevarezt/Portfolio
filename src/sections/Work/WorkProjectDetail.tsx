@@ -17,16 +17,22 @@ export function WorkProjectDetail({ project, detail, onClose }: WorkProjectDetai
   const screenshots = useMemo(() => detail.screenshots.filter(Boolean), [detail.screenshots]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [mobileTab, setMobileTab] = useState<'case' | 'snapshot' | 'metrics'>('case');
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   useEffect(() => {
     setCurrentIndex(0);
     setMobileTab('case');
+    setLightboxOpen(false);
   }, [project.title]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        onClose();
+        if (lightboxOpen) {
+          setLightboxOpen(false);
+        } else {
+          onClose();
+        }
       }
       if (!screenshots.length) return;
       if (event.key === 'ArrowLeft') {
@@ -39,7 +45,7 @@ export function WorkProjectDetail({ project, detail, onClose }: WorkProjectDetai
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [onClose, screenshots.length]);
+  }, [onClose, screenshots.length, lightboxOpen]);
 
   const canNavigate = screenshots.length > 1;
   const activeScreenshot = screenshots[currentIndex] ?? screenshots[0] ?? '';
@@ -52,6 +58,10 @@ export function WorkProjectDetail({ project, detail, onClose }: WorkProjectDetai
   const goNext = () => {
     if (!canNavigate) return;
     setCurrentIndex((prev) => (prev + 1) % screenshots.length);
+  };
+
+  const openLightbox = () => {
+    if (activeScreenshot) setLightboxOpen(true);
   };
 
   return (
@@ -74,6 +84,7 @@ export function WorkProjectDetail({ project, detail, onClose }: WorkProjectDetai
             onClose={onClose}
             tab={mobileTab}
             onTabChange={setMobileTab}
+            onOpenLightbox={openLightbox}
           />
         ) : (
           <DesktopLayout
@@ -87,9 +98,66 @@ export function WorkProjectDetail({ project, detail, onClose }: WorkProjectDetai
             goNext={goNext}
             goPrevious={goPrevious}
             activeScreenshot={activeScreenshot}
+            onOpenLightbox={openLightbox}
           />
         )}
       </article>
+
+      {lightboxOpen && activeScreenshot && (
+        <Lightbox
+          src={activeScreenshot}
+          index={currentIndex}
+          total={screenshots.length}
+          canNavigate={canNavigate}
+          onClose={() => setLightboxOpen(false)}
+          onPrev={goPrevious}
+          onNext={goNext}
+        />
+      )}
+    </div>
+  );
+}
+
+function Lightbox({
+  src,
+  index,
+  total,
+  canNavigate,
+  onClose,
+  onPrev,
+  onNext,
+}: {
+  src: string;
+  index: number;
+  total: number;
+  canNavigate: boolean;
+  onClose: () => void;
+  onPrev: () => void;
+  onNext: () => void;
+}) {
+  return (
+    <div role="dialog" aria-modal="true" aria-label="Image preview" className={styles.lightbox}>
+      <button type="button" aria-label="Close image preview" onClick={onClose} className={styles.lightboxBackdrop} />
+
+      <button type="button" onClick={onPrev} disabled={!canNavigate} aria-label="Previous screenshot" className={`${styles.lightboxNav} ${styles.lightboxPrev}`}>
+        <span style={{ transform: 'rotate(180deg)', display: 'inline-flex' }}>
+          <ChevronRightIcon size={18} />
+        </span>
+      </button>
+
+      <div className={styles.lightboxStage}>
+        <img src={src} alt={`Screenshot ${index + 1}`} className={styles.lightboxImage} />
+      </div>
+
+      <button type="button" onClick={onNext} disabled={!canNavigate} aria-label="Next screenshot" className={`${styles.lightboxNav} ${styles.lightboxNext}`}>
+        <ChevronRightIcon size={18} />
+      </button>
+
+      <button type="button" onClick={onClose} className={styles.lightboxClose} aria-label="Close image preview">
+        ×
+      </button>
+
+      {total > 0 && <div className={styles.lightboxCounter}>{`${index + 1} / ${total}`}</div>}
     </div>
   );
 }
@@ -113,12 +181,14 @@ function DesktopLayout({
   goNext,
   goPrevious,
   activeScreenshot,
+  onOpenLightbox,
 }: DetailLayoutProps & {
   onClose: () => void;
   canNavigate: boolean;
   goNext: () => void;
   goPrevious: () => void;
   activeScreenshot: string;
+  onOpenLightbox: () => void;
 }) {
   return (
     <>
@@ -184,10 +254,19 @@ function DesktopLayout({
           ×
         </button>
 
-        <div className={styles.contentScroll}>
+        <div className={styles.heroWrap}>
           <div className={styles.heroShotFrame}>
             {activeScreenshot ? (
-              <img src={activeScreenshot} alt={`Project screenshot ${currentIndex + 1}`} loading="lazy" className={styles.shotImage} />
+              <>
+                <img src={activeScreenshot} alt="" aria-hidden="true" className={styles.heroShotBackdrop} />
+                <img src={activeScreenshot} alt={`Project screenshot ${currentIndex + 1}`} className={styles.shotImage} />
+                <button
+                  type="button"
+                  onClick={onOpenLightbox}
+                  className={styles.heroShotButton}
+                  aria-label="Open image preview"
+                />
+              </>
             ) : (
               <div className={styles.shotFallback}>NO IMAGE</div>
             )}
@@ -203,16 +282,21 @@ function DesktopLayout({
             </button>
 
             <div className={`m ${styles.counterPill}`}>{screenshots.length ? `${currentIndex + 1} / ${screenshots.length}` : '0 / 0'}</div>
+            {activeScreenshot && <div className={styles.zoomHint}>Click to expand</div>}
           </div>
 
-          <div className={styles.thumbStrip}>
-            {screenshots.map((src, index) => (
-              <button key={`${src}-${index}`} type="button" onClick={() => setCurrentIndex(index)} className={`${styles.thumbBtn} ${index === currentIndex ? styles.thumbBtnActive : ''}`} aria-label={`Go to screenshot ${index + 1}`}>
-                <img src={src} alt={`Screenshot thumbnail ${index + 1}`} loading="lazy" className={styles.thumbImage} />
-              </button>
-            ))}
-          </div>
+          {screenshots.length > 1 && (
+            <div className={styles.thumbStrip}>
+              {screenshots.map((src, index) => (
+                <button key={`${src}-${index}`} type="button" onClick={() => setCurrentIndex(index)} className={`${styles.thumbBtn} ${index === currentIndex ? styles.thumbBtnActive : ''}`} aria-label={`Go to screenshot ${index + 1}`}>
+                  <img src={src} alt={`Screenshot thumbnail ${index + 1}`} loading="lazy" className={styles.thumbImage} />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
+        <div className={styles.contentScroll}>
           <div className={styles.narrative}>
             <CaseText title="Challenge" body={detail.challenge} />
             <CaseText title="Approach" body={detail.approach} />
@@ -233,20 +317,25 @@ function DesktopLayout({
         <footer className={styles.footerDesktop}>
           <div className={`m ${styles.footerHint}`}>ESC TO CLOSE · ← → NAV</div>
           <div className={styles.links}>
-            {detail.links.map((linkItem, i) => (
-              <a
-                key={linkItem.label}
-                href={linkItem.href}
-                className={`btn ${i === detail.links.length - 1 ? 'p' : ''}`}
-                onClick={(event) => {
-                  if (linkItem.href === '#') {
-                    event.preventDefault();
-                  }
-                }}
-              >
-                {linkItem.label} <ArrowIcon size={12} />
-              </a>
-            ))}
+            {detail.links.map((linkItem, i) => {
+              const isExternal = linkItem.href !== '#' && /^https?:\/\//.test(linkItem.href);
+              return (
+                <a
+                  key={linkItem.label}
+                  href={linkItem.href}
+                  className={`btn ${i === detail.links.length - 1 ? 'p' : ''}`}
+                  target={isExternal ? '_blank' : undefined}
+                  rel={isExternal ? 'noopener noreferrer' : undefined}
+                  onClick={(event) => {
+                    if (linkItem.href === '#') {
+                      event.preventDefault();
+                    }
+                  }}
+                >
+                  {linkItem.label} <ArrowIcon size={12} />
+                </a>
+              );
+            })}
           </div>
         </footer>
       </div>
@@ -263,10 +352,12 @@ function MobileLayout({
   onClose,
   tab,
   onTabChange,
+  onOpenLightbox,
 }: DetailLayoutProps & {
   onClose: () => void;
   tab: 'case' | 'snapshot' | 'metrics';
   onTabChange: (tab: 'case' | 'snapshot' | 'metrics') => void;
+  onOpenLightbox: () => void;
 }) {
   const canNavigate = screenshots.length > 1;
   const activeScreenshot = screenshots[currentIndex] ?? screenshots[0] ?? '';
@@ -298,7 +389,16 @@ function MobileLayout({
 
         <div className={styles.mobileShotFrame}>
           {activeScreenshot ? (
-            <img src={activeScreenshot} alt={`Project screenshot ${currentIndex + 1}`} loading="lazy" className={styles.shotImage} />
+            <>
+              <img src={activeScreenshot} alt="" aria-hidden="true" className={styles.heroShotBackdrop} />
+              <img src={activeScreenshot} alt={`Project screenshot ${currentIndex + 1}`} className={styles.shotImage} />
+              <button
+                type="button"
+                onClick={onOpenLightbox}
+                className={styles.heroShotButton}
+                aria-label="Open image preview"
+              />
+            </>
           ) : (
             <div className={styles.shotFallback}>NO IMAGE</div>
           )}
@@ -396,20 +496,25 @@ function MobileLayout({
       </div>
 
       <footer className={styles.mobileFooter}>
-        {detail.links.map((linkItem, i) => (
-          <a
-            key={linkItem.label}
-            href={linkItem.href}
-            className={`btn ${i === detail.links.length - 1 ? 'p' : ''}`}
-            onClick={(event) => {
-              if (linkItem.href === '#') {
-                event.preventDefault();
-              }
-            }}
-          >
-            {linkItem.label} <ArrowIcon size={11} />
-          </a>
-        ))}
+        {detail.links.map((linkItem, i) => {
+          const isExternal = linkItem.href !== '#' && /^https?:\/\//.test(linkItem.href);
+          return (
+            <a
+              key={linkItem.label}
+              href={linkItem.href}
+              className={`btn ${i === detail.links.length - 1 ? 'p' : ''}`}
+              target={isExternal ? '_blank' : undefined}
+              rel={isExternal ? 'noopener noreferrer' : undefined}
+              onClick={(event) => {
+                if (linkItem.href === '#') {
+                  event.preventDefault();
+                }
+              }}
+            >
+              {linkItem.label} <ArrowIcon size={11} />
+            </a>
+          );
+        })}
       </footer>
     </div>
   );

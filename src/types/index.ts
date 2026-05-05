@@ -1,6 +1,6 @@
 export type ThemeMode = 'dark' | 'light';
 
-export type ProjectKind = 'vc' | 'lumen' | 'tinta' | 'desk' | 'pal' | 'kaito';
+export type ProjectKind = 'vc' | 'lumen' | 'tinta' | 'desk' | 'pal' | 'kaito' | 'hydro' | 'mine' | 'algeb' | 'zoop';
 export type ServiceKind = 'web' | 'droid' | 'ui' | 'desk';
 export type PostMarkKind = 'auth' | '2fa' | 'android' | 'oklch';
 
