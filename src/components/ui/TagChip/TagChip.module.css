@@ -1,0 +1,9 @@
+.tag {
+  font-size: var(--fs-9);
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--br);
+  color: var(--fg-m);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}

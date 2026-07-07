@@ -83,9 +83,6 @@ body {
   --featured-cols: 1.1fr 1fr;
   --about-grid-cols: repeat(auto-fit, minmax(200px, 1fr));
   --contact-2col: minmax(260px, 1fr) minmax(320px, 1.15fr);
-
-  /* Legacy */
-  --px: 56px;
 }
 
 /* ── LIGHT THEME ───────────────────────────────────────────── */
@@ -107,7 +104,6 @@ body {
     --topbar-h: 0px;
     --bottomnav-h: 76px;
     --main-header-h: 0px;
-    --px: 24px;
     --about-grid-cols: repeat(auto-fit, minmax(160px, 1fr));
     --contact-2col: 1fr;
   }
@@ -145,6 +141,37 @@ button {
   border-radius: var(--card-radius);
 }
 
+/* Interactive card: single hover/focus/press behavior for every
+   clickable card in the app (replaces per-card JS mouse handlers). */
+.card-hover {
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.card-hover:hover,
+.card-hover:focus-visible {
+  border-color: var(--ac);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 18px oklch(50% 0.1 130 / 0.1);
+}
+.card-hover:active {
+  transform: translateY(0);
+}
+.hover-title {
+  transition: color 0.2s ease;
+}
+.card-hover:hover .hover-title,
+.card-hover:focus-visible .hover-title {
+  color: var(--ac);
+}
+
+/* Content swap (view toggles, filter changes, dialog tab panels) */
+.view-fade {
+  animation: in 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -165,6 +192,12 @@ button {
 .btn:hover {
   border-color: var(--ac);
   color: var(--ac);
+}
+.btn:focus-visible,
+.field:focus-visible,
+.card-hover:focus-visible {
+  outline: 2px solid var(--ac);
+  outline-offset: 2px;
 }
 
 @media (pointer: coarse) {
@@ -250,14 +283,24 @@ button {
   }
 }
 
-/* Featured cards (Writing, Contact): deco area shrinks on mobile */
-@media (max-width: 600px) {
-  .featured-deco {
-    min-height: 120px;
-  }
-  .featured-deco .featured-quote {
-    font-size: clamp(48px, 10vw, 88px);
-  }
+/* Square social icon links (Sidebar) */
+.icon-social {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--br);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg-m);
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+.icon-social:hover,
+.icon-social:focus-visible {
+  color: var(--ac);
+  border-color: var(--ac);
 }
 
 /* ── HERO DENSIFICATION ─────────────────────────────────────── */

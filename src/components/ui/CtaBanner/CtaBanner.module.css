@@ -1,0 +1,28 @@
+.banner {
+  margin-top: 36px;
+  padding: var(--space-5) var(--space-6);
+  border: 1px dashed var(--br-s);
+  border-radius: var(--card-radius);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-size: var(--fs-15);
+  font-weight: 500;
+}
+
+.sub {
+  font-size: var(--fs-12);
+  color: var(--fg-m);
+  margin-top: 2px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}

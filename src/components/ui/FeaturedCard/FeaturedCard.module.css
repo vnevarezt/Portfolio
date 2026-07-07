@@ -1,0 +1,83 @@
+.root {
+  display: grid;
+  grid-template-columns: var(--featured-cols);
+  gap: 0;
+  overflow: hidden;
+  color: var(--fg);
+  margin-bottom: 14px;
+  text-align: left;
+  width: 100%;
+}
+
+.deco {
+  position: relative;
+  min-height: 220px;
+  background: oklch(22% 0.08 var(--card-hue) / 0.35);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 22px;
+}
+
+.deco::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 30% 30%,
+    oklch(60% 0.2 var(--card-hue) / 0.18),
+    transparent 60%
+  );
+}
+
+:global([data-theme='light']) .deco {
+  background: oklch(94% 0.04 var(--card-hue) / 0.7);
+}
+
+:global([data-theme='light']) .deco::before {
+  background: radial-gradient(
+    circle at 30% 30%,
+    oklch(70% 0.12 var(--card-hue) / 0.35),
+    transparent 60%
+  );
+}
+
+.pills {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.glyph {
+  position: relative;
+  font-size: 88px;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  font-family: var(--font-d);
+  font-weight: 500;
+  font-style: italic;
+  color: oklch(82% 0.17 var(--card-hue) / 0.9);
+}
+
+:global([data-theme='light']) .glyph {
+  color: oklch(45% 0.15 var(--card-hue) / 0.85);
+}
+
+.content {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+@media (max-width: 600px) {
+  .deco {
+    min-height: 120px;
+  }
+  .glyph {
+    font-size: clamp(48px, 10vw, 88px);
+  }
+}

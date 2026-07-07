@@ -1,0 +1,26 @@
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-9);
+  padding: 3px 9px;
+  border-radius: 999px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.hue {
+  background: oklch(70% 0.18 var(--pill-hue) / 0.14);
+  color: oklch(80% 0.15 var(--pill-hue));
+}
+
+:global([data-theme='light']) .hue {
+  background: oklch(60% 0.15 var(--pill-hue) / 0.14);
+  color: oklch(42% 0.15 var(--pill-hue));
+}
+
+.ghost {
+  padding-inline: 0;
+  color: var(--fg-d);
+}

@@ -1,0 +1,40 @@
+.root {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 3px;
+  background: var(--bg-c);
+  border: 1px solid var(--br);
+  border-radius: 999px;
+  max-width: 100%;
+}
+
+.btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--fg-m);
+  font-family: var(--font-b);
+  font-size: var(--fs-12);
+  cursor: pointer;
+  white-space: nowrap;
+  text-transform: capitalize;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ac);
+  outline-offset: 1px;
+}
+
+.active {
+  font-weight: 500;
+}
+
+.sm .btn {
+  padding: 5px 12px;
+  font-size: var(--fs-11);
+}

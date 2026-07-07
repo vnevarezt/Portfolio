@@ -4,15 +4,25 @@ interface FormFieldProps {
   value: string;
   onChange: (value: string) => void;
   area?: boolean;
+  placeholder?: string;
+  required?: boolean;
 }
 
-export function FormField({ label, type = 'text', value, onChange, area }: FormFieldProps) {
+export function FormField({
+  label,
+  type = 'text',
+  value,
+  onChange,
+  area,
+  placeholder = '…',
+  required,
+}: FormFieldProps) {
   return (
-    <div>
-      <label
+    <label style={{ display: 'block' }}>
+      <span
         className="m"
         style={{
-          fontSize: 9,
+          fontSize: 'var(--fs-9)',
           color: 'var(--fg-d)',
           letterSpacing: '0.14em',
           textTransform: 'uppercase',
@@ -21,14 +31,15 @@ export function FormField({ label, type = 'text', value, onChange, area }: FormF
         }}
       >
         {label}
-      </label>
+      </span>
       {area ? (
         <textarea
           value={value}
           onChange={(e) => onChange(e.target.value)}
           className="field"
-          style={{ height: 80 }}
-          placeholder="Your message..."
+          style={{ minHeight: 80 }}
+          placeholder={placeholder}
+          required={required}
         />
       ) : (
         <input
@@ -36,9 +47,10 @@ export function FormField({ label, type = 'text', value, onChange, area }: FormF
           value={value}
           onChange={(e) => onChange(e.target.value)}
           className="field"
-          placeholder="..."
+          placeholder={placeholder}
+          required={required}
         />
       )}
-    </div>
+    </label>
   );
 }
