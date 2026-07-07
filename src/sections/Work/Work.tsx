@@ -1,10 +1,16 @@
 import { useState } from 'react';
 import { ProjectMark } from '@/components/marks/ProjectMark';
+import { CardButton } from '@/components/ui/CardButton/CardButton';
+import { SectionIntro } from '@/components/ui/SectionIntro/SectionIntro';
+import { SegmentedControl } from '@/components/ui/SegmentedControl/SegmentedControl';
+import { TagChip } from '@/components/ui/TagChip/TagChip';
 import { DEFAULT_PROJECT_DETAIL_MOCK, PROJECT_DETAILS_MOCK } from '@/data/projectDetails.mock';
 import { PROJECTS, PROJECT_CATEGORIES } from '@/data/projects';
 import { Writing } from '@/sections/Writing/Writing';
 import { WorkProjectDetail } from '@/sections/Work/WorkProjectDetail';
 import type { Project } from '@/types';
+
+const MAX_VISIBLE_STACK = 3;
 
 interface ProjMiniProps {
   p: Project;
@@ -12,36 +18,19 @@ interface ProjMiniProps {
 }
 
 function ProjMini({ p, onOpen }: ProjMiniProps) {
-  const [hover, setHover] = useState(false);
-  const visibleStack = p.stack.slice(0, 3);
-  const hiddenStackCount = Math.max(p.stack.length - visibleStack.length, 0);
+  const visibleStack = p.stack.slice(0, MAX_VISIBLE_STACK);
+  const hiddenStackCount = p.stack.length - visibleStack.length;
 
   return (
-    <article
-      className="card"
+    <CardButton
+      onActivate={() => onOpen(p)}
+      ariaLabel={`Open project detail for ${p.title}`}
       style={{
         padding: 'var(--space-2)',
         display: 'flex',
         flexDirection: 'column',
         gap: 8,
-        cursor: 'pointer',
-        borderColor: hover ? 'var(--ac)' : 'var(--br)',
-        transform: hover ? 'translateY(-2px)' : 'none',
-        transition: 'transform .2s ease, border-color .2s',
-        boxShadow: hover ? '0 5px 18px oklch(50% 0.1 130 / 0.1)' : 'none',
       }}
-      role="button"
-      tabIndex={0}
-      aria-label={`Open project detail for ${p.title}`}
-      onClick={() => onOpen(p)}
-      onKeyDown={(event) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault();
-          onOpen(p);
-        }
-      }}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
     >
       <div
         style={{
@@ -53,31 +42,14 @@ function ProjMini({ p, onOpen }: ProjMiniProps) {
       >
         <ProjectMark kind={p.mark} />
       </div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'baseline',
-          gap: 8,
-        }}
-      >
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 8 }}>
         <h3
-          className="d"
-          style={{
-            fontSize: 'var(--fs-14)',
-            fontWeight: 500,
-            letterSpacing: '-0.02em',
-            margin: 0,
-            color: hover ? 'var(--ac)' : 'var(--fg)',
-            transition: 'color .2s',
-          }}
+          className="d hover-title"
+          style={{ fontSize: 'var(--fs-14)', fontWeight: 500, letterSpacing: '-0.02em', margin: 0 }}
         >
           {p.title}
         </h3>
-        <span
-          className="m"
-          style={{ fontSize: 'var(--fs-11)', color: 'var(--fg-d)', whiteSpace: 'nowrap' }}
-        >
+        <span className="m" style={{ fontSize: 'var(--fs-11)', color: 'var(--fg-d)', whiteSpace: 'nowrap' }}>
           {p.year}
         </span>
       </div>
@@ -97,36 +69,11 @@ function ProjMini({ p, onOpen }: ProjMiniProps) {
       </p>
       <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
         {visibleStack.map((s) => (
-          <span
-            key={s}
-            className="m"
-            style={{
-              fontSize: 'var(--fs-9)',
-              padding: '2px 7px',
-              borderRadius: 4,
-              border: '1px solid var(--br)',
-              color: 'var(--fg-d)',
-            }}
-          >
-            {s}
-          </span>
+          <TagChip key={s}>{s}</TagChip>
         ))}
-        {hiddenStackCount > 0 && (
-          <span
-            className="m"
-            style={{
-              fontSize: 'var(--fs-9)',
-              padding: '2px 7px',
-              borderRadius: 4,
-              border: '1px solid var(--br)',
-              color: 'var(--fg-d)',
-            }}
-          >
-            +{hiddenStackCount}
-          </span>
-        )}
+        {hiddenStackCount > 0 && <TagChip>+{hiddenStackCount}</TagChip>}
       </div>
-    </article>
+    </CardButton>
   );
 }
 
@@ -138,115 +85,34 @@ export function Work() {
 
   return (
     <div style={{ padding: 'var(--pad-y) var(--pad-x) var(--pad-b)' }}>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'flex-start',
-          justifyContent: 'space-between',
-          marginBottom: 20,
-          gap: 12,
-          flexWrap: 'wrap',
-        }}
-      >
-        <div>
-          <div
-            className="m"
-            style={{
-              fontSize: 'var(--fs-9)',
-              color: 'var(--fg-d)',
-              letterSpacing: '0.18em',
-              marginBottom: 8,
-            }}
-          >
-            02 · WORK
-          </div>
-          <h2
-            className="d"
-            style={{ fontSize: 'var(--fs-36)', fontWeight: 500, letterSpacing: '-0.03em', margin: 0 }}
-          >
-            {view === 'projects' ? 'Portfolio' : 'Writing'}
-          </h2>
-        </div>
-        <div
-          role="tablist"
-          aria-label="Work view"
-          style={{
-            display: 'flex',
-            gap: 4,
-            padding: 3,
-            background: 'var(--bg-c)',
-            border: '1px solid var(--br)',
-            borderRadius: 999,
-          }}
-        >
-          {(['projects', 'writing'] as const).map((v) => (
-            <button
-              key={v}
-              role="tab"
-              aria-selected={view === v}
-              className={view === v ? 'accent-surface' : undefined}
-              onClick={() => setView(v)}
-              style={{
-                padding: '6px 16px',
-                border: 'none',
-                borderRadius: 999,
-                background: view === v ? undefined : 'transparent',
-                color: view === v ? undefined : 'var(--fg-m)',
-                fontFamily: 'var(--font-b)',
-                fontSize: 'var(--fs-12)',
-                fontWeight: view === v ? 500 : 400,
-                cursor: 'pointer',
-                transition: 'all .15s',
-                textTransform: 'capitalize',
-              }}
-            >
-              {v}
-            </button>
-          ))}
-        </div>
-      </div>
+      <SectionIntro
+        kicker="02 · WORK"
+        title={view === 'projects' ? 'Portfolio' : 'Writing'}
+        action={
+          <SegmentedControl
+            options={['projects', 'writing'] as const}
+            value={view}
+            onChange={setView}
+            label="Work view"
+          />
+        }
+      />
 
       {view === 'projects' ? (
-        <>
-          <div
-            style={{
-              display: 'flex',
-              gap: 4,
-              padding: 3,
-              background: 'var(--bg-c)',
-              border: '1px solid var(--br)',
-              borderRadius: 999,
-              width: 'fit-content',
-              marginBottom: 20,
-              flexWrap: 'wrap',
-              maxWidth: '100%',
-              overflowX: 'auto',
-            }}
-          >
-            {PROJECT_CATEGORIES.map((c) => (
-              <button
-                key={c}
-                className={filter === c ? 'accent-surface' : undefined}
-                onClick={() => setFilter(c)}
-                style={{
-                  padding: '5px 12px',
-                  border: 'none',
-                  borderRadius: 999,
-                  background: filter === c ? undefined : 'transparent',
-                  color: filter === c ? undefined : 'var(--fg-m)',
-                  fontFamily: 'var(--font-b)',
-                  fontSize: 'var(--fs-11)',
-                  cursor: 'pointer',
-                  transition: 'all .15s',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                {c}
-              </button>
-            ))}
+        <div key="projects" className="view-fade">
+          <div style={{ marginBottom: 20 }}>
+            <SegmentedControl
+              options={PROJECT_CATEGORIES}
+              value={filter}
+              onChange={setFilter}
+              label="Project category"
+              size="sm"
+            />
           </div>
 
           <div
+            key={filter}
+            className="view-fade"
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
@@ -257,13 +123,16 @@ export function Work() {
               <ProjMini key={p.title} p={p} onOpen={setActiveProject} />
             ))}
           </div>
-        </>
+        </div>
       ) : (
-        <Writing embedded />
+        <div key="writing" className="view-fade">
+          <Writing embedded />
+        </div>
       )}
 
       {activeProject && (
         <WorkProjectDetail
+          key={activeProject.title}
           project={activeProject}
           detail={PROJECT_DETAILS_MOCK[activeProject.title] ?? DEFAULT_PROJECT_DETAIL_MOCK}
           onClose={() => setActiveProject(null)}

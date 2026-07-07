@@ -9,6 +9,7 @@
   background:
     linear-gradient(180deg, color-mix(in oklab, var(--bg) 88%, transparent), color-mix(in oklab, var(--bg) 88%, transparent)),
     repeating-linear-gradient(0deg, transparent, transparent 24px, color-mix(in oklab, var(--bg-e) 68%, transparent) 24px, color-mix(in oklab, var(--bg-e) 68%, transparent) 25px);
+  animation: overlayFade 0.25s ease-out;
 }
 
 .overlay::before {
@@ -39,6 +40,27 @@
   display: grid;
   grid-template-columns: 280px 1fr;
   grid-template-rows: 1fr auto;
+  animation: dialogIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes overlayFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes dialogIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .leftRail {
@@ -145,17 +167,6 @@
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
-}
-
-.chip {
-  font-family: var(--font-m);
-  font-size: var(--fs-11);
-  padding: 4px 10px;
-  border-radius: 6px;
-  border: 1px solid var(--br);
-  color: var(--fg-m);
-  text-transform: none;
-  letter-spacing: 0.02em;
 }
 
 .rightBody {
@@ -613,16 +624,17 @@
 .mobileShell {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  min-height: 100dvh;
+  height: 100dvh;
+  max-height: 100dvh;
   background: var(--bg);
 }
 
 .mobileHeader {
-  padding: 36px 18px 12px;
+  padding: calc(env(safe-area-inset-top, 0px) + 10px) 14px 10px;
   border-bottom: 1px solid var(--br);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 12px;
   background: var(--bg);
   z-index: 10;
 }
@@ -630,23 +642,50 @@
 .mobileCloseBtn {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  border: 1px solid var(--br-s);
-  background: transparent;
-  color: var(--fg);
+  border-radius: 10px;
+  border: 1px solid var(--br);
+  background: var(--bg-c);
+  color: var(--fg-m);
   cursor: pointer;
   display: grid;
   place-items: center;
   font-size: 22px;
   line-height: 1;
+  flex-shrink: 0;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.mobileCloseBtn:hover {
+  border-color: var(--ac);
+  color: var(--fg);
 }
 
 .mobileCloseBtn:active {
-  background: var(--bg-c);
+  background: var(--bg);
+}
+
+.mobileBreadcrumb {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-11);
+  color: var(--fg-d);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+}
+
+.mobileBreadcrumbAccent {
+  color: var(--ac);
 }
 
 .mobileScroll {
   overflow: auto;
+  min-height: 0;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 .mobileTitleBlock {
@@ -671,7 +710,7 @@
 .mobileShotFrame {
   position: relative;
   width: 100%;
-  height: clamp(360px, 60dvh, 560px);
+  height: clamp(220px, 42dvh, 420px);
   overflow: hidden;
   background: var(--bg-e);
   cursor: zoom-in;
@@ -722,12 +761,11 @@
 }
 
 .mobileTabsWrap {
-  padding: 16px 20px 0;
+  padding: 16px 20px 8px;
   position: sticky;
   top: 0;
-  background: linear-gradient(180deg, var(--bg) 70%, color-mix(in oklab, var(--bg) 0%, transparent));
+  background: var(--bg);
   z-index: 2;
-  padding-bottom: 8px;
 }
 
 .mobileTabs {
@@ -793,11 +831,12 @@
 }
 
 .mobileFooter {
-  padding: 14px 18px 22px;
+  padding: 14px 18px calc(env(safe-area-inset-bottom, 0px) + 14px);
   border-top: 1px solid var(--br);
   background: var(--bg);
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .mobileFooter :global(.btn) {
@@ -823,12 +862,36 @@
     align-items: stretch;
   }
 
+  .overlay::before {
+    backdrop-filter: none;
+    background: var(--bg);
+  }
+
   .dialog {
     width: 100%;
+    height: 100dvh;
     max-height: 100dvh;
-    min-height: 100dvh;
+    min-height: 0;
     border-radius: 0;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
+    border: none;
+    display: block;
+    overflow: hidden;
+  }
+
+  .mobileTitleBlock {
+    padding: 16px 20px 14px;
+  }
+
+  .mobileTitle {
+    font-size: 26px;
+  }
+
+  .mobileHeadline {
+    margin-top: 12px;
+    font-size: 15px;
+  }
+
+  .mobileContent {
+    padding: 14px 20px 24px;
   }
 }

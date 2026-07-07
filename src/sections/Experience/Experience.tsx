@@ -1,4 +1,9 @@
 import { DownloadIcon } from '@/components/icons/Icons';
+import { CtaBanner } from '@/components/ui/CtaBanner/CtaBanner';
+import { CV_PDF_FILENAME, CV_PDF_PATH } from '@/sections/CV/cv.data';
+import { Pill } from '@/components/ui/Pill/Pill';
+import { SectionIntro, Accent } from '@/components/ui/SectionIntro/SectionIntro';
+import { TagChip } from '@/components/ui/TagChip/TagChip';
 import { EXPERIENCE, EXPERIENCE_META } from '@/data/experience';
 
 interface ExperienceProps {
@@ -8,49 +13,19 @@ interface ExperienceProps {
 export function Experience({ embedded = false }: ExperienceProps) {
   const content = (
     <>
-      {/* Header */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'baseline',
-          justifyContent: 'space-between',
-          marginBottom: 6,
-        }}
-      >
-        <div
-          className="m"
-          style={{ fontSize: 'var(--fs-9)', color: 'var(--fg-d)', letterSpacing: '0.18em' }}
-        >
-          {embedded ? '02 · BACKGROUND' : '04 · BACKGROUND'}
-        </div>
-        <div
-          className="m"
-          style={{ fontSize: 'var(--fs-9)', color: 'var(--fg-d)', letterSpacing: '0.1em' }}
-        >
-          4 chapters · 6+ years
-        </div>
-      </div>
-      <h2
-        className="d"
-        style={{ fontSize: 'var(--fs-36)', fontWeight: 500, letterSpacing: '-0.035em', margin: '0 0 8px' }}
-      >
-        A timeline of <em style={{ color: 'var(--ac)', fontStyle: 'italic' }}>becoming</em>.
-      </h2>
-      <p
-        style={{
-          fontSize: 'var(--fs-14)',
-          color: 'var(--fg-m)',
-          margin: '0 0 40px',
-          lineHeight: 1.55,
-          maxWidth: 560,
-        }}
-      >
-        From writing my first tag at fifteen to shipping apps that people actually use — each step
-        taught me something worth keeping.
-      </p>
+      <SectionIntro
+        kicker={embedded ? '02 · BACKGROUND' : '04 · BACKGROUND'}
+        meta="4 chapters · 6+ years"
+        title={
+          <>
+            A timeline of <Accent>becoming</Accent>.
+          </>
+        }
+        lede="From writing my first tag at fifteen to shipping apps that people actually use — each step taught me something worth keeping."
+      />
 
       {/* Timeline */}
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: 'relative', marginTop: 16 }}>
         {/* Spine */}
         <div
           className="timeline-spine"
@@ -60,8 +35,7 @@ export function Experience({ embedded = false }: ExperienceProps) {
             top: 8,
             bottom: 8,
             width: 1,
-            background:
-              'linear-gradient(to bottom, var(--ac) 0, var(--br) 80px, var(--br) 100%)',
+            background: 'linear-gradient(to bottom, var(--ac) 0, var(--br) 80px, var(--br) 100%)',
           }}
         />
         <ol
@@ -80,7 +54,7 @@ export function Experience({ embedded = false }: ExperienceProps) {
             const isNow = i === 0;
             return (
               <li
-                key={i}
+                key={`${e.org}-${e.time}`}
                 className="timeline-item"
                 style={{
                   display: 'grid',
@@ -165,33 +139,14 @@ export function Experience({ embedded = false }: ExperienceProps) {
                     }}
                   >
                     <div>
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: 10,
-                          flexWrap: 'wrap',
-                        }}
-                      >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
                         <div
                           className="d"
                           style={{ fontSize: 'var(--fs-17)', fontWeight: 500, letterSpacing: '-0.02em' }}
                         >
                           {e.role}
                         </div>
-                        {isNow && (
-                          <span
-                            className="m accent-surface"
-                            style={{
-                              fontSize: 'var(--fs-9)',
-                              padding: '2px 7px',
-                              borderRadius: 999,
-                              letterSpacing: '0.1em',
-                            }}
-                          >
-                            NOW
-                          </span>
-                        )}
+                        {isNow && <Pill variant="accent">NOW</Pill>}
                       </div>
                       <div style={{ fontSize: 'var(--fs-12)', color: 'var(--fg-m)', marginTop: 3 }}>
                         {e.org}
@@ -221,20 +176,7 @@ export function Experience({ embedded = false }: ExperienceProps) {
                   </p>
                   <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
                     {meta.tags.map((t) => (
-                      <span
-                        key={t}
-                        className="m"
-                        style={{
-                          fontSize: 'var(--fs-9)',
-                          padding: '3px 8px',
-                          borderRadius: 4,
-                          border: '1px solid var(--br)',
-                          color: 'var(--fg-m)',
-                          letterSpacing: '0.04em',
-                        }}
-                      >
-                        {t}
-                      </span>
+                      <TagChip key={t}>{t}</TagChip>
                     ))}
                   </div>
                 </div>
@@ -244,40 +186,26 @@ export function Experience({ embedded = false }: ExperienceProps) {
         </ol>
       </div>
 
-      {/* CV download */}
-      <div
-        style={{
-          marginTop: 36,
-          padding: 'var(--space-5) var(--space-6)',
-          border: '1px dashed var(--br-s)',
-          borderRadius: 14,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: 16,
-          flexWrap: 'wrap',
-        }}
+      <CtaBanner
+        title="Need the full story?"
+        sub="Download a one-page CV with every project and stack."
       >
-        <div>
-          <div className="d" style={{ fontSize: 'var(--fs-15)', fontWeight: 500 }}>
-            Need the full story?
-          </div>
-          <div style={{ fontSize: 'var(--fs-12)', color: 'var(--fg-m)', marginTop: 2 }}>
-            Download a one-page CV with every project and stack.
-          </div>
-        </div>
-        <a href="#" className="btn p" style={{ fontSize: 'var(--fs-13)' }}>
+        <a href="/cv" className="btn" style={{ fontSize: 'var(--fs-13)' }}>
+          View CV
+        </a>
+        <a
+          href={CV_PDF_PATH}
+          download={CV_PDF_FILENAME}
+          className="btn p"
+          style={{ fontSize: 'var(--fs-13)' }}
+        >
           Download CV <DownloadIcon size={13} />
         </a>
-      </div>
+      </CtaBanner>
     </>
   );
 
   if (embedded) return content;
 
-  return (
-    <div style={{ padding: 'var(--pad-y) var(--pad-x) var(--pad-b)' }}>
-      {content}
-    </div>
-  );
+  return <div style={{ padding: 'var(--pad-y) var(--pad-x) var(--pad-b)' }}>{content}</div>;
 }

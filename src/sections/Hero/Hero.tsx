@@ -1,5 +1,6 @@
 import { Clock } from '@/components/widgets/Clock/Clock';
 import { ArrowIcon, ChevronRightIcon, DownloadIcon } from '@/components/icons/Icons';
+import { Pill } from '@/components/ui/Pill/Pill';
 import { HeroMeshBackground } from './mesh/HeroMeshBackground';
 
 interface HeroProps {
@@ -37,43 +38,9 @@ export function Hero({ onNavigate }: HeroProps) {
 
       {/* Zone 1 — Availability (top) */}
       <div className="hero-avail">
-        {/* Pill AVAILABLE — same pattern as Experience NOW + Contact featured */}
-        <span
-          className="m accent-surface"
-          style={{
-            fontSize: 'var(--fs-9)',
-            padding: '3px 9px',
-            borderRadius: 999,
-            letterSpacing: '0.14em',
-            textTransform: 'uppercase',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 6,
-          }}
-        >
-          <span
-            style={{
-              position: 'relative',
-              display: 'inline-block',
-              width: 6,
-              height: 6,
-              borderRadius: '50%',
-              background: 'var(--ac-f)',
-            }}
-          >
-            <span
-              style={{
-                position: 'absolute',
-                inset: -4,
-                borderRadius: '50%',
-                background: 'var(--ac-f)',
-                opacity: 0.3,
-                animation: 'pulse 1.8s ease-in-out infinite',
-              }}
-            />
-          </span>
+        <Pill variant="accent" pulse>
           Available
-        </span>
+        </Pill>
 
         <span
           className="m"
@@ -131,7 +98,7 @@ export function Hero({ onNavigate }: HeroProps) {
           <button className="btn" onClick={() => onNavigate?.('Work')}>
             View work <ChevronRightIcon size={13} />
           </button>
-          <a href="#" className="btn">
+          <a href="/cv" className="btn">
             CV <DownloadIcon size={13} />
           </a>
         </div>

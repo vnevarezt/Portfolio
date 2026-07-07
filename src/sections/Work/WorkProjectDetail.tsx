@@ -1,6 +1,6 @@
 import { type Dispatch, type SetStateAction, useEffect, useMemo, useState } from 'react';
-import { ArrowIcon, ChevronRightIcon } from '@/components/icons/Icons';
-import { ProjectMark } from '@/components/marks/ProjectMark';
+import { ArrowIcon, ChevronRightIcon, CloseIcon } from '@/components/icons/Icons';
+import { TagChip } from '@/components/ui/TagChip/TagChip';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import type { Project } from '@/types';
 import type { ProjectDetailMock } from '@/data/projectDetails.mock';
@@ -20,10 +20,12 @@ export function WorkProjectDetail({ project, detail, onClose }: WorkProjectDetai
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
   useEffect(() => {
-    setCurrentIndex(0);
-    setMobileTab('case');
-    setLightboxOpen(false);
-  }, [project.title]);
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, []);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -154,7 +156,7 @@ function Lightbox({
       </button>
 
       <button type="button" onClick={onClose} className={styles.lightboxClose} aria-label="Close image preview">
-        ×
+        <CloseIcon size={18} />
       </button>
 
       {total > 0 && <div className={styles.lightboxCounter}>{`${index + 1} / ${total}`}</div>}
@@ -241,9 +243,7 @@ function DesktopLayout({
           <div className={styles.label}>Stack</div>
           <div className={styles.chips}>
             {project.stack.map((stackItem) => (
-              <span key={stackItem} className={styles.chip}>
-                {stackItem}
-              </span>
+              <TagChip key={stackItem}>{stackItem}</TagChip>
             ))}
           </div>
         </div>
@@ -251,7 +251,7 @@ function DesktopLayout({
 
       <div className={styles.rightBody}>
         <button type="button" onClick={onClose} className={styles.closeFloating} aria-label="Close project detail">
-          ×
+          <CloseIcon size={16} />
         </button>
 
         <div className={styles.heroWrap}>
@@ -365,14 +365,14 @@ function MobileLayout({
   return (
     <div className={styles.mobileShell}>
       <header className={styles.mobileHeader}>
-        <div className={`m ${styles.breadcrumb}`}>
+        <button type="button" onClick={onClose} className={styles.mobileCloseBtn} aria-label="Close project detail">
+          <CloseIcon size={16} />
+        </button>
+        <div className={`m ${styles.mobileBreadcrumb}`}>
           <span>WORK</span>
           <span>/</span>
-          <span className={styles.breadcrumbAccent}>02</span>
+          <span className={styles.mobileBreadcrumbAccent}>02</span>
         </div>
-        <button type="button" onClick={onClose} className={styles.mobileCloseBtn} aria-label="Close project detail">
-          ×
-        </button>
       </header>
 
       <div className={styles.mobileScroll}>
@@ -439,7 +439,7 @@ function MobileLayout({
           </div>
         </div>
 
-        <div className={styles.mobileContent}>
+        <div key={tab} className={`view-fade ${styles.mobileContent}`}>
           {tab === 'case' && (
             <div className={styles.mobileColumn}>
               <CaseText title="Challenge" body={detail.challenge} />
@@ -459,7 +459,7 @@ function MobileLayout({
                 <div className={styles.label} style={{ marginBottom: 8 }}>Stack</div>
                 <div className={styles.chips}>
                   {project.stack.map((stackItem) => (
-                    <span key={stackItem} className={styles.chip}>{stackItem}</span>
+                    <TagChip key={stackItem}>{stackItem}</TagChip>
                   ))}
                 </div>
               </div>

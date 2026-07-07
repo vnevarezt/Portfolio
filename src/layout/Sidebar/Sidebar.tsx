@@ -1,5 +1,7 @@
 import { Monogram } from '@/components/marks/Monogram';
 import { GitHubIcon, LinkedInIcon, XIcon, MailIcon, ArrowIcon } from '@/components/icons/Icons';
+import { PulseDot } from '@/components/ui/PulseDot/PulseDot';
+import { CONTACT_INFO, SOCIAL_LINKS } from '@/data/social';
 
 interface SidebarProps {
   activeTab: string;
@@ -8,12 +10,11 @@ interface SidebarProps {
 
 const TABS = ['Home', 'About', 'Work', 'Contact'];
 
-const SOCIALS = [
-  { icon: <GitHubIcon size={14} />, label: 'GitHub' },
-  { icon: <LinkedInIcon size={14} />, label: 'LinkedIn' },
-  { icon: <XIcon size={14} />, label: 'X' },
-  { icon: <MailIcon size={14} />, label: 'Email' },
-];
+const SOCIAL_ICONS: Record<string, React.ReactNode> = {
+  GitHub: <GitHubIcon size={14} />,
+  LinkedIn: <LinkedInIcon size={14} />,
+  X: <XIcon size={14} />,
+};
 
 export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
   return (
@@ -38,11 +39,11 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
       <div style={{ textAlign: 'center' }}>
         <div
           className="d"
-          style={{ fontSize: 20, fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1.1 }}
+          style={{ fontSize: 'var(--fs-22)', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1.1 }}
         >
           Vicente Nevárez
         </div>
-        <div style={{ fontSize: 12, color: 'var(--fg-m)', marginTop: 6 }}>
+        <div style={{ fontSize: 'var(--fs-12)', color: 'var(--fg-m)', marginTop: 6 }}>
           VicentCodes · Software dev
         </div>
       </div>
@@ -54,29 +55,10 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
         className="card"
         style={{ padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 10 }}
       >
-        <span style={{ position: 'relative', width: 8, height: 8, flexShrink: 0 }}>
-          <span
-            style={{
-              position: 'absolute',
-              inset: 0,
-              borderRadius: '50%',
-              background: 'var(--ac)',
-            }}
-          />
-          <span
-            style={{
-              position: 'absolute',
-              inset: -4,
-              borderRadius: '50%',
-              background: 'var(--ac)',
-              opacity: 0.3,
-              animation: 'pulse 1.8s ease-in-out infinite',
-            }}
-          />
-        </span>
-        <div style={{ fontSize: 12, lineHeight: 1.3 }}>
+        <PulseDot />
+        <div style={{ fontSize: 'var(--fs-12)', lineHeight: 1.3 }}>
           <div style={{ fontWeight: 500 }}>Available for work</div>
-          <div className="m" style={{ fontSize: 9, color: 'var(--fg-d)' }}>
+          <div className="m" style={{ fontSize: 'var(--fs-9)', color: 'var(--fg-d)' }}>
             Spring 2026 · remote
           </div>
         </div>
@@ -88,6 +70,7 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
           <button
             key={t}
             onClick={() => onTabChange(t)}
+            aria-current={activeTab === t ? 'page' : undefined}
             style={{
               textAlign: 'left',
               padding: '11px 16px',
@@ -97,18 +80,18 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
               background: activeTab === t ? 'var(--ac-s)' : 'transparent',
               color: activeTab === t ? 'var(--ac)' : 'var(--fg-m)',
               fontFamily: 'var(--font-b)',
-              fontSize: 13,
+              fontSize: 'var(--fs-13)',
               fontWeight: activeTab === t ? 500 : 400,
               display: 'flex',
               alignItems: 'center',
               gap: 12,
-              transition: 'all .15s',
+              transition: 'background-color .15s ease, color .15s ease',
             }}
           >
             <span
               className="m"
               style={{
-                fontSize: 9,
+                fontSize: 'var(--fs-9)',
                 color: activeTab === t ? 'var(--ac)' : 'var(--fg-d)',
                 width: 16,
               }}
@@ -124,41 +107,28 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
 
       {/* Socials */}
       <div style={{ display: 'flex', gap: 6, justifyContent: 'center' }}>
-        {SOCIALS.map((s) => (
+        {SOCIAL_LINKS.map((s) => (
           <a
-            key={s.label}
-            href="#"
-            title={s.label}
-            style={{
-              width: 32,
-              height: 32,
-              borderRadius: 8,
-              border: '1px solid var(--br)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'var(--fg-m)',
-              transition: 'all .15s',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = 'var(--ac)';
-              e.currentTarget.style.borderColor = 'var(--ac)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = 'var(--fg-m)';
-              e.currentTarget.style.borderColor = 'var(--br)';
-            }}
+            key={s.name}
+            href={s.url}
+            title={s.name}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="icon-social"
           >
-            {s.icon}
+            {SOCIAL_ICONS[s.name]}
           </a>
         ))}
+        <a href={`mailto:${CONTACT_INFO.email}`} title="Email" className="icon-social">
+          <MailIcon size={14} />
+        </a>
       </div>
 
       {/* Hire me */}
       <a
-        href="mailto:contact@vicentcodes.com"
+        href={`mailto:${CONTACT_INFO.email}`}
         className="btn p"
-        style={{ justifyContent: 'center', padding: '10px 14px', fontSize: 13 }}
+        style={{ justifyContent: 'center', padding: '10px 14px', fontSize: 'var(--fs-13)' }}
       >
         Hire me <ArrowIcon size={12} />
       </a>
@@ -167,7 +137,7 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
       <div
         className="m"
         style={{
-          fontSize: 9,
+          fontSize: 'var(--fs-9)',
           color: 'var(--fg-d)',
           textAlign: 'center',
           letterSpacing: '0.1em',

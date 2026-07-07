@@ -1,6 +1,14 @@
 import { useState } from 'react';
 import { ArrowIcon } from '@/components/icons/Icons';
+import { CardButton } from '@/components/ui/CardButton/CardButton';
+import { CtaBanner } from '@/components/ui/CtaBanner/CtaBanner';
+import { FeaturedCard } from '@/components/ui/FeaturedCard/FeaturedCard';
+import { Pill } from '@/components/ui/Pill/Pill';
+import { SectionIntro, Accent } from '@/components/ui/SectionIntro/SectionIntro';
+import { SegmentedControl } from '@/components/ui/SegmentedControl/SegmentedControl';
 import { POSTS } from '@/data/posts';
+import type { Post } from '@/types';
+import { WritingPostDetail } from './WritingPostDetail';
 
 interface WritingProps {
   embedded?: boolean;
@@ -8,190 +16,52 @@ interface WritingProps {
 
 export function Writing({ embedded = false }: WritingProps) {
   const [filter, setFilter] = useState('All');
+  const [activePost, setActivePost] = useState<Post | null>(null);
   const cats = ['All', ...new Set(POSTS.map((p) => p.cat))];
   const list = POSTS.filter((p) => filter === 'All' || p.cat === filter);
   const [feat, ...rest] = list;
 
+  const openPost = (post: Post) => setActivePost(post);
+  const closePost = () => setActivePost(null);
+
   const content = (
     <>
-      {/* Header */}
-      {!embedded && (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'baseline',
-            justifyContent: 'space-between',
-            marginBottom: 6,
-            flexWrap: 'wrap',
-            gap: 12,
-          }}
-        >
-          <div
-            className="m"
-            style={{ fontSize: 'var(--fs-9)', color: 'var(--fg-d)', letterSpacing: '0.18em' }}
-          >
-            05 · WRITING
-          </div>
-          <div
-            className="m"
-            style={{ fontSize: 'var(--fs-9)', color: 'var(--fg-d)', letterSpacing: '0.1em' }}
-          >
-            {POSTS.length} essays · updated weekly
-          </div>
-        </div>
-      )}
-      <h2
-        className="d"
-        style={{ fontSize: 'var(--fs-36)', fontWeight: 500, letterSpacing: '-0.035em', margin: '0 0 8px' }}
-      >
-        Notes from <em style={{ color: 'var(--ac)', fontStyle: 'italic' }}>the edit</em>.
-      </h2>
-      <p
-        style={{
-          fontSize: 'var(--fs-14)',
-          color: 'var(--fg-m)',
-          margin: '0 0 24px',
-          lineHeight: 1.55,
-          maxWidth: 560,
-        }}
-      >
-        Short essays on design, code, and the in-between. Opinions are mine; typos are too.
-      </p>
+      <SectionIntro
+        kicker={embedded ? undefined : '05 · WRITING'}
+        meta={embedded ? undefined : `${POSTS.length} essays · updated weekly`}
+        title={
+          <>
+            Notes from <Accent>the edit</Accent>.
+          </>
+        }
+        lede="Short essays on design, code, and the in-between. Opinions are mine; typos are too."
+      />
 
-      {/* Filter */}
-      <div
-        style={{
-          display: 'flex',
-          gap: 4,
-          padding: 3,
-          background: 'var(--bg-c)',
-          border: '1px solid var(--br)',
-          borderRadius: 999,
-          width: 'fit-content',
-          marginBottom: 20,
-          flexWrap: 'wrap',
-        }}
-      >
-        {cats.map((c) => (
-          <button
-            key={c}
-            className={filter === c ? 'accent-surface' : undefined}
-            onClick={() => setFilter(c)}
-            style={{
-              padding: '6px 14px',
-              border: 'none',
-              borderRadius: 999,
-              background: filter === c ? undefined : 'transparent',
-              color: filter === c ? undefined : 'var(--fg-m)',
-              fontFamily: 'var(--font-b)',
-              fontSize: 'var(--fs-12)',
-              cursor: 'pointer',
-              transition: 'all .15s',
-            }}
-          >
-            {c}
-          </button>
-        ))}
+      <div style={{ marginBottom: 20 }}>
+        <SegmentedControl
+          options={cats}
+          value={filter}
+          onChange={setFilter}
+          label="Post category"
+        />
       </div>
 
-      {/* Featured */}
-      {feat && (
-        <a
-          href="#"
-          className="card featured-grid"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'var(--featured-cols)',
-            gap: 0,
-            overflow: 'hidden',
-            textDecoration: 'none',
-            color: 'var(--fg)',
-            marginBottom: 14,
-            transition: 'border-color .2s, transform .2s',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.borderColor = 'var(--ac)';
-            e.currentTarget.style.transform = 'translateY(-2px)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.borderColor = 'var(--br)';
-            e.currentTarget.style.transform = '';
-          }}
-        >
-          <div
-            className="gbg featured-deco"
-            style={{
-              position: 'relative',
-              minHeight: 220,
-              background: `oklch(${feat.hue === 130 ? '25%' : '20%'} 0.08 ${feat.hue} / 0.35)`,
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              padding: 22,
-            }}
-          >
-            <div
-              style={{
-                position: 'absolute',
-                inset: 0,
-                background: `radial-gradient(circle at 30% 30%, oklch(60% 0.2 ${feat.hue} / 0.18), transparent 60%)`,
-              }}
-            />
-            <div style={{ position: 'relative' }}>
-              <span
-                className="m"
-                style={{
-                  fontSize: 'var(--fs-9)',
-                  padding: '3px 9px',
-                  borderRadius: 999,
-                  background: `oklch(70% 0.18 ${feat.hue} / 0.2)`,
-                  color: `oklch(85% 0.15 ${feat.hue})`,
-                  letterSpacing: '0.14em',
-                  textTransform: 'uppercase',
-                }}
-              >
-                {feat.cat}
-              </span>
-              <span
-                className="m"
-                style={{
-                  fontSize: 'var(--fs-9)',
-                  color: 'var(--fg-d)',
-                  letterSpacing: '0.14em',
-                  marginLeft: 10,
-                  textTransform: 'uppercase',
-                }}
-              >
-                Featured
-              </span>
-            </div>
-            <div
-              className="featured-quote"
-              style={{
-                position: 'relative',
-                fontSize: 88,
-                lineHeight: 0.9,
-                letterSpacing: '-0.05em',
-                fontFamily: 'var(--font-d)',
-                fontWeight: 500,
-                color: `oklch(82% 0.17 ${feat.hue} / 0.9)`,
-                fontStyle: 'italic',
-              }}
-            >
-              "
-            </div>
-          </div>
-          <div
-            style={{
-              padding: 'var(--space-6)',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              gap: 10,
-            }}
+      <div key={filter} className="view-fade">
+        {feat && (
+          <FeaturedCard
+            hue={feat.hue}
+            glyph={'“'}
+            onActivate={() => openPost(feat)}
+            ariaLabel={`Open article ${feat.title}`}
+            pills={
+              <>
+                <Pill hue={feat.hue}>{feat.cat}</Pill>
+                <Pill variant="ghost">Featured</Pill>
+              </>
+            }
           >
             <h3
-              className="d"
+              className="d hover-title"
               style={{
                 fontSize: 'var(--fs-22)',
                 fontWeight: 500,
@@ -211,14 +81,16 @@ export function Writing({ embedded = false }: WritingProps) {
                 alignItems: 'center',
                 gap: 10,
                 marginTop: 4,
-                fontSize: 11,
+                fontSize: 'var(--fs-11)',
                 flexWrap: 'wrap',
               }}
             >
               <span className="m" style={{ color: 'var(--fg-d)' }}>
                 {feat.date}
               </span>
-              <span className="m" style={{ color: 'var(--fg-d)' }}>·</span>
+              <span className="m" style={{ color: 'var(--fg-d)' }}>
+                ·
+              </span>
               <span className="m" style={{ color: 'var(--fg-d)' }}>
                 {feat.read} read
               </span>
@@ -229,154 +101,96 @@ export function Writing({ embedded = false }: WritingProps) {
                   display: 'flex',
                   alignItems: 'center',
                   gap: 4,
-                  fontSize: 12,
+                  fontSize: 'var(--fs-12)',
                 }}
               >
                 Read <ArrowIcon size={12} />
               </span>
             </div>
-          </div>
-        </a>
-      )}
+          </FeaturedCard>
+        )}
 
-      {/* Rest grid */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-          gap: 10,
-        }}
-      >
-        {rest.map((p, i) => (
-          <a
-            key={i}
-            href="#"
-            className="card"
-            style={{
-              padding: 'var(--space-5)',
-              textDecoration: 'none',
-              color: 'var(--fg)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 10,
-              transition: 'border-color .2s, transform .2s',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'var(--ac)';
-              e.currentTarget.style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'var(--br)';
-              e.currentTarget.style.transform = '';
-            }}
-          >
-            <div
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+            gap: 10,
+          }}
+        >
+          {rest.map((p) => (
+            <CardButton
+              key={p.title}
+              onActivate={() => openPost(p)}
+              ariaLabel={`Open article ${p.title}`}
               style={{
+                padding: 'var(--space-5)',
                 display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
+                flexDirection: 'column',
+                gap: 10,
               }}
             >
-              <span
-                className="m"
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Pill hue={p.hue}>{p.cat}</Pill>
+                <span className="m" style={{ fontSize: 'var(--fs-11)', color: 'var(--fg-d)' }}>
+                  {p.read}
+                </span>
+              </div>
+              <h3
+                className="d hover-title"
                 style={{
-                  fontSize: 'var(--fs-9)',
-                  padding: '3px 8px',
-                  borderRadius: 999,
-                  background: `oklch(70% 0.18 ${p.hue} / 0.14)`,
-                  color: `oklch(78% 0.15 ${p.hue})`,
-                  letterSpacing: '0.12em',
-                  textTransform: 'uppercase',
+                  fontSize: 'var(--fs-15)',
+                  fontWeight: 500,
+                  letterSpacing: '-0.02em',
+                  lineHeight: 1.3,
+                  margin: 0,
                 }}
               >
-                {p.cat}
-              </span>
-              <span className="m" style={{ fontSize: 'var(--fs-11)', color: 'var(--fg-d)' }}>
-                {p.read}
-              </span>
-            </div>
-            <h3
-              className="d"
-              style={{
-                fontSize: 'var(--fs-15)',
-                fontWeight: 500,
-                letterSpacing: '-0.02em',
-                lineHeight: 1.3,
-                margin: 0,
-              }}
-            >
-              {p.title}
-            </h3>
-            <p
-              style={{
-                fontSize: 'var(--fs-12)',
-                color: 'var(--fg-m)',
-                lineHeight: 1.55,
-                margin: 0,
-                display: '-webkit-box',
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: 'vertical',
-                overflow: 'hidden',
-              }}
-            >
-              {p.excerpt}
-            </p>
-            <div
-              style={{
-                marginTop: 'auto',
-                paddingTop: 4,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}
-            >
-              <span className="m" style={{ fontSize: 'var(--fs-11)', color: 'var(--fg-d)' }}>
-                {p.date}
-              </span>
-              <span
+                {p.title}
+              </h3>
+              <p
                 style={{
-                  color: 'var(--ac)',
+                  fontSize: 'var(--fs-12)',
+                  color: 'var(--fg-m)',
+                  lineHeight: 1.55,
+                  margin: 0,
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden',
+                }}
+              >
+                {p.excerpt}
+              </p>
+              <div
+                style={{
+                  marginTop: 'auto',
+                  paddingTop: 4,
                   display: 'flex',
                   alignItems: 'center',
-                  fontSize: 11,
+                  justifyContent: 'space-between',
                 }}
               >
-                <ArrowIcon size={11} />
-              </span>
-            </div>
-          </a>
-        ))}
+                <span className="m" style={{ fontSize: 'var(--fs-11)', color: 'var(--fg-d)' }}>
+                  {p.date}
+                </span>
+                <span style={{ color: 'var(--ac)', display: 'flex', alignItems: 'center' }}>
+                  <ArrowIcon size={11} />
+                </span>
+              </div>
+            </CardButton>
+          ))}
+        </div>
       </div>
 
-      {/* Subscribe */}
-      <div
-        style={{
-          marginTop: 36,
-          padding: 'var(--space-5) var(--space-6)',
-          border: '1px dashed var(--br-s)',
-          borderRadius: 14,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: 16,
-          flexWrap: 'wrap',
-        }}
-      >
-        <div>
-          <div className="d" style={{ fontSize: 'var(--fs-15)', fontWeight: 500 }}>
-            New essay every other week.
-          </div>
-          <div style={{ fontSize: 'var(--fs-12)', color: 'var(--fg-m)', marginTop: 2 }}>
-            No spam. Unsubscribe with one click.
-          </div>
-        </div>
+      <CtaBanner title="New essay every other week." sub="No spam. Unsubscribe with one click.">
         <form
           onSubmit={(e) => e.preventDefault()}
           style={{ display: 'flex', gap: 6, flexWrap: 'wrap', width: '100%', maxWidth: 380 }}
         >
           <input
             type="email"
-            placeholder="contact@vicentcodes.com"
+            placeholder="you@example.com"
+            aria-label="Email address"
             className="field"
             style={{ flex: '1 1 160px', padding: '9px 12px' }}
           />
@@ -384,15 +198,26 @@ export function Writing({ embedded = false }: WritingProps) {
             Subscribe
           </button>
         </form>
-      </div>
+      </CtaBanner>
     </>
   );
 
-  if (embedded) return content;
+  const dialog = activePost ? (
+    <WritingPostDetail post={activePost} all={POSTS} onClose={closePost} onOpen={openPost} />
+  ) : null;
+
+  if (embedded)
+    return (
+      <>
+        {content}
+        {dialog}
+      </>
+    );
 
   return (
     <div style={{ padding: 'var(--pad-y) var(--pad-x) var(--pad-b)' }}>
       {content}
+      {dialog}
     </div>
   );
 }
