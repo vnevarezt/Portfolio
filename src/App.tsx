@@ -1,9 +1,32 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { Sidebar } from '@/layout/Sidebar/Sidebar';
 import { MainPanel } from '@/layout/MainPanel/MainPanel';
 import { MobileBottomNav } from '@/layout/MobileBottomNav/MobileBottomNav';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { LinksPage } from '@/sections/Links/LinksPage';
+
+const CVPage = lazy(() => import('@/sections/CV/CVPage').then((m) => ({ default: m.CVPage })));
+
+function usePathname(): string {
+  const [pathname, setPathname] = useState(() =>
+    typeof window === 'undefined' ? '/' : window.location.pathname,
+  );
+  useEffect(() => {
+    const onChange = () => setPathname(window.location.pathname);
+    window.addEventListener('popstate', onChange);
+    return () => window.removeEventListener('popstate', onChange);
+  }, []);
+  return pathname;
+}
+
+function isLinksRoute(pathname: string): boolean {
+  return /^\/me\/?$/.test(pathname);
+}
+
+function isCVRoute(pathname: string): boolean {
+  return /^\/cv\/?$/.test(pathname);
+}
 
 function Portfolio() {
   const [tab, setTab] = useState('Home');
@@ -60,9 +83,21 @@ function Portfolio() {
 }
 
 export default function App() {
+  const pathname = usePathname();
+
+  if (isCVRoute(pathname)) {
+    return (
+      <ThemeProvider>
+        <Suspense fallback={null}>
+          <CVPage />
+        </Suspense>
+      </ThemeProvider>
+    );
+  }
+
   return (
     <ThemeProvider>
-      <Portfolio />
+      {isLinksRoute(pathname) ? <LinksPage /> : <Portfolio />}
     </ThemeProvider>
   );
 }

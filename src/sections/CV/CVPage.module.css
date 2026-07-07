@@ -1,0 +1,89 @@
+.page {
+  min-height: 100dvh;
+  background: var(--bg);
+}
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 56px;
+  padding: 0 var(--pad-x);
+  background: color-mix(in oklab, var(--bg) 85%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--br);
+}
+
+.toolbarTitle {
+  font-size: var(--fs-9);
+  color: var(--fg-d);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.toolbarActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--fs-12);
+  color: var(--fg-m);
+  transition: color 0.15s ease;
+}
+
+.back:hover {
+  color: var(--ac);
+}
+
+.stage {
+  display: flex;
+  justify-content: center;
+  padding: clamp(16px, 3vw, 40px) 12px 64px;
+  overflow: hidden;
+}
+
+.sheetShadow {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.18),
+    0 24px 60px rgba(0, 0, 0, 0.35);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+/* Bare mode (?print) and Cmd+P: only the sheet, exact size. */
+.bare {
+  background: #ffffff;
+}
+
+@media print {
+  .toolbar {
+    display: none;
+  }
+  .page {
+    background: #ffffff;
+  }
+  .stage {
+    padding: 0;
+    overflow: visible;
+  }
+  .sheetShadow {
+    zoom: 1 !important;
+    box-shadow: none;
+    border-radius: 0;
+  }
+}
+
+@page {
+  size: Letter;
+  margin: 0;
+}
