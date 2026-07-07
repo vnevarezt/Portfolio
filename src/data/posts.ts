@@ -18,7 +18,7 @@ export const POSTS: Post[] = [
     cat: 'Backend',
     mark: '2fa',
     excerpt:
-      'What I learned from rolling my own 2FA for VicentCodes, including the embarrassing first iteration.',
+      'What I learned from rolling my own 2FA for vnevarezt, including the embarrassing first iteration.',
     hue: 45,
   },
 ];

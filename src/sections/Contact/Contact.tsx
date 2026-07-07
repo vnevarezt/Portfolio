@@ -29,7 +29,7 @@ const SOCIAL_URL = Object.fromEntries(SOCIAL_LINKS.map((s) => [s.name, s.url]));
 const SOCIALS: SocialCard[] = [
   {
     icon: <LinkedInIcon size={14} />,
-    handle: '@vicentcodes',
+    handle: '@vnevarezt',
     cat: 'LinkedIn',
     tagline: 'Work history & recommendations',
     hue: 245,
@@ -37,7 +37,7 @@ const SOCIALS: SocialCard[] = [
   },
   {
     icon: <GitHubIcon size={14} />,
-    handle: '@vicentcodes',
+    handle: '@vnevarezt',
     cat: 'GitHub',
     tagline: 'Code, side projects & dotfiles',
     hue: 285,
@@ -45,7 +45,7 @@ const SOCIALS: SocialCard[] = [
   },
   {
     icon: <XIcon size={14} />,
-    handle: '@VicentCodes',
+    handle: '@vnevarezt',
     cat: 'X',
     tagline: 'Thinking out loud, occasionally',
     hue: 215,

@@ -20,7 +20,7 @@ import { Monogram } from '@/components/marks/Monogram';
 import { VCARD } from '@/data/vcard';
 import styles from './LinksPage.module.css';
 
-const EMAIL = 'contact@vicentcodes.com';
+const EMAIL = 'contact@vnevarezt.com';
 
 const madridFormatter = new Intl.DateTimeFormat('en-GB', {
   hour: '2-digit',
@@ -66,7 +66,7 @@ export function LinksPage() {
           <div className={styles.linkList}>
             <SecondaryLink
               icon={<GlobeIcon size={17} />}
-              label="vicentcodes.com"
+              label="vnevarezt.com"
               sub="Portfolio · projects · about"
               href="/"
             />
@@ -90,27 +90,27 @@ export function LinksPage() {
           <div className={styles.socialGrid}>
             <SocialChip
               icon={<GitHubIcon size={20} />}
-              label="vicentcodes"
+              label="vnevarezt"
               sub="GitHub"
-              href="https://github.com/vicentcodes"
+              href="https://github.com/vnevarezt"
             />
             <SocialChip
               icon={<LinkedInIcon size={20} />}
-              label="vicentcodes"
+              label="vnevarezt"
               sub="LinkedIn"
-              href="https://linkedin.com/in/vicentcodes"
+              href="https://linkedin.com/in/vnevarezt"
             />
             <SocialChip
               icon={<XIcon size={20} />}
-              label="@VicentCodes"
+              label="@vnevarezt"
               sub="X · Twitter"
-              href="https://x.com/VicentCodes"
+              href="https://x.com/vnevarezt"
             />
             <SocialChip
               icon={<InstagramIcon size={20} />}
-              label="@vicentcodes"
+              label="@vnevarezt"
               sub="Instagram"
-              href="https://instagram.com/vicentcodes"
+              href="https://instagram.com/vnevarezt"
             />
           </div>
         </section>
@@ -119,7 +119,7 @@ export function LinksPage() {
           <div className={`d ${styles.footerCredit}`}>
             Built by hand <span className={styles.footerAccent}>·</span> 2026
           </div>
-          <div className={`m ${styles.footerUrl}`}>vicentcodes.com/me</div>
+          <div className={`m ${styles.footerUrl}`}>vnevarezt.com/me</div>
         </footer>
       </main>
     </div>
@@ -154,7 +154,7 @@ function Hero() {
       </h1>
 
       <div className={styles.heroHandleRow}>
-        <span className={`m ${styles.heroHandle}`}>@vicentcodes</span>
+        <span className={`m ${styles.heroHandle}`}>@vnevarezt</span>
         <span className={styles.heroDot} />
         <span className={styles.heroLocation}>Madrid · ES</span>
       </div>

@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.vicentcodes.portfolio',
-  appName: 'vicentcodes-portfolio',
+  appId: 'com.vnevarezt.portfolio',
+  appName: 'vnevarezt-portfolio',
   webDir: 'dist'
 };
 

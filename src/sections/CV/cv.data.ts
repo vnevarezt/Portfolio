@@ -10,10 +10,10 @@ export const CV = {
   contact: {
     location: 'Torreón, Coahuila, México',
     phone: '(676) 112-4186',
-    email: 'contact@vicentcodes.com',
-    linkedin: 'linkedin.com/in/VicentCodes',
-    github: 'github.com/VicentCodes',
-    web: 'vicentcodes.com',
+    email: 'contact@vnevarezt.com',
+    linkedin: 'linkedin.com/in/vnevarezt',
+    github: 'github.com/vnevarezt',
+    web: 'vnevarezt.com',
   },
   summary:
     'Ingeniero Informático enfocado en desarrollo frontend móvil y web, con experiencia en aplicaciones nativas e híbridas (Flutter, React, Android, iOS) y servicios backend en Node.js y TypeScript. Actualmente desarrollo plataformas internas en el equipo de Innovación de Grupo Batta, dando servicio a más de 100 oficinas a nivel nacional. Me motivan los proyectos donde el código resuelve problemas medibles y de impacto operativo, no solo demos técnicas.',

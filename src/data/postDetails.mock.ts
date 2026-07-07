@@ -50,7 +50,7 @@ export const POST_BODIES: Partial<Record<Post['title'], PostBodyBlock[]>> = {
     {
       type: 'lede',
       text:
-        "I rolled my own 2FA for VicentCodes in 2022. It worked — but the first iteration was embarrassing. Here's what I'd do differently.",
+        "I rolled my own 2FA for vnevarezt in 2022. It worked — but the first iteration was embarrassing. Here's what I'd do differently.",
     },
     { type: 'h2', text: 'The mistake: trusting the timestamp' },
     {

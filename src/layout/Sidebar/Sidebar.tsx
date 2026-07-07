@@ -44,7 +44,7 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
           Vicente Nevárez
         </div>
         <div style={{ fontSize: 'var(--fs-12)', color: 'var(--fg-m)', marginTop: 6 }}>
-          VicentCodes · Software dev
+          vnevarezt · Software dev
         </div>
       </div>
 
@@ -145,7 +145,7 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
           paddingTop: 8,
         }}
       >
-        VicentCodes · 2026
+        vnevarezt · 2026
       </div>
     </aside>
   );

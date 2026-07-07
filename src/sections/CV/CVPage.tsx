@@ -79,7 +79,7 @@ export function CVPage() {
           Back to site
         </a>
         <span className={`m ${styles.toolbarTitle}`}>
-          VICENT<span style={{ color: 'var(--ac)' }}>CODES</span> · CV
+          V<span style={{ color: 'var(--ac)' }}>NEVAREZ</span>T · CV
         </span>
         <div className={styles.toolbarActions}>
           <a

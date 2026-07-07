@@ -48,7 +48,7 @@ function StickyHeader({ tab }: { tab: string }) {
       }}
     >
       <div className="m" style={{ fontSize: 'var(--fs-9)', color: 'var(--fg-d)', letterSpacing: '0.2em' }}>
-        VICENT<span style={{ color: 'var(--ac)' }}>CODES</span> · {tab.toUpperCase()}
+        V<span style={{ color: 'var(--ac)' }}>NEVAREZ</span>T · {tab.toUpperCase()}
       </div>
       <Clock />
     </div>

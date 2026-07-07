@@ -33,7 +33,7 @@ export const PROJECT_DETAILS_MOCK: Partial<Record<Project['title'], ProjectDetai
       'Min / max / live overlays per chart for quick anomaly spotting.',
     ],
     screenshots: [
-      'https://raw.githubusercontent.com/VicentCodes/HydroSenseAndroid/master/s1.png',
+      'https://raw.githubusercontent.com/vnevarezt/HydroSenseAndroid/master/s1.png',
     ],
     metrics: [
       { k: '3', v: 'Surfaces (Firmware + API + App)' },
@@ -45,9 +45,9 @@ export const PROJECT_DETAILS_MOCK: Partial<Record<Project['title'], ProjectDetai
     team: 'Solo (three coordinated repos)',
     status: 'Open source · MIT',
     links: [
-      { label: 'Android App', href: 'https://github.com/VicentCodes/HydroSenseAndroid' },
-      { label: 'REST API', href: 'https://github.com/VicentCodes/HydroSenseApi' },
-      { label: 'ESP32 Firmware', href: 'https://github.com/VicentCodes/HydroSense' },
+      { label: 'Android App', href: 'https://github.com/vnevarezt/HydroSenseAndroid' },
+      { label: 'REST API', href: 'https://github.com/vnevarezt/HydroSenseApi' },
+      { label: 'ESP32 Firmware', href: 'https://github.com/vnevarezt/HydroSense' },
     ],
   },
   'Minecraft Admin Suite': {
@@ -76,8 +76,8 @@ export const PROJECT_DETAILS_MOCK: Partial<Record<Project['title'], ProjectDetai
     team: 'Solo (two coordinated repos)',
     status: 'Open source · in development',
     links: [
-      { label: 'Mobile App', href: 'https://github.com/VicentCodes/MineServerApp' },
-      { label: 'Admin Panel', href: 'https://github.com/VicentCodes/minecraft-admin' },
+      { label: 'Mobile App', href: 'https://github.com/vnevarezt/MineServerApp' },
+      { label: 'Admin Panel', href: 'https://github.com/vnevarezt/minecraft-admin' },
     ],
   },
   Zoop: {
@@ -131,7 +131,7 @@ export const PROJECT_DETAILS_MOCK: Partial<Record<Project['title'], ProjectDetai
       'APK distributable for offline classroom use, Android 5.0+.',
     ],
     screenshots: [
-      'https://raw.githubusercontent.com/VicentCodes/Algeb/master/screenshot.png',
+      'https://raw.githubusercontent.com/vnevarezt/Algeb/master/screenshot.png',
     ],
     metrics: [
       { k: '3', v: 'Calculators in one' },
@@ -143,7 +143,7 @@ export const PROJECT_DETAILS_MOCK: Partial<Record<Project['title'], ProjectDetai
     team: 'Solo',
     status: 'Open source · MIT',
     links: [
-      { label: 'Repository', href: 'https://github.com/VicentCodes/Algeb' },
+      { label: 'Repository', href: 'https://github.com/vnevarezt/Algeb' },
     ],
   },
 };

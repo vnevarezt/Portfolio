@@ -54,7 +54,7 @@ export function WritingPostDetail({ post, all, onClose, onOpen }: WritingPostDet
 
   const copyLink = () => {
     const slug = post.title.toLowerCase().replace(/\s+/g, '-');
-    void navigator.clipboard?.writeText(`https://vicentcodes.com/blog/${slug}`);
+    void navigator.clipboard?.writeText(`https://vnevarezt.com/blog/${slug}`);
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1800);
   };
@@ -159,7 +159,7 @@ export function WritingPostDetail({ post, all, onClose, onOpen }: WritingPostDet
                 </div>
                 <div className={styles.bylineMeta}>
                   <div className={`d ${styles.bylineName}`}>Vicente Nevárez</div>
-                  <div className={`m ${styles.bylineHandle}`}>Developer · @vicentcodes</div>
+                  <div className={`m ${styles.bylineHandle}`}>Developer · @vnevarezt</div>
                 </div>
                 <div className={styles.bylineRead}>
                   <ClockIcon size={13} />
