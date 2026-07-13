@@ -32,9 +32,7 @@ export const PROJECT_DETAILS_MOCK: Partial<Record<Project['title'], ProjectDetai
       'Pump control on-device via H-bridge, decoupled from API availability.',
       'Min / max / live overlays per chart for quick anomaly spotting.',
     ],
-    screenshots: [
-      'https://raw.githubusercontent.com/vnevarezt/HydroSenseAndroid/master/s1.png',
-    ],
+    screenshots: ['/projects/hydrosense-1.webp'],
     metrics: [
       { k: '3', v: 'Surfaces (Firmware + API + App)' },
       { k: '5', v: 'Sensor parameters tracked' },
@@ -97,10 +95,7 @@ export const PROJECT_DETAILS_MOCK: Partial<Record<Project['title'], ProjectDetai
       'Post creation flow with image upload, category selection and geo-tagging.',
       'Account-deletion flow with optional feedback, meeting Play Store data-control requirements.',
     ],
-    screenshots: [
-      '/zoop-1.png',
-      '/zoop-2.png',
-    ],
+    screenshots: ['/projects/zoop-1.webp', '/projects/zoop-2.webp'],
     metrics: [
       { k: '12+', v: 'Activities & fragments' },
       { k: '4', v: 'Home feeds (Local / Global / Followed / Suggestion)' },
@@ -130,9 +125,7 @@ export const PROJECT_DETAILS_MOCK: Partial<Record<Project['title'], ProjectDetai
       'Linear systems solved via Cramer’s Rule from raw coefficients.',
       'APK distributable for offline classroom use, Android 5.0+.',
     ],
-    screenshots: [
-      'https://raw.githubusercontent.com/vnevarezt/Algeb/master/screenshot.png',
-    ],
+    screenshots: ['/projects/algeb-1.webp'],
     metrics: [
       { k: '3', v: 'Calculators in one' },
       { k: '5.0+', v: 'Android API supported' },
