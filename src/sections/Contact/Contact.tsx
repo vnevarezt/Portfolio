@@ -13,13 +13,14 @@ import {
   XIcon,
 } from '@/components/icons/Icons';
 import { CONTACT_INFO, SOCIAL_LINKS } from '@/data/social';
-import { CV_PDF_FILENAME, CV_PDF_PATH } from '@/sections/CV/cv.data';
+import { useLang } from '@/i18n/useLang';
+import { useT } from '@/i18n/useT';
+import { cvPdfFilename, cvPdfPath } from '@/sections/CV/cv.data';
 
 interface SocialCard {
   icon: ReactNode;
   handle: string;
   cat: string;
-  tagline: string;
   hue: number;
   href: string;
 }
@@ -31,7 +32,6 @@ const SOCIALS: SocialCard[] = [
     icon: <LinkedInIcon size={14} />,
     handle: '@vnevarezt',
     cat: 'LinkedIn',
-    tagline: 'Work history & recommendations',
     hue: 245,
     href: SOCIAL_URL.LinkedIn,
   },
@@ -39,7 +39,6 @@ const SOCIALS: SocialCard[] = [
     icon: <GitHubIcon size={14} />,
     handle: '@vnevarezt',
     cat: 'GitHub',
-    tagline: 'Code, side projects & dotfiles',
     hue: 285,
     href: SOCIAL_URL.GitHub,
   },
@@ -47,27 +46,32 @@ const SOCIALS: SocialCard[] = [
     icon: <XIcon size={14} />,
     handle: '@vnevarezt',
     cat: 'X',
-    tagline: 'Thinking out loud, occasionally',
     hue: 215,
     href: SOCIAL_URL.X,
   },
 ];
 
 export function Contact() {
+  const t = useT();
+  const { lang } = useLang();
+
   return (
     <div style={{ padding: 'var(--pad-y) var(--pad-x) var(--pad-b)' }}>
       <SectionIntro
-        kicker="04 · LET'S TALK"
-        meta="Usually replies in < 24h"
+        kicker={t.contact.kicker}
+        meta={t.contact.meta}
         title={
           <>
-            Let's build <Accent>something</Accent>.
+            {t.contact.titlePre}
+            <Accent>{t.contact.titleAccent}</Accent>
+            {t.contact.titlePost}
           </>
         }
         lede={
           <>
-            Freelance, full-time, or just to say hi — I read every message and reply personally
-            within <span style={{ color: 'var(--ac)' }}>24h</span>.
+            {t.contact.ledePre}
+            <span style={{ color: 'var(--ac)' }}>24h</span>
+            {t.contact.ledePost}
           </>
         }
       />
@@ -81,14 +85,14 @@ export function Contact() {
         pills={
           <>
             <Pill variant="accent" pulse>
-              Available
+              {t.contact.available}
             </Pill>
-            <Pill variant="ghost">Featured</Pill>
+            <Pill variant="ghost">{t.contact.featured}</Pill>
           </>
         }
       >
         <Pill hue={130} style={{ alignSelf: 'flex-start' }}>
-          Direct Email
+          {t.contact.directEmail}
         </Pill>
         <h3
           className="d"
@@ -104,7 +108,7 @@ export function Contact() {
           {CONTACT_INFO.email}
         </h3>
         <p style={{ fontSize: 'var(--fs-13)', color: 'var(--fg-m)', lineHeight: 1.6, margin: 0 }}>
-          The best way to reach me. I read every email and reply to every real one within 24 hours.
+          {t.contact.emailDesc}
         </p>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 4, flexWrap: 'wrap' }}>
           <span className="m" style={{ fontSize: 'var(--fs-11)', color: 'var(--fg-d)' }}>
@@ -114,7 +118,7 @@ export function Contact() {
             ·
           </span>
           <span className="m" style={{ fontSize: 'var(--fs-11)', color: 'var(--fg-d)' }}>
-            Mon–Fri
+            {t.contact.monFri}
           </span>
           <span
             style={{
@@ -126,7 +130,7 @@ export function Contact() {
               fontSize: 'var(--fs-12)',
             }}
           >
-            Send <ArrowIcon size={12} />
+            {t.contact.send} <ArrowIcon size={12} />
           </span>
         </div>
       </FeaturedCard>
@@ -188,7 +192,7 @@ export function Contact() {
                 </span>
               </div>
               <p style={{ fontSize: 'var(--fs-12)', color: 'var(--fg-m)', lineHeight: 1.5, margin: 0 }}>
-                {s.tagline}
+                {t.contact.socials[s.cat]}
               </p>
             </a>
           ))}
@@ -207,30 +211,28 @@ export function Contact() {
                 textTransform: 'uppercase',
               }}
             >
-              OR WRITE HERE
+              {t.contact.orWriteHere}
             </div>
             <div className="d" style={{ fontSize: 'var(--fs-17)', fontWeight: 500, letterSpacing: '-0.02em' }}>
-              Tell me what you're <Accent>building</Accent>.
+              {t.contact.formTitlePre}
+              <Accent>{t.contact.formTitleAccent}</Accent>.
             </div>
           </div>
           <ContactForm />
         </div>
       </div>
 
-      <CtaBanner
-        title="Want the full CV or a quick intro call?"
-        sub="20-min video chat, no agenda. Perfect if you're exploring options."
-      >
+      <CtaBanner title={t.contact.ctaTitle} sub={t.contact.ctaSub}>
         <a
-          href={CV_PDF_PATH}
-          download={CV_PDF_FILENAME}
+          href={cvPdfPath(lang)}
+          download={cvPdfFilename(lang)}
           className="btn p"
           style={{ fontSize: 'var(--fs-13)' }}
         >
-          Download CV <DownloadIcon size={13} />
+          {t.common.downloadCV} <DownloadIcon size={13} />
         </a>
         <a href="#" className="btn" style={{ fontSize: 'var(--fs-13)' }}>
-          Book a call <PhoneIcon size={13} />
+          {t.contact.bookCall} <PhoneIcon size={13} />
         </a>
       </CtaBanner>
     </div>

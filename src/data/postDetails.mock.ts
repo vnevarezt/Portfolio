@@ -1,4 +1,5 @@
-import type { Post } from '@/types';
+import type { Post, PostMarkKind } from '@/types';
+import type { Lang } from '@/i18n/types';
 
 export type PostBodyBlock =
   | { type: 'lede'; text: string }
@@ -7,8 +8,9 @@ export type PostBodyBlock =
   | { type: 'pull'; text: string }
   | { type: 'list'; items: string[] };
 
-export const POST_BODIES: Partial<Record<Post['title'], PostBodyBlock[]>> = {
-  "Designing auth that users don't hate": [
+/** Bodies are keyed by the post's stable `mark`, not its (localized) title. */
+const BODIES_EN: Partial<Record<PostMarkKind, PostBodyBlock[]>> = {
+  auth: [
     {
       type: 'lede',
       text:
@@ -46,7 +48,7 @@ export const POST_BODIES: Partial<Record<Post['title'], PostBodyBlock[]>> = {
       text: "The goal isn't a frictionless door. It's a door the user is happy to walk through.",
     },
   ],
-  "My 2FA implementation: what I'd change": [
+  '2fa': [
     {
       type: 'lede',
       text:
@@ -76,6 +78,81 @@ export const POST_BODIES: Partial<Record<Post['title'], PostBodyBlock[]>> = {
   ],
 };
 
-export const DEFAULT_POST_BODY: PostBodyBlock[] = [
-  { type: 'lede', text: 'Full text coming soon. This is a preview placeholder for the article body.' },
-];
+const BODIES_ES: Partial<Record<PostMarkKind, PostBodyBlock[]>> = {
+  auth: [
+    {
+      type: 'lede',
+      text:
+        'La pantalla de inicio de sesión es la recepción de tu producto. Es donde la curiosidad choca con la fricción — y donde la mayoría de los equipos pierde en silencio al 30% de los usuarios que pagó por adquirir.',
+    },
+    { type: 'h2', text: 'El problema del control de aduana' },
+    {
+      type: 'p',
+      text:
+        'La autenticación por defecto se siente como una aduana: un mostrador alto, una tabla con documentos y un extraño pidiendo papeles. El usuario no hizo nada malo, pero el ambiente sugiere sospecha. Podemos conservar la seguridad y perder la sospecha.',
+    },
+    { type: 'pull', text: 'La seguridad no es negociable. La hostilidad sí.' },
+    { type: 'h2', text: 'Tres cambios que nos dieron 18% más inicios de sesión' },
+    {
+      type: 'p',
+      text:
+        'Ninguno es ingenioso. Son lo mínimo indispensable que la mayoría de los equipos omite porque el flujo de autenticación no es responsabilidad de nadie en el equipo de diseño.',
+    },
+    {
+      type: 'list',
+      items: [
+        "Empieza con el verbo. 'Continuar con correo' funciona mejor que 'Correo electrónico' como etiqueta: le dice al usuario qué pasa después.",
+        'Validación en línea, pero tarde. Valida al salir del campo, no en cada tecla. Nadie quiere que le digan que su correo está mal mientras todavía lo escribe.',
+        "Perdona el typo. Si el usuario escribe 'gnail.com', ofrece 'gmail.com' como corrección de un toque. Vimos que el 4% de los inicios fallidos se recuperan así.",
+      ],
+    },
+    { type: 'h2', text: 'Lo que conservamos' },
+    {
+      type: 'p',
+      text:
+        'Autenticación de dos factores. Límites de intentos. Mensajes de error honestos que nombran el problema sin filtrar qué campo estaba mal. La fricción amable sigue siendo fricción — pero el usuario entiende por qué está ahí.',
+    },
+    {
+      type: 'p',
+      text: 'La meta no es una puerta sin fricción. Es una puerta que el usuario cruce con gusto.',
+    },
+  ],
+  '2fa': [
+    {
+      type: 'lede',
+      text:
+        'Construí mi propio 2FA para vnevarezt en 2022. Funcionó — pero la primera iteración fue vergonzosa. Esto es lo que haría diferente.',
+    },
+    { type: 'h2', text: 'El error: confiar en el timestamp' },
+    {
+      type: 'p',
+      text:
+        'Mi primera versión generaba códigos TOTP en el servidor y los enviaba por correo. Bien, hasta que el correo de un usuario llegó 90 segundos tarde y el código expiró en su bandeja. Confía en la app de autenticación del usuario, no en tu cola SMTP.',
+    },
+    { type: 'pull', text: 'Si no funciona offline, no es realmente 2FA.' },
+    { type: 'h2', text: 'Lo que haría hoy' },
+    {
+      type: 'list',
+      items: [
+        'WebAuthn primero, TOTP como respaldo. Las passkeys ganan por goleada en UX.',
+        'Códigos de recuperación como PDF imprimible, no como un toast de una sola vez.',
+        'Códigos de respaldo que se vean obviamente como códigos de respaldo: agrupados de cinco en cinco, monoespaciados, copiables.',
+      ],
+    },
+    {
+      type: 'p',
+      text:
+        "La lección no es 'usa una librería'. Es 'diseña el flujo de recuperación antes que el camino feliz'. Los usuarios siempre van a perder su dispositivo — tu trabajo es hacer que ese día sea sobrevivible.",
+    },
+  ],
+};
+
+const POST_BODIES: Record<Lang, Partial<Record<PostMarkKind, PostBodyBlock[]>>> = {
+  en: BODIES_EN,
+  es: BODIES_ES,
+};
+
+/** Falls back to the post's excerpt as a lede when no body exists yet. */
+export function getPostBody(lang: Lang, post: Post): PostBodyBlock[] {
+  return POST_BODIES[lang][post.mark] ?? [{ type: 'lede', text: post.excerpt }];
+}

@@ -5,7 +5,8 @@ import { SectionIntro } from '@/components/ui/SectionIntro/SectionIntro';
 import { SegmentedControl } from '@/components/ui/SegmentedControl/SegmentedControl';
 import { TagChip } from '@/components/ui/TagChip/TagChip';
 import { DEFAULT_PROJECT_DETAIL_MOCK, PROJECT_DETAILS_MOCK } from '@/data/projectDetails.mock';
-import { PROJECTS, PROJECT_CATEGORIES } from '@/data/projects';
+import { useProjects, PROJECT_CATEGORIES } from '@/data/projects';
+import { useT } from '@/i18n/useT';
 import { Writing } from '@/sections/Writing/Writing';
 import { WorkProjectDetail } from '@/sections/Work/WorkProjectDetail';
 import type { Project } from '@/types';
@@ -78,22 +79,25 @@ function ProjMini({ p, onOpen }: ProjMiniProps) {
 }
 
 export function Work() {
+  const t = useT();
+  const projects = useProjects();
   const [view, setView] = useState<'projects' | 'writing'>('projects');
   const [filter, setFilter] = useState('All');
   const [activeProject, setActiveProject] = useState<Project | null>(null);
-  const list = PROJECTS.filter((p) => filter === 'All' || p.cat.includes(filter));
+  const list = projects.filter((p) => filter === 'All' || p.cat.includes(filter));
 
   return (
     <div style={{ padding: 'var(--pad-y) var(--pad-x) var(--pad-b)' }}>
       <SectionIntro
-        kicker="02 · WORK"
-        title={view === 'projects' ? 'Portfolio' : 'Writing'}
+        kicker={t.work.kicker}
+        title={view === 'projects' ? t.work.portfolio : t.work.writing}
         action={
           <SegmentedControl
             options={['projects', 'writing'] as const}
             value={view}
             onChange={setView}
             label="Work view"
+            labelFor={(v) => (v === 'projects' ? t.work.viewProjects : t.work.viewWriting)}
           />
         }
       />
@@ -107,6 +111,7 @@ export function Work() {
               onChange={setFilter}
               label="Project category"
               size="sm"
+              labelFor={(c) => (c === 'All' ? t.work.all : c)}
             />
           </div>
 

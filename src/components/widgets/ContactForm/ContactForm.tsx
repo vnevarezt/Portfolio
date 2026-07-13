@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { ArrowIcon } from '@/components/icons/Icons';
 import { FormField } from '@/components/ui/FormField/FormField';
+import { useT } from '@/i18n/useT';
 
 export function ContactForm() {
+  const t = useT();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [msg, setMsg] = useState('');
@@ -38,17 +40,17 @@ export function ContactForm() {
           ✓
         </div>
         <div className="d" style={{ fontSize: 'var(--fs-17)', fontWeight: 500 }}>
-          Sent!
+          {t.form.sentTitle}
         </div>
         <div style={{ fontSize: 'var(--fs-13)', color: 'var(--fg-m)' }}>
-          I'll reply within 24h.
+          {t.form.sentNote}
         </div>
         <button
           className="btn"
           onClick={() => setSent(false)}
           style={{ marginTop: 4, padding: '8px 16px', fontSize: 'var(--fs-12)' }}
         >
-          Another
+          {t.form.another}
         </button>
       </div>
     );
@@ -62,18 +64,18 @@ export function ContactForm() {
       }}
       style={{ display: 'flex', flexDirection: 'column', gap: 10 }}
     >
-      <FormField label="Name" value={name} onChange={setName} required />
-      <FormField label="Email" type="email" value={email} onChange={setEmail} required />
+      <FormField label={t.form.name} value={name} onChange={setName} required />
+      <FormField label={t.form.email} type="email" value={email} onChange={setEmail} required />
       <FormField
-        label="Message"
+        label={t.form.message}
         value={msg}
         onChange={setMsg}
         area
-        placeholder="Your message…"
+        placeholder={t.form.messagePlaceholder}
         required
       />
       <button type="submit" className="btn p" style={{ justifyContent: 'center', marginTop: 2 }}>
-        Send <ArrowIcon size={13} />
+        {t.form.send} <ArrowIcon size={13} />
       </button>
     </form>
   );

@@ -2,6 +2,7 @@ import { type Dispatch, type SetStateAction, useEffect, useMemo, useState } from
 import { ArrowIcon, ChevronRightIcon, CloseIcon } from '@/components/icons/Icons';
 import { TagChip } from '@/components/ui/TagChip/TagChip';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { useT } from '@/i18n/useT';
 import type { Project } from '@/types';
 import type { ProjectDetailMock } from '@/data/projectDetails.mock';
 import styles from './WorkProjectDetailV6.module.css';
@@ -192,11 +193,12 @@ function DesktopLayout({
   activeScreenshot: string;
   onOpenLightbox: () => void;
 }) {
+  const t = useT();
   return (
     <>
       <aside className={styles.leftRail}>
         <div className={`m ${styles.breadcrumb}`}>
-          <span>WORK</span>
+          <span>{t.workDialog.work}</span>
           <span>/</span>
           <span className={styles.breadcrumbAccent}>02</span>
         </div>
@@ -215,10 +217,10 @@ function DesktopLayout({
 
         <div className={styles.railSection}>
           {[
-            ['Role', detail.role],
-            ['Timeline', detail.timeline],
-            ['Team', detail.team],
-            ['Status', detail.status],
+            [t.workDialog.role, detail.role],
+            [t.workDialog.timeline, detail.timeline],
+            [t.workDialog.team, detail.team],
+            [t.workDialog.status, detail.status],
           ].map(([label, value]) => (
             <div key={label}>
               <div className={styles.label}>{label}</div>
@@ -228,7 +230,7 @@ function DesktopLayout({
         </div>
 
         <div className={styles.railSection}>
-          <div className={styles.label}>Metrics</div>
+          <div className={styles.label}>{t.workDialog.metrics}</div>
           <div className={styles.metricsCompact}>
             {detail.metrics.map((metric) => (
               <div key={metric.k} className={styles.metricRow}>
@@ -240,7 +242,7 @@ function DesktopLayout({
         </div>
 
         <div className={styles.railSection}>
-          <div className={styles.label}>Stack</div>
+          <div className={styles.label}>{t.workDialog.stack}</div>
           <div className={styles.chips}>
             {project.stack.map((stackItem) => (
               <TagChip key={stackItem}>{stackItem}</TagChip>
@@ -268,7 +270,7 @@ function DesktopLayout({
                 />
               </>
             ) : (
-              <div className={styles.shotFallback}>NO IMAGE</div>
+              <div className={styles.shotFallback}>{t.workDialog.noImage}</div>
             )}
 
             <button type="button" onClick={goPrevious} disabled={!canNavigate} aria-label="Previous screenshot" className={`${styles.carouselNavBtn} ${styles.carouselNavPrev}`}>
@@ -282,7 +284,7 @@ function DesktopLayout({
             </button>
 
             <div className={`m ${styles.counterPill}`}>{screenshots.length ? `${currentIndex + 1} / ${screenshots.length}` : '0 / 0'}</div>
-            {activeScreenshot && <div className={styles.zoomHint}>Click to expand</div>}
+            {activeScreenshot && <div className={styles.zoomHint}>{t.workDialog.clickToExpand}</div>}
           </div>
 
           {screenshots.length > 1 && (
@@ -298,10 +300,10 @@ function DesktopLayout({
 
         <div className={styles.contentScroll}>
           <div className={styles.narrative}>
-            <CaseText title="Challenge" body={detail.challenge} />
-            <CaseText title="Approach" body={detail.approach} />
+            <CaseText title={t.workDialog.challenge} body={detail.challenge} />
+            <CaseText title={t.workDialog.approach} body={detail.approach} />
             <div>
-              <div className={styles.label} style={{ marginBottom: 10 }}>Outcomes</div>
+              <div className={styles.label} style={{ marginBottom: 10 }}>{t.workDialog.outcomes}</div>
               <ul className={styles.outcomeListAlt}>
                 {detail.outcomes.map((item) => (
                   <li key={item} className={styles.outcomeAlt}>
@@ -315,7 +317,7 @@ function DesktopLayout({
         </div>
 
         <footer className={styles.footerDesktop}>
-          <div className={`m ${styles.footerHint}`}>ESC TO CLOSE · ← → NAV</div>
+          <div className={`m ${styles.footerHint}`}>{t.workDialog.escNav}</div>
           <div className={styles.links}>
             {detail.links.map((linkItem, i) => {
               const isExternal = linkItem.href !== '#' && /^https?:\/\//.test(linkItem.href);
@@ -359,6 +361,7 @@ function MobileLayout({
   onTabChange: (tab: 'case' | 'snapshot' | 'metrics') => void;
   onOpenLightbox: () => void;
 }) {
+  const t = useT();
   const canNavigate = screenshots.length > 1;
   const activeScreenshot = screenshots[currentIndex] ?? screenshots[0] ?? '';
 
@@ -369,7 +372,7 @@ function MobileLayout({
           <CloseIcon size={16} />
         </button>
         <div className={`m ${styles.mobileBreadcrumb}`}>
-          <span>WORK</span>
+          <span>{t.workDialog.work}</span>
           <span>/</span>
           <span className={styles.mobileBreadcrumbAccent}>02</span>
         </div>
@@ -400,7 +403,7 @@ function MobileLayout({
               />
             </>
           ) : (
-            <div className={styles.shotFallback}>NO IMAGE</div>
+            <div className={styles.shotFallback}>{t.workDialog.noImage}</div>
           )}
           <button type="button" onClick={() => setCurrentIndex((prev) => (prev - 1 + screenshots.length) % screenshots.length)} disabled={!canNavigate} aria-label="Previous screenshot" className={`${styles.carouselNavBtn} ${styles.carouselNavPrev} ${styles.mobileNavBtn}`}>
             <span style={{ transform: 'rotate(180deg)', display: 'inline-flex' }}>
@@ -421,9 +424,9 @@ function MobileLayout({
         <div className={styles.mobileTabsWrap}>
           <div className={styles.mobileTabs} role="tablist" aria-label="Detail section tabs">
             {[
-              { id: 'case', label: 'Case' },
-              { id: 'snapshot', label: 'Snapshot' },
-              { id: 'metrics', label: 'Metrics' },
+              { id: 'case', label: t.workDialog.case },
+              { id: 'snapshot', label: t.workDialog.snapshot },
+              { id: 'metrics', label: t.workDialog.metrics },
             ].map((item) => (
               <button
                 key={item.id}
@@ -442,10 +445,10 @@ function MobileLayout({
         <div key={tab} className={`view-fade ${styles.mobileContent}`}>
           {tab === 'case' && (
             <div className={styles.mobileColumn}>
-              <CaseText title="Challenge" body={detail.challenge} />
-              <CaseText title="Approach" body={detail.approach} />
+              <CaseText title={t.workDialog.challenge} body={detail.challenge} />
+              <CaseText title={t.workDialog.approach} body={detail.approach} />
               <div>
-                <div className={styles.label} style={{ marginBottom: 8 }}>Outcomes</div>
+                <div className={styles.label} style={{ marginBottom: 8 }}>{t.workDialog.outcomes}</div>
                 <ul className={styles.outcomeListAlt}>
                   {detail.outcomes.map((item) => (
                     <li key={item} className={styles.outcomeAlt}>
@@ -456,7 +459,7 @@ function MobileLayout({
                 </ul>
               </div>
               <div>
-                <div className={styles.label} style={{ marginBottom: 8 }}>Stack</div>
+                <div className={styles.label} style={{ marginBottom: 8 }}>{t.workDialog.stack}</div>
                 <div className={styles.chips}>
                   {project.stack.map((stackItem) => (
                     <TagChip key={stackItem}>{stackItem}</TagChip>
@@ -469,10 +472,10 @@ function MobileLayout({
           {tab === 'snapshot' && (
             <div className={styles.mobileColumn}>
               {[
-                ['Role', detail.role],
-                ['Timeline', detail.timeline],
-                ['Team', detail.team],
-                ['Status', detail.status],
+                [t.workDialog.role, detail.role],
+                [t.workDialog.timeline, detail.timeline],
+                [t.workDialog.team, detail.team],
+                [t.workDialog.status, detail.status],
               ].map(([label, value]) => (
                 <div key={label} className={styles.mobileSnapshotRow}>
                   <div className={styles.label} style={{ marginBottom: 4 }}>{label}</div>

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { haptic } from 'ios-haptics';
 import { Clock } from '@/components/widgets/Clock/Clock';
+import { useT } from '@/i18n/useT';
 import { prefersReducedMotion, scrollBehavior } from '@/lib/motion';
 import { Hero } from '@/sections/Hero/Hero';
 import { About } from '@/sections/About/About';
@@ -29,7 +30,8 @@ function triggerHaptic() {
   haptic.confirm();
 }
 
-function StickyHeader({ tab }: { tab: string }) {
+function StickyHeader({ tab }: { tab: Tab }) {
+  const t = useT();
   return (
     <div
       className="main-sticky-header"
@@ -48,7 +50,7 @@ function StickyHeader({ tab }: { tab: string }) {
       }}
     >
       <div className="m" style={{ fontSize: 'var(--fs-9)', color: 'var(--fg-d)', letterSpacing: '0.2em' }}>
-        V<span style={{ color: 'var(--ac)' }}>NEVAREZ</span>T · {tab.toUpperCase()}
+        V<span style={{ color: 'var(--ac)' }}>NEVAREZ</span>T · {t.nav[tab].toUpperCase()}
       </div>
       <Clock />
     </div>

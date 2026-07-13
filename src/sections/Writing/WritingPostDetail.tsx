@@ -7,7 +7,9 @@ import {
   LinkIcon,
 } from '@/components/icons/Icons';
 import { Pill } from '@/components/ui/Pill/Pill';
-import { DEFAULT_POST_BODY, POST_BODIES, type PostBodyBlock } from '@/data/postDetails.mock';
+import { getPostBody, type PostBodyBlock } from '@/data/postDetails.mock';
+import { useLang } from '@/i18n/useLang';
+import { useT } from '@/i18n/useT';
 import type { Post } from '@/types';
 import styles from './WritingPostDetail.module.css';
 
@@ -19,6 +21,8 @@ interface WritingPostDetailProps {
 }
 
 export function WritingPostDetail({ post, all, onClose, onOpen }: WritingPostDetailProps) {
+  const t = useT();
+  const { lang } = useLang();
   const [progress, setProgress] = useState(0);
   const [copied, setCopied] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
@@ -47,8 +51,7 @@ export function WritingPostDetail({ post, all, onClose, onOpen }: WritingPostDet
     setProgress(max > 0 ? Math.min(100, (el.scrollTop / max) * 100) : 0);
   };
 
-  const body: PostBodyBlock[] =
-    POST_BODIES[post.title] ?? [{ type: 'lede', text: post.excerpt }, ...DEFAULT_POST_BODY.slice(1)];
+  const body: PostBodyBlock[] = getPostBody(lang, post);
   const related = all.filter((p) => p.title !== post.title).slice(0, 3);
   const hue = post.hue;
 
@@ -146,7 +149,7 @@ export function WritingPostDetail({ post, all, onClose, onOpen }: WritingPostDet
             </div>
 
             <div className={styles.heroInner}>
-              <div className={`m ${styles.kicker}`}>Essay · {post.date}</div>
+              <div className={`m ${styles.kicker}`}>{t.postDialog.essay} · {post.date}</div>
               <h1 id="art-title" className={`d ${styles.heroTitle}`}>
                 {post.title}
               </h1>
@@ -159,7 +162,7 @@ export function WritingPostDetail({ post, all, onClose, onOpen }: WritingPostDet
                 </div>
                 <div className={styles.bylineMeta}>
                   <div className={`d ${styles.bylineName}`}>Vicente Nevárez</div>
-                  <div className={`m ${styles.bylineHandle}`}>Developer · @vnevarezt</div>
+                  <div className={`m ${styles.bylineHandle}`}>{t.postDialog.role} · @vnevarezt</div>
                 </div>
                 <div className={styles.bylineRead}>
                   <ClockIcon size={13} />
@@ -176,14 +179,14 @@ export function WritingPostDetail({ post, all, onClose, onOpen }: WritingPostDet
 
             <div className={styles.endMark}>
               <span className={styles.endLine} />
-              <span className={`m ${styles.endLabel}`}>END</span>
+              <span className={`m ${styles.endLabel}`}>{t.postDialog.end}</span>
               <span className={styles.endLine} />
             </div>
           </article>
 
           {related.length > 0 && (
             <section className={styles.related}>
-              <div className={`m ${styles.relatedLabel}`}>Continue reading</div>
+              <div className={`m ${styles.relatedLabel}`}>{t.postDialog.continueReading}</div>
               <div className={styles.relatedGrid}>
                 {related.map((r) => (
                   <button
@@ -211,8 +214,8 @@ export function WritingPostDetail({ post, all, onClose, onOpen }: WritingPostDet
 
         <div className={styles.footer}>
           <div className={`m ${styles.footerHint}`}>
-            <kbd className={styles.kbd}>ESC</kbd>
-            <span className={styles.kbdLabel}>to close</span>
+            <kbd className={styles.kbd}>{t.postDialog.esc}</kbd>
+            <span className={styles.kbdLabel}>{t.postDialog.toClose}</span>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import type { Post } from '@/types';
+import { useLang } from '@/i18n/useLang';
 
-export const POSTS: Post[] = [
+const POSTS_EN: Post[] = [
   {
     title: "Designing auth that users don't hate",
     date: 'Mar 2026',
@@ -22,3 +23,31 @@ export const POSTS: Post[] = [
     hue: 45,
   },
 ];
+
+const POSTS_ES: Post[] = [
+  {
+    title: 'Diseñar autenticación que no odien los usuarios',
+    date: 'Mar 2026',
+    read: '6 min',
+    cat: 'UX',
+    mark: 'auth',
+    excerpt:
+      'Por qué la pantalla de inicio de sesión típica se siente como pasar por aduana, y tres cambios pequeños que hacen sonreír al usuario en vez de suspirar.',
+    hue: 130,
+  },
+  {
+    title: 'Mi implementación de 2FA: qué cambiaría',
+    date: 'Feb 2026',
+    read: '9 min',
+    cat: 'Backend',
+    mark: '2fa',
+    excerpt:
+      'Lo que aprendí al construir mi propio 2FA para vnevarezt, incluyendo la vergonzosa primera iteración.',
+    hue: 45,
+  },
+];
+
+export function usePosts() {
+  const { lang } = useLang();
+  return lang === 'es' ? POSTS_ES : POSTS_EN;
+}

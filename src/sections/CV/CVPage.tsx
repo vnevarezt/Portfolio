@@ -1,7 +1,10 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { ArrowIcon, DownloadIcon } from '@/components/icons/Icons';
+import { LanguageToggle } from '@/i18n/LanguageToggle';
+import { useLang } from '@/i18n/useLang';
+import { useT } from '@/i18n/useT';
 import { CVSheet } from './CVSheet';
-import { CV_PDF_FILENAME, CV_PDF_PATH } from './cv.data';
+import { cvPdfFilename, cvPdfPath } from './cv.data';
 import styles from './CVPage.module.css';
 
 /** US Letter at CSS 96dpi. Must match the .sheet dimensions in CVSheet. */
@@ -51,6 +54,8 @@ export function CVPage() {
   const isBare =
     typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('print');
   const { stageRef, scale } = useFitScale();
+  const { lang } = useLang();
+  const t = useT();
 
   useEffect(() => {
     const previous = document.title;
@@ -76,19 +81,20 @@ export function CVPage() {
           <span style={{ display: 'inline-flex', transform: 'rotate(225deg)' }}>
             <ArrowIcon size={12} />
           </span>
-          Back to site
+          {t.cv.backToSite}
         </a>
         <span className={`m ${styles.toolbarTitle}`}>
-          V<span style={{ color: 'var(--ac)' }}>NEVAREZ</span>T · CV
+          V<span style={{ color: 'var(--ac)' }}>NEVAREZ</span>T · {t.cv.label}
         </span>
         <div className={styles.toolbarActions}>
+          <LanguageToggle />
           <a
-            href={CV_PDF_PATH}
-            download={CV_PDF_FILENAME}
+            href={cvPdfPath(lang)}
+            download={cvPdfFilename(lang)}
             className="btn p"
             style={{ fontSize: 'var(--fs-13)' }}
           >
-            Download PDF <DownloadIcon size={13} />
+            {t.cv.downloadPDF} <DownloadIcon size={13} />
           </a>
         </div>
       </header>

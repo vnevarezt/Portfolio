@@ -1,27 +1,35 @@
 import { DownloadIcon } from '@/components/icons/Icons';
 import { CtaBanner } from '@/components/ui/CtaBanner/CtaBanner';
-import { CV_PDF_FILENAME, CV_PDF_PATH } from '@/sections/CV/cv.data';
 import { Pill } from '@/components/ui/Pill/Pill';
 import { SectionIntro, Accent } from '@/components/ui/SectionIntro/SectionIntro';
 import { TagChip } from '@/components/ui/TagChip/TagChip';
-import { EXPERIENCE, EXPERIENCE_META } from '@/data/experience';
+import { useLang } from '@/i18n/useLang';
+import { useT } from '@/i18n/useT';
+import { cvPdfFilename, cvPdfPath } from '@/sections/CV/cv.data';
+import { useExperience } from '@/data/experience';
 
 interface ExperienceProps {
   embedded?: boolean;
 }
 
 export function Experience({ embedded = false }: ExperienceProps) {
+  const t = useT();
+  const { lang } = useLang();
+  const { experience, meta: metaList } = useExperience();
+
   const content = (
     <>
       <SectionIntro
-        kicker={embedded ? '02 · BACKGROUND' : '04 · BACKGROUND'}
-        meta="4 chapters · 6+ years"
+        kicker={`${embedded ? '02' : '04'} · ${t.experience.kicker}`}
+        meta={t.experience.meta}
         title={
           <>
-            A timeline of <Accent>becoming</Accent>.
+            {t.experience.titlePre}
+            <Accent>{t.experience.titleAccent}</Accent>
+            {t.experience.titlePost}
           </>
         }
-        lede="From writing my first tag at fifteen to shipping apps that people actually use — each step taught me something worth keeping."
+        lede={t.experience.lede}
       />
 
       {/* Timeline */}
@@ -49,8 +57,8 @@ export function Experience({ embedded = false }: ExperienceProps) {
             gap: 20,
           }}
         >
-          {EXPERIENCE.map((e, i) => {
-            const meta = EXPERIENCE_META[i];
+          {experience.map((e, i) => {
+            const meta = metaList[i];
             const isNow = i === 0;
             return (
               <li
@@ -146,7 +154,7 @@ export function Experience({ embedded = false }: ExperienceProps) {
                         >
                           {e.role}
                         </div>
-                        {isNow && <Pill variant="accent">NOW</Pill>}
+                        {isNow && <Pill variant="accent">{t.experience.now}</Pill>}
                       </div>
                       <div style={{ fontSize: 'var(--fs-12)', color: 'var(--fg-m)', marginTop: 3 }}>
                         {e.org}
@@ -175,8 +183,8 @@ export function Experience({ embedded = false }: ExperienceProps) {
                     {e.desc}
                   </p>
                   <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
-                    {meta.tags.map((t) => (
-                      <TagChip key={t}>{t}</TagChip>
+                    {meta.tags.map((tag) => (
+                      <TagChip key={tag}>{tag}</TagChip>
                     ))}
                   </div>
                 </div>
@@ -186,20 +194,17 @@ export function Experience({ embedded = false }: ExperienceProps) {
         </ol>
       </div>
 
-      <CtaBanner
-        title="Need the full story?"
-        sub="Download a one-page CV with every project and stack."
-      >
+      <CtaBanner title={t.experience.ctaTitle} sub={t.experience.ctaSub}>
         <a href="/cv" className="btn" style={{ fontSize: 'var(--fs-13)' }}>
-          View CV
+          {t.common.viewCV}
         </a>
         <a
-          href={CV_PDF_PATH}
-          download={CV_PDF_FILENAME}
+          href={cvPdfPath(lang)}
+          download={cvPdfFilename(lang)}
           className="btn p"
           style={{ fontSize: 'var(--fs-13)' }}
         >
-          Download CV <DownloadIcon size={13} />
+          {t.common.downloadCV} <DownloadIcon size={13} />
         </a>
       </CtaBanner>
     </>

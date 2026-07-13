@@ -6,7 +6,8 @@ import { FeaturedCard } from '@/components/ui/FeaturedCard/FeaturedCard';
 import { Pill } from '@/components/ui/Pill/Pill';
 import { SectionIntro, Accent } from '@/components/ui/SectionIntro/SectionIntro';
 import { SegmentedControl } from '@/components/ui/SegmentedControl/SegmentedControl';
-import { POSTS } from '@/data/posts';
+import { usePosts } from '@/data/posts';
+import { useT } from '@/i18n/useT';
 import type { Post } from '@/types';
 import { WritingPostDetail } from './WritingPostDetail';
 
@@ -15,10 +16,12 @@ interface WritingProps {
 }
 
 export function Writing({ embedded = false }: WritingProps) {
+  const t = useT();
+  const posts = usePosts();
   const [filter, setFilter] = useState('All');
   const [activePost, setActivePost] = useState<Post | null>(null);
-  const cats = ['All', ...new Set(POSTS.map((p) => p.cat))];
-  const list = POSTS.filter((p) => filter === 'All' || p.cat === filter);
+  const cats = ['All', ...new Set(posts.map((p) => p.cat))];
+  const list = posts.filter((p) => filter === 'All' || p.cat === filter);
   const [feat, ...rest] = list;
 
   const openPost = (post: Post) => setActivePost(post);
@@ -27,14 +30,16 @@ export function Writing({ embedded = false }: WritingProps) {
   const content = (
     <>
       <SectionIntro
-        kicker={embedded ? undefined : '05 · WRITING'}
-        meta={embedded ? undefined : `${POSTS.length} essays · updated weekly`}
+        kicker={embedded ? undefined : t.writing.kicker}
+        meta={embedded ? undefined : t.writing.meta(posts.length)}
         title={
           <>
-            Notes from <Accent>the edit</Accent>.
+            {t.writing.titlePre}
+            <Accent>{t.writing.titleAccent}</Accent>
+            {t.writing.titlePost}
           </>
         }
-        lede="Short essays on design, code, and the in-between. Opinions are mine; typos are too."
+        lede={t.writing.lede}
       />
 
       <div style={{ marginBottom: 20 }}>
@@ -43,6 +48,7 @@ export function Writing({ embedded = false }: WritingProps) {
           value={filter}
           onChange={setFilter}
           label="Post category"
+          labelFor={(c) => (c === 'All' ? t.work.all : c)}
         />
       </div>
 
@@ -56,7 +62,7 @@ export function Writing({ embedded = false }: WritingProps) {
             pills={
               <>
                 <Pill hue={feat.hue}>{feat.cat}</Pill>
-                <Pill variant="ghost">Featured</Pill>
+                <Pill variant="ghost">{t.writing.featured}</Pill>
               </>
             }
           >
@@ -92,7 +98,7 @@ export function Writing({ embedded = false }: WritingProps) {
                 ·
               </span>
               <span className="m" style={{ color: 'var(--fg-d)' }}>
-                {feat.read} read
+                {feat.read}
               </span>
               <span
                 style={{
@@ -104,7 +110,7 @@ export function Writing({ embedded = false }: WritingProps) {
                   fontSize: 'var(--fs-12)',
                 }}
               >
-                Read <ArrowIcon size={12} />
+                {t.writing.read} <ArrowIcon size={12} />
               </span>
             </div>
           </FeaturedCard>
@@ -182,20 +188,20 @@ export function Writing({ embedded = false }: WritingProps) {
         </div>
       </div>
 
-      <CtaBanner title="New essay every other week." sub="No spam. Unsubscribe with one click.">
+      <CtaBanner title={t.writing.subscribeTitle} sub={t.writing.subscribeSub}>
         <form
           onSubmit={(e) => e.preventDefault()}
           style={{ display: 'flex', gap: 6, flexWrap: 'wrap', width: '100%', maxWidth: 380 }}
         >
           <input
             type="email"
-            placeholder="you@example.com"
-            aria-label="Email address"
+            placeholder={t.writing.emailPlaceholder}
+            aria-label={t.form.email}
             className="field"
             style={{ flex: '1 1 160px', padding: '9px 12px' }}
           />
           <button type="submit" className="btn p" style={{ fontSize: 'var(--fs-12)', flexShrink: 0 }}>
-            Subscribe
+            {t.writing.subscribe}
           </button>
         </form>
       </CtaBanner>
@@ -203,7 +209,7 @@ export function Writing({ embedded = false }: WritingProps) {
   );
 
   const dialog = activePost ? (
-    <WritingPostDetail post={activePost} all={POSTS} onClose={closePost} onOpen={openPost} />
+    <WritingPostDetail post={activePost} all={posts} onClose={closePost} onOpen={openPost} />
   ) : null;
 
   if (embedded)

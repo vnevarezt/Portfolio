@@ -1,6 +1,7 @@
 import type { Project } from '@/types';
+import { useLang } from '@/i18n/useLang';
 
-export const PROJECTS: Project[] = [
+const PROJECTS_EN: Project[] = [
   {
     title: 'HydroSense',
     cat: 'Android',
@@ -38,7 +39,25 @@ export const PROJECTS: Project[] = [
   },
 ];
 
+const DESC_ES: Record<string, string> = {
+  HydroSense:
+    'Monitoreo hidropónico de extremo a extremo: firmware ESP32 → API REST → app Android para pH, TDS y temperatura en tiempo real.',
+  'Minecraft Admin Suite':
+    'Administración multiplataforma de servidores Minecraft: panel web Express + EJS junto a una app compañera en React Native (Expo).',
+  Zoop:
+    'Red social con geolocalización en Google Play que conecta clientes con trabajadores cercanos mediante publicaciones, categorías y mensajería directa.',
+  Algeb:
+    'Calculadora Android para inversas de matrices, aritmética de números complejos y sistemas de ecuaciones lineales.',
+};
+
+const PROJECTS_ES: Project[] = PROJECTS_EN.map((p) => ({ ...p, desc: DESC_ES[p.title] ?? p.desc }));
+
+export function useProjects() {
+  const { lang } = useLang();
+  return lang === 'es' ? PROJECTS_ES : PROJECTS_EN;
+}
+
 export const PROJECT_CATEGORIES: readonly string[] = [
   'All',
-  ...Array.from(new Set(PROJECTS.map((p) => p.cat))).sort((a, b) => a.localeCompare(b)),
+  ...Array.from(new Set(PROJECTS_EN.map((p) => p.cat))).sort((a, b) => a.localeCompare(b)),
 ];

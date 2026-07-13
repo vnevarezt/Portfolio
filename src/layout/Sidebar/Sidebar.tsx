@@ -1,6 +1,8 @@
 import { Monogram } from '@/components/marks/Monogram';
 import { GitHubIcon, LinkedInIcon, XIcon, MailIcon, ArrowIcon } from '@/components/icons/Icons';
 import { PulseDot } from '@/components/ui/PulseDot/PulseDot';
+import { LanguageToggle } from '@/i18n/LanguageToggle';
+import { useT } from '@/i18n/useT';
 import { CONTACT_INFO, SOCIAL_LINKS } from '@/data/social';
 
 interface SidebarProps {
@@ -8,7 +10,7 @@ interface SidebarProps {
   onTabChange: (tab: string) => void;
 }
 
-const TABS = ['Home', 'About', 'Work', 'Contact'];
+const TABS = ['Home', 'About', 'Work', 'Contact'] as const;
 
 const SOCIAL_ICONS: Record<string, React.ReactNode> = {
   GitHub: <GitHubIcon size={14} />,
@@ -17,6 +19,7 @@ const SOCIAL_ICONS: Record<string, React.ReactNode> = {
 };
 
 export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
+  const t = useT();
   return (
     <aside
       style={{
@@ -44,8 +47,12 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
           Vicente Nevárez
         </div>
         <div style={{ fontSize: 'var(--fs-12)', color: 'var(--fg-m)', marginTop: 6 }}>
-          vnevarezt · Software dev
+          vnevarezt · {t.common.softwareDev}
         </div>
+      </div>
+
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <LanguageToggle />
       </div>
 
       <div style={{ height: 1, background: 'var(--br)' }} />
@@ -57,31 +64,31 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
       >
         <PulseDot />
         <div style={{ fontSize: 'var(--fs-12)', lineHeight: 1.3 }}>
-          <div style={{ fontWeight: 500 }}>Available for work</div>
+          <div style={{ fontWeight: 500 }}>{t.common.available}</div>
           <div className="m" style={{ fontSize: 'var(--fs-9)', color: 'var(--fg-d)' }}>
-            Spring 2026 · remote
+            {t.common.availabilityNote}
           </div>
         </div>
       </div>
 
       {/* Nav */}
       <nav style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-        {TABS.map((t, i) => (
+        {TABS.map((tab, i) => (
           <button
-            key={t}
-            onClick={() => onTabChange(t)}
-            aria-current={activeTab === t ? 'page' : undefined}
+            key={tab}
+            onClick={() => onTabChange(tab)}
+            aria-current={activeTab === tab ? 'page' : undefined}
             style={{
               textAlign: 'left',
               padding: '11px 16px',
               border: 'none',
               borderRadius: 10,
               cursor: 'pointer',
-              background: activeTab === t ? 'var(--ac-s)' : 'transparent',
-              color: activeTab === t ? 'var(--ac)' : 'var(--fg-m)',
+              background: activeTab === tab ? 'var(--ac-s)' : 'transparent',
+              color: activeTab === tab ? 'var(--ac)' : 'var(--fg-m)',
               fontFamily: 'var(--font-b)',
               fontSize: 'var(--fs-13)',
-              fontWeight: activeTab === t ? 500 : 400,
+              fontWeight: activeTab === tab ? 500 : 400,
               display: 'flex',
               alignItems: 'center',
               gap: 12,
@@ -92,13 +99,13 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
               className="m"
               style={{
                 fontSize: 'var(--fs-9)',
-                color: activeTab === t ? 'var(--ac)' : 'var(--fg-d)',
+                color: activeTab === tab ? 'var(--ac)' : 'var(--fg-d)',
                 width: 16,
               }}
             >
               0{i + 1}
             </span>
-            {t}
+            {t.nav[tab]}
           </button>
         ))}
       </nav>
@@ -130,7 +137,7 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
         className="btn p"
         style={{ justifyContent: 'center', padding: '10px 14px', fontSize: 'var(--fs-13)' }}
       >
-        Hire me <ArrowIcon size={12} />
+        {t.common.hireMe} <ArrowIcon size={12} />
       </a>
 
       {/* Footer */}

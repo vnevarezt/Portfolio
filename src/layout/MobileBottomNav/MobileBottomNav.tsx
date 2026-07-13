@@ -5,12 +5,13 @@ import {
   BriefcaseIcon,
   MailIcon,
 } from '@/components/icons/Icons';
+import { useT } from '@/i18n/useT';
 
 const TABS = [
-  { key: 'Home', label: 'Home', Icon: HomeIcon },
-  { key: 'About', label: 'About', Icon: UserIcon },
-  { key: 'Work', label: 'Work', Icon: BriefcaseIcon },
-  { key: 'Contact', label: 'Contact', Icon: MailIcon },
+  { key: 'Home', Icon: HomeIcon },
+  { key: 'About', Icon: UserIcon },
+  { key: 'Work', Icon: BriefcaseIcon },
+  { key: 'Contact', Icon: MailIcon },
 ] as const;
 
 interface MobileBottomNavProps {
@@ -19,6 +20,7 @@ interface MobileBottomNavProps {
 }
 
 export function MobileBottomNav({ activeTab, onTabChange }: MobileBottomNavProps) {
+  const t = useT();
   const navRef = useRef<HTMLElement>(null);
   const [navWidth, setNavWidth] = useState(0);
   const [dragX, setDragX] = useState(0);
@@ -164,7 +166,7 @@ export function MobileBottomNav({ activeTab, onTabChange }: MobileBottomNavProps
             }}
           >
             <Icon size={17} />
-            <span>{tab.label}</span>
+            <span>{t.nav[tab.key]}</span>
           </button>
         );
       })}

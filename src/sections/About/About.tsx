@@ -1,20 +1,12 @@
 import { SectionIntro } from '@/components/ui/SectionIntro/SectionIntro';
+import { useT } from '@/i18n/useT';
 import { Experience } from '@/sections/Experience/Experience';
 
-const HIGHLIGHTS = [
-  { title: 'Product Mindset', desc: 'Technology decisions based on impact and usability.' },
-  {
-    title: 'Mobile, Web & UI Design',
-    desc: 'Flutter, React, and polished interface systems with strong UX quality.',
-  },
-  { title: 'Backend Engineering', desc: 'Node.js, TypeScript, API design, and integrations.' },
-  { title: 'Data & Cloud', desc: 'Firebase, SQL, and AWS-connected service workflows.' },
-];
-
 export function About() {
+  const t = useT();
   return (
     <div style={{ padding: 'var(--pad-y) var(--pad-x) var(--pad-b)' }}>
-      <SectionIntro kicker="01 · ABOUT" title="About Me" />
+      <SectionIntro kicker={t.about.kicker} title={t.about.title} />
 
       <p
         style={{
@@ -25,9 +17,9 @@ export function About() {
           maxWidth: 680,
         }}
       >
-        I&apos;m <span style={{ color: 'var(--ac)' }}>Vicente</span>, a Computer Engineer focused on
-        building useful digital products with clean interfaces, solid architecture, and a clear
-        user-first mindset.
+        {t.about.introPre}
+        <span style={{ color: 'var(--ac)' }}>Vicente</span>
+        {t.about.introPost}
       </p>
       <p
         style={{
@@ -38,10 +30,7 @@ export function About() {
           maxWidth: 680,
         }}
       >
-        I enjoy moving between mobile apps, web platforms, backend APIs, and data-driven features.
-        I care about solving real problems, writing maintainable code, and collaborating with teams
-        that value ownership, clarity, and continuous learning. I&apos;m especially drawn to crafting
-        high-quality interface design that feels clear, consistent, and purposeful.
+        {t.about.body}
       </p>
 
       <div
@@ -52,12 +41,12 @@ export function About() {
           marginTop: 28,
         }}
       >
-        {HIGHLIGHTS.map((h) => (
-          <div key={h.title} className="card" style={{ padding: 'var(--space-4)' }}>
+        {t.about.cards.map((c) => (
+          <div key={c.title} className="card" style={{ padding: 'var(--space-4)' }}>
             <div className="d" style={{ fontSize: 'var(--fs-14)', fontWeight: 500, marginBottom: 4 }}>
-              {h.title}
+              {c.title}
             </div>
-            <div style={{ fontSize: 'var(--fs-12)', color: 'var(--fg-m)' }}>{h.desc}</div>
+            <div style={{ fontSize: 'var(--fs-12)', color: 'var(--fg-m)' }}>{c.desc}</div>
           </div>
         ))}
       </div>

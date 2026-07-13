@@ -6,6 +6,8 @@ interface SegmentedControlProps<T extends string> {
   onChange: (value: T) => void;
   label: string;
   size?: 'sm' | 'md';
+  /** Display label for an option (e.g. localized); values stay stable. */
+  labelFor?: (option: T) => string;
 }
 
 export function SegmentedControl<T extends string>({
@@ -14,6 +16,7 @@ export function SegmentedControl<T extends string>({
   onChange,
   label,
   size = 'md',
+  labelFor,
 }: SegmentedControlProps<T>) {
   return (
     <div
@@ -31,7 +34,7 @@ export function SegmentedControl<T extends string>({
             className={`${styles.btn} ${isActive ? `accent-surface ${styles.active}` : ''}`}
             onClick={() => onChange(option)}
           >
-            {option}
+            {labelFor ? labelFor(option) : option}
           </button>
         );
       })}

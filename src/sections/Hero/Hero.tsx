@@ -1,6 +1,7 @@
 import { Clock } from '@/components/widgets/Clock/Clock';
 import { ArrowIcon, ChevronRightIcon, DownloadIcon } from '@/components/icons/Icons';
 import { Pill } from '@/components/ui/Pill/Pill';
+import { useT } from '@/i18n/useT';
 import { HeroMeshBackground } from './mesh/HeroMeshBackground';
 
 interface HeroProps {
@@ -8,6 +9,7 @@ interface HeroProps {
 }
 
 export function Hero({ onNavigate }: HeroProps) {
+  const t = useT();
   return (
     <div
       className="hero-root"
@@ -39,7 +41,7 @@ export function Hero({ onNavigate }: HeroProps) {
       {/* Zone 1 — Availability (top) */}
       <div className="hero-avail">
         <Pill variant="accent" pulse>
-          Available
+          {t.common.available}
         </Pill>
 
         <span
@@ -51,7 +53,7 @@ export function Hero({ onNavigate }: HeroProps) {
             textTransform: 'uppercase',
           }}
         >
-          Spring 2026 · remote
+          {t.common.availabilityNote}
         </span>
 
         <span
@@ -87,19 +89,20 @@ export function Hero({ onNavigate }: HeroProps) {
             lineHeight: 1.55,
           }}
         >
-          Developer & interface designer — turning complex ideas into{' '}
-          <em style={{ color: 'var(--ac)', fontStyle: 'italic' }}>calm, intuitive software</em>.
+          {t.hero.taglinePre}
+          <em style={{ color: 'var(--ac)', fontStyle: 'italic' }}>{t.hero.taglineAccent}</em>
+          {t.hero.taglinePost}
         </p>
 
         <div className="hero-ctas" style={{ marginTop: 'clamp(20px, 3vw, 32px)' }}>
           <button className="btn p" onClick={() => onNavigate?.('Contact')}>
-            Get in touch <ArrowIcon size={13} />
+            {t.hero.getInTouch} <ArrowIcon size={13} />
           </button>
           <button className="btn" onClick={() => onNavigate?.('Work')}>
-            View work <ChevronRightIcon size={13} />
+            {t.hero.viewWork} <ChevronRightIcon size={13} />
           </button>
           <a href="/cv" className="btn">
-            CV <DownloadIcon size={13} />
+            {t.common.cv} <DownloadIcon size={13} />
           </a>
         </div>
       </div>
@@ -108,10 +111,10 @@ export function Hero({ onNavigate }: HeroProps) {
       <dl className="hero-spec">
         {(
           [
-            ['Based', 'Mexico · remote'],
-            ['Focus', 'Web · Android'],
-            ['Since', '2018'],
-            ['Stack', 'React · Node'],
+            [t.hero.spec.based, t.hero.specValues.based],
+            [t.hero.spec.focus, t.hero.specValues.focus],
+            [t.hero.spec.since, t.hero.specValues.since],
+            [t.hero.spec.stack, t.hero.specValues.stack],
           ] as const
         ).map(([k, v], i) => (
           <div key={k} className="hero-spec-item">
