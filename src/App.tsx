@@ -1,5 +1,7 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { ThemeProvider } from '@/context/ThemeContext';
+import { LanguageProvider } from '@/i18n/LanguageProvider';
+import { LanguageToggle } from '@/i18n/LanguageToggle';
 import { Sidebar } from '@/layout/Sidebar/Sidebar';
 import { MainPanel } from '@/layout/MainPanel/MainPanel';
 import { MobileBottomNav } from '@/layout/MobileBottomNav/MobileBottomNav';
@@ -50,6 +52,7 @@ function Portfolio() {
           overflow: 'hidden',
         }}
       >
+        <LanguageToggle floating />
         <div
           style={{
             flex: 1,
@@ -85,19 +88,19 @@ function Portfolio() {
 export default function App() {
   const pathname = usePathname();
 
-  if (isCVRoute(pathname)) {
-    return (
-      <ThemeProvider>
-        <Suspense fallback={null}>
-          <CVPage />
-        </Suspense>
-      </ThemeProvider>
-    );
-  }
-
   return (
     <ThemeProvider>
-      {isLinksRoute(pathname) ? <LinksPage /> : <Portfolio />}
+      <LanguageProvider>
+        {isCVRoute(pathname) ? (
+          <Suspense fallback={null}>
+            <CVPage />
+          </Suspense>
+        ) : isLinksRoute(pathname) ? (
+          <LinksPage />
+        ) : (
+          <Portfolio />
+        )}
+      </LanguageProvider>
     </ThemeProvider>
   );
 }
