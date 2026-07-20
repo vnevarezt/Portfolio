@@ -1,8 +1,10 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { ArrowIcon, DownloadIcon } from '@/components/icons/Icons';
 import { LanguageToggle } from '@/i18n/LanguageToggle';
 import { useLang } from '@/i18n/useLang';
+import { localePath } from '@/i18n/routing';
 import { useT } from '@/i18n/useT';
+import { useSeo } from '@/seo/useSeo';
 import { CVSheet } from './CVSheet';
 import { cvPdfFilename, cvPdfPath } from './cv.data';
 import styles from './CVPage.module.css';
@@ -57,13 +59,7 @@ export function CVPage() {
   const { lang } = useLang();
   const t = useT();
 
-  useEffect(() => {
-    const previous = document.title;
-    document.title = 'CV — Vicente Nevárez';
-    return () => {
-      document.title = previous;
-    };
-  }, []);
+  useSeo('/cv', lang, !isBare);
 
   // Bare mode: only the sheet at natural size (used by the PDF generator).
   if (isBare) {
@@ -77,7 +73,7 @@ export function CVPage() {
   return (
     <div className={styles.page}>
       <header className={styles.toolbar}>
-        <a href="/" className={styles.back}>
+        <a href={localePath(lang, '/')} className={styles.back}>
           <span style={{ display: 'inline-flex', transform: 'rotate(225deg)' }}>
             <ArrowIcon size={12} />
           </span>

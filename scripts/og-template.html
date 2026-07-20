@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --bg: #0c0c0e;
+        --fg: #f0f0f2;
+        --fg-m: rgba(240, 240, 242, 0.58);
+        --fg-d: rgba(240, 240, 242, 0.3);
+        --ac: oklch(80% 0.17 130);
+        --br: rgba(255, 255, 255, 0.08);
+      }
+      html,
+      body {
+        width: 1200px;
+        height: 630px;
+      }
+      .card {
+        position: relative;
+        width: 1200px;
+        height: 630px;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: 'Space Grotesk', sans-serif;
+        overflow: hidden;
+        padding: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      /* dot grid */
+      .grid {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1.2px, transparent 1.2px);
+        background-size: 34px 34px;
+        mask-image: linear-gradient(115deg, #000 0%, transparent 70%);
+        -webkit-mask-image: linear-gradient(115deg, #000 0%, transparent 70%);
+      }
+      /* accent glow */
+      .glow {
+        position: absolute;
+        right: -160px;
+        bottom: -220px;
+        width: 620px;
+        height: 620px;
+        background: radial-gradient(circle, oklch(80% 0.17 130 / 0.22), transparent 62%);
+        filter: blur(10px);
+      }
+      .row {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .eyebrow {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 21px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--fg-d);
+      }
+      .avail {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 20px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--fg-m);
+        border: 1px solid var(--br);
+        border-radius: 999px;
+        padding: 11px 22px;
+      }
+      .dot {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: var(--ac);
+        box-shadow: 0 0 14px oklch(80% 0.17 130 / 0.9);
+      }
+      .center {
+        position: relative;
+        z-index: 1;
+      }
+      h1 {
+        font-size: 148px;
+        font-weight: 500;
+        letter-spacing: -0.045em;
+        line-height: 0.9;
+      }
+      h1 .period {
+        color: var(--ac);
+      }
+      .role {
+        margin-top: 30px;
+        font-size: 40px;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+        color: var(--fg-m);
+      }
+      .role em {
+        font-style: italic;
+        color: var(--ac);
+      }
+      .domain {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 26px;
+        letter-spacing: 0.08em;
+        color: var(--fg);
+      }
+      .domain .slash {
+        color: var(--ac);
+      }
+      .tags {
+        display: inline-flex;
+        gap: 12px;
+      }
+      .tag {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 19px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--fg-m);
+        border: 1px solid var(--br);
+        border-radius: 8px;
+        padding: 8px 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="grid"></div>
+      <div class="glow"></div>
+
+      <div class="row">
+        <div class="eyebrow">Portfolio · 2026</div>
+        <div class="avail"><span class="dot"></span>Available for work</div>
+      </div>
+
+      <div class="center">
+        <h1>Vicente Nevárez<span class="period">.</span></h1>
+        <div class="role">Developer &amp; <em>interface designer</em></div>
+      </div>
+
+      <div class="row">
+        <div class="domain">vnevarezt<span class="slash">.</span>com</div>
+        <div class="tags">
+          <span class="tag">React</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">UI / UX</span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -10,6 +10,16 @@ export default defineConfig({
   build: {
     target: 'es2022',
     cssTarget: 'chrome111',
+    rollupOptions: {
+      output: {
+        // Split React into its own chunk so it stays cached across app deploys.
+        manualChunks(id) {
+          if (/node_modules\/(react|react-dom|scheduler)\//.test(id)) {
+            return 'vendor-react';
+          }
+        },
+      },
+    },
   },
   server: { port: 3000 },
 });

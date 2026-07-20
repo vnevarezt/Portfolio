@@ -17,6 +17,9 @@ import {
   XIcon,
 } from '@/components/icons/Icons';
 import { Monogram } from '@/components/marks/Monogram';
+import { useLang } from '@/i18n/useLang';
+import { localePath } from '@/i18n/routing';
+import { useSeo } from '@/seo/useSeo';
 import { VCARD } from '@/data/vcard';
 import styles from './LinksPage.module.css';
 
@@ -39,6 +42,8 @@ function useMadridClock(): string {
 }
 
 export function LinksPage() {
+  const { lang } = useLang();
+  useSeo('/me', lang);
   return (
     <div className={styles.shell}>
       <div className={`gbg ${styles.bgGrid}`} />
@@ -68,19 +73,19 @@ export function LinksPage() {
               icon={<GlobeIcon size={17} />}
               label="vnevarezt.com"
               sub="Portfolio · projects · about"
-              href="/"
+              href={localePath(lang, '/')}
             />
             <SecondaryLink
               icon={<PenIcon size={17} />}
               label="The blog"
               sub="Notes on design & code"
-              href="/"
+              href={localePath(lang, '/')}
             />
             <SecondaryLink
               icon={<DownloadIcon size={17} />}
               label="Download CV"
               sub="PDF · 2026"
-              href="#"
+              href={localePath(lang, '/cv')}
             />
           </div>
         </section>

@@ -1,37 +1,42 @@
 import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import { LanguageContext } from './languageContext';
 import type { Lang } from './types';
+import { baseRouteFromPath, langFromPath, localePath, navigate } from './routing';
 
-const STORAGE_KEY = 'lang';
-
-function isLang(value: string | null): value is Lang {
-  return value === 'en' || value === 'es';
-}
-
-/** ?lang= wins (used by the CV PDF generator), then a stored choice, then English. */
-function initialLang(): Lang {
+/**
+ * The active language is derived from the URL so each language is crawlable at
+ * its own address (see ./routing). `?lang=` still wins because the CV PDF
+ * generator drives the bare sheet with `/cv?print&lang=<lang>`.
+ */
+function resolveLang(): Lang {
   if (typeof window === 'undefined') return 'en';
   const query = new URLSearchParams(window.location.search).get('lang');
-  if (isLang(query)) return query;
-  const stored = window.localStorage.getItem(STORAGE_KEY);
-  if (isLang(stored)) return stored;
-  return 'en';
+  if (query === 'en' || query === 'es') return query;
+  return langFromPath(window.location.pathname);
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>(initialLang);
+  const [lang, setLangState] = useState<Lang>(resolveLang);
+
+  // Keep the language in sync with the URL (back/forward + programmatic nav).
+  useEffect(() => {
+    const sync = () => setLangState(resolveLang());
+    window.addEventListener('popstate', sync);
+    return () => window.removeEventListener('popstate', sync);
+  }, []);
 
   useEffect(() => {
     document.documentElement.lang = lang;
-    try {
-      window.localStorage.setItem(STORAGE_KEY, lang);
-    } catch {
-      /* storage unavailable — non-fatal */
-    }
   }, [lang]);
 
-  const setLang = useCallback((next: Lang) => setLangState(next), []);
-  const toggleLang = useCallback(() => setLangState((prev) => (prev === 'en' ? 'es' : 'en')), []);
+  // Changing language navigates to the mirror URL of the current page.
+  const setLang = useCallback((next: Lang) => {
+    navigate(localePath(next, baseRouteFromPath(window.location.pathname)));
+  }, []);
+
+  const toggleLang = useCallback(() => {
+    setLang(langFromPath(window.location.pathname) === 'en' ? 'es' : 'en');
+  }, [setLang]);
 
   return (
     <LanguageContext.Provider value={{ lang, setLang, toggleLang }}>

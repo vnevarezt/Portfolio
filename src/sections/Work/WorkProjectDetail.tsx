@@ -149,7 +149,7 @@ function Lightbox({
       </button>
 
       <div className={styles.lightboxStage}>
-        <img src={src} alt={`Screenshot ${index + 1}`} className={styles.lightboxImage} />
+        <img src={src} alt={`Screenshot ${index + 1}`} loading="lazy" decoding="async" className={styles.lightboxImage} />
       </div>
 
       <button type="button" onClick={onNext} disabled={!canNavigate} aria-label="Next screenshot" className={`${styles.lightboxNav} ${styles.lightboxNext}`}>
@@ -260,8 +260,8 @@ function DesktopLayout({
           <div className={styles.heroShotFrame}>
             {activeScreenshot ? (
               <>
-                <img src={activeScreenshot} alt="" aria-hidden="true" className={styles.heroShotBackdrop} />
-                <img src={activeScreenshot} alt={`Project screenshot ${currentIndex + 1}`} className={styles.shotImage} />
+                <img src={activeScreenshot} alt="" aria-hidden="true" decoding="async" className={styles.heroShotBackdrop} />
+                <img src={activeScreenshot} alt={`Project screenshot ${currentIndex + 1}`} decoding="async" className={styles.shotImage} />
                 <button
                   type="button"
                   onClick={onOpenLightbox}
@@ -291,7 +291,7 @@ function DesktopLayout({
             <div className={styles.thumbStrip}>
               {screenshots.map((src, index) => (
                 <button key={`${src}-${index}`} type="button" onClick={() => setCurrentIndex(index)} className={`${styles.thumbBtn} ${index === currentIndex ? styles.thumbBtnActive : ''}`} aria-label={`Go to screenshot ${index + 1}`}>
-                  <img src={src} alt={`Screenshot thumbnail ${index + 1}`} loading="lazy" className={styles.thumbImage} />
+                  <img src={src} alt={`Screenshot thumbnail ${index + 1}`} loading="lazy" decoding="async" className={styles.thumbImage} />
                 </button>
               ))}
             </div>
@@ -393,8 +393,8 @@ function MobileLayout({
         <div className={styles.mobileShotFrame}>
           {activeScreenshot ? (
             <>
-              <img src={activeScreenshot} alt="" aria-hidden="true" className={styles.heroShotBackdrop} />
-              <img src={activeScreenshot} alt={`Project screenshot ${currentIndex + 1}`} className={styles.shotImage} />
+              <img src={activeScreenshot} alt="" aria-hidden="true" decoding="async" className={styles.heroShotBackdrop} />
+              <img src={activeScreenshot} alt={`Project screenshot ${currentIndex + 1}`} decoding="async" className={styles.shotImage} />
               <button
                 type="button"
                 onClick={onOpenLightbox}

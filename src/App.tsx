@@ -2,13 +2,17 @@ import { useState, useEffect, lazy, Suspense } from 'react';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { LanguageProvider } from '@/i18n/LanguageProvider';
 import { LanguageToggle } from '@/i18n/LanguageToggle';
+import { useLang } from '@/i18n/useLang';
+import { useSeo } from '@/seo/useSeo';
 import { Sidebar } from '@/layout/Sidebar/Sidebar';
 import { MainPanel } from '@/layout/MainPanel/MainPanel';
 import { MobileBottomNav } from '@/layout/MobileBottomNav/MobileBottomNav';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
-import { LinksPage } from '@/sections/Links/LinksPage';
 
 const CVPage = lazy(() => import('@/sections/CV/CVPage').then((m) => ({ default: m.CVPage })));
+const LinksPage = lazy(() =>
+  import('@/sections/Links/LinksPage').then((m) => ({ default: m.LinksPage })),
+);
 
 function usePathname(): string {
   const [pathname, setPathname] = useState(() =>
@@ -23,16 +27,18 @@ function usePathname(): string {
 }
 
 function isLinksRoute(pathname: string): boolean {
-  return /^\/me\/?$/.test(pathname);
+  return /^\/(es\/)?me\/?$/.test(pathname);
 }
 
 function isCVRoute(pathname: string): boolean {
-  return /^\/cv\/?$/.test(pathname);
+  return /^\/(es\/)?cv\/?$/.test(pathname);
 }
 
 function Portfolio() {
   const [tab, setTab] = useState('Home');
   const isMobile = useMediaQuery('(max-width: 768px)');
+  const { lang } = useLang();
+  useSeo('/', lang);
 
   useEffect(() => {
     document.body.style.overflow = isMobile ? '' : 'hidden';
@@ -91,15 +97,15 @@ export default function App() {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        {isCVRoute(pathname) ? (
-          <Suspense fallback={null}>
+        <Suspense fallback={null}>
+          {isCVRoute(pathname) ? (
             <CVPage />
-          </Suspense>
-        ) : isLinksRoute(pathname) ? (
-          <LinksPage />
-        ) : (
-          <Portfolio />
-        )}
+          ) : isLinksRoute(pathname) ? (
+            <LinksPage />
+          ) : (
+            <Portfolio />
+          )}
+        </Suspense>
       </LanguageProvider>
     </ThemeProvider>
   );

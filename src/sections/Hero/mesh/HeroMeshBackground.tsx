@@ -104,6 +104,9 @@ export function HeroMeshBackground() {
     let acc = 0;
 
     let isHidden = document.hidden;
+    // Paused while the hero is scrolled out of view (parallels the tab-hidden
+    // pause below) so the animation loop never runs off-screen.
+    let isOffscreen = false;
     let particles: MeshParticle[] = [];
 
     const backgroundStroke = 'rgb(255 255 255 / 0.40)';
@@ -399,7 +402,7 @@ export function HeroMeshBackground() {
 
     const tick = (now: number) => {
       rafId = requestAnimationFrame(tick);
-      if (isHidden) return;
+      if (isHidden || isOffscreen) return;
 
       const delta = now - prevNow;
       prevNow = now;
@@ -440,10 +443,18 @@ export function HeroMeshBackground() {
     };
 
     const observer = new ResizeObserver(() => resize());
+    const visibilityObserver = new IntersectionObserver(
+      (entries) => {
+        isOffscreen = !entries[0]?.isIntersecting;
+        if (!isOffscreen) prevNow = performance.now();
+      },
+      { threshold: 0 },
+    );
 
     resize();
     createParticles();
     observer.observe(host);
+    visibilityObserver.observe(host);
     window.addEventListener('pointermove', onPointerMove, { passive: true });
     window.addEventListener('pointerleave', onPointerLeave);
     document.addEventListener('visibilitychange', onVisibilityChange);
@@ -453,6 +464,7 @@ export function HeroMeshBackground() {
     return () => {
       cancelAnimationFrame(rafId);
       observer.disconnect();
+      visibilityObserver.disconnect();
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('pointerleave', onPointerLeave);
       document.removeEventListener('visibilitychange', onVisibilityChange);

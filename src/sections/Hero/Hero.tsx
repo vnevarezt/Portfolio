@@ -1,8 +1,14 @@
+import { lazy, Suspense } from 'react';
 import { Clock } from '@/components/widgets/Clock/Clock';
 import { ArrowIcon, ChevronRightIcon, DownloadIcon } from '@/components/icons/Icons';
 import { Pill } from '@/components/ui/Pill/Pill';
+import { useLang } from '@/i18n/useLang';
+import { localePath } from '@/i18n/routing';
 import { useT } from '@/i18n/useT';
-import { HeroMeshBackground } from './mesh/HeroMeshBackground';
+
+const HeroMeshBackground = lazy(() =>
+  import('./mesh/HeroMeshBackground').then((m) => ({ default: m.HeroMeshBackground })),
+);
 
 interface HeroProps {
   onNavigate?: (tab: string) => void;
@@ -10,6 +16,7 @@ interface HeroProps {
 
 export function Hero({ onNavigate }: HeroProps) {
   const t = useT();
+  const { lang } = useLang();
   return (
     <div
       className="hero-root"
@@ -22,7 +29,9 @@ export function Hero({ onNavigate }: HeroProps) {
         overflow: 'hidden',
       }}
     >
-      <HeroMeshBackground />
+      <Suspense fallback={null}>
+        <HeroMeshBackground />
+      </Suspense>
 
       {/* Bottom gradient */}
       <div
@@ -101,7 +110,7 @@ export function Hero({ onNavigate }: HeroProps) {
           <button className="btn" onClick={() => onNavigate?.('Work')}>
             {t.hero.viewWork} <ChevronRightIcon size={13} />
           </button>
-          <a href="/cv" className="btn">
+          <a href={localePath(lang, '/cv')} className="btn">
             {t.common.cv} <DownloadIcon size={13} />
           </a>
         </div>

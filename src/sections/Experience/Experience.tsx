@@ -4,6 +4,7 @@ import { Pill } from '@/components/ui/Pill/Pill';
 import { SectionIntro, Accent } from '@/components/ui/SectionIntro/SectionIntro';
 import { TagChip } from '@/components/ui/TagChip/TagChip';
 import { useLang } from '@/i18n/useLang';
+import { localePath } from '@/i18n/routing';
 import { useT } from '@/i18n/useT';
 import { cvPdfFilename, cvPdfPath } from '@/sections/CV/cv.data';
 import { useExperience } from '@/data/experience';
@@ -195,7 +196,7 @@ export function Experience({ embedded = false }: ExperienceProps) {
       </div>
 
       <CtaBanner title={t.experience.ctaTitle} sub={t.experience.ctaSub}>
-        <a href="/cv" className="btn" style={{ fontSize: 'var(--fs-13)' }}>
+        <a href={localePath(lang, '/cv')} className="btn" style={{ fontSize: 'var(--fs-13)' }}>
           {t.common.viewCV}
         </a>
         <a
